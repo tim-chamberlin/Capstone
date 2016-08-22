@@ -1,0 +1,14 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Disco' do
+
+  use_frameworks!
+
+  # Pods for Disco
+  
+  pod 'Firebase'
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
+
+end
