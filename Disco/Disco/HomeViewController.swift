@@ -10,10 +10,14 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = UserController.sharedController.currentUser?.name
-        print((UserController.sharedController.currentUser?.FBID)! as String)
+        
+        
+        self.segmentedControl.setEnabled(true, forSegmentAtIndex: 0)
     }
 
     
@@ -37,13 +41,25 @@ class HomeViewController: UIViewController {
         self.presentViewController(actionSheet, animated: true, completion: nil)
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toFriendsListSegue" {
+            guard let detailVC = segue.destinationViewController as? FriendsListTableViewController else { return }
+            detailVC.friends = UserController.sharedController.currentUser?.friends
+        }
+    }
+    
+    // MARK: - IBActions
+    
     @IBAction func logoutButtonTapped(sender: AnyObject) {
         presentLogoutActionSheet()
     }
     
     @IBAction func friendsListButtonTapped(sender: AnyObject) {
-        UserController.sharedController.getFriends { (success) in
-            //
+        UserController.sharedController.getFriends { (friends, success) in
+            guard let friends = friends else { return }
+            UserController.sharedController.currentUser?.friends = friends
+            self.performSegueWithIdentifier("toFriendsListSegue", sender: self)
         }
     }
 }

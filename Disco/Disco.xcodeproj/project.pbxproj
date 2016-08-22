@@ -19,7 +19,6 @@
 		22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C6D1D6A4620001B7A9B /* UserController.swift */; };
 		22456C701D6A462A001B7A9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C6F1D6A462A001B7A9B /* User.swift */; };
 		22456C751D6A4D6E001B7A9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C741D6A4D6E001B7A9B /* HomeViewController.swift */; };
-		22456C771D6A7DCB001B7A9B /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C761D6A7DCB001B7A9B /* NetworkController.swift */; };
 		22456C7A1D6A8B5D001B7A9B /* FriendsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */; };
 		D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */; };
 /* End PBXBuildFile section */
@@ -39,7 +38,6 @@
 		22456C6D1D6A4620001B7A9B /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		22456C6F1D6A462A001B7A9B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		22456C741D6A4D6E001B7A9B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		22456C761D6A7DCB001B7A9B /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewController.swift; sourceTree = "<group>"; };
 		734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Disco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4DD003BFC04492F5C49F5 /* Pods-Disco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.release.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.release.xcconfig"; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 		22456C781D6A7DCF001B7A9B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
-				22456C761D6A7DCB001B7A9B /* NetworkController.swift */,
 			);
 			name = "Helper Classes";
 			sourceTree = "<group>";
@@ -285,7 +282,6 @@
 				22456C751D6A4D6E001B7A9B /* HomeViewController.swift in Sources */,
 				22456C701D6A462A001B7A9B /* User.swift in Sources */,
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,
-				22456C771D6A7DCB001B7A9B /* NetworkController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
 				22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */,
 				22456C7A1D6A8B5D001B7A9B /* FriendsListTableViewController.swift in Sources */,

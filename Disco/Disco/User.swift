@@ -10,11 +10,23 @@ import Foundation
 
 struct User {
     
+    static let kFBID = "id"
+    static let kName = "name"
+    
     let FBID: String
     let name: String
+    var friends: [User] = []
+//    var contributingPlaylists: [Playlist] = []
+//    var hostingPlaylists: [Playlist] = []
     
     
     init(FBID: String, name: String){
+        self.FBID = FBID
+        self.name = name
+    }
+    
+    init?(dictionary: [String:AnyObject]) {
+        guard let FBID = dictionary[User.kFBID] as? String, name = dictionary[User.kName] as? String else { return nil }
         self.FBID = FBID
         self.name = name
     }

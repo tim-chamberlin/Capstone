@@ -94,12 +94,20 @@
                                 <state key="normal" title="Friends List"/>
                                 <connections>
                                     <action selector="friendsListButtonTapped:" destination="5aj-mc-2ib" eventType="touchUpInside" id="4hF-yu-FXB"/>
-                                    <segue destination="GMP-T9-Aga" kind="show" identifier="toFriendsListSegue" id="wBZ-di-XjZ"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="FNO-Ak-cSp">
+                                <rect key="frame" x="210" y="72" width="181" height="29"/>
+                                <segments>
+                                    <segment title="Contributing"/>
+                                    <segment title="Hosting"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="FNO-Ak-cSp" firstAttribute="centerX" secondItem="9KR-Ck-BdC" secondAttribute="centerX" id="Aa0-Va-U8J"/>
+                            <constraint firstItem="FNO-Ak-cSp" firstAttribute="top" secondItem="Die-VB-37m" secondAttribute="bottom" constant="8" id="Ghe-Eh-5SB"/>
                             <constraint firstItem="WZ9-SF-Ypd" firstAttribute="centerX" secondItem="9KR-Ck-BdC" secondAttribute="centerX" id="R4o-hE-2Kf"/>
                             <constraint firstItem="7EI-eT-HlM" firstAttribute="centerX" secondItem="9KR-Ck-BdC" secondAttribute="centerX" id="fcM-he-uxq"/>
                             <constraint firstItem="a41-yp-eVe" firstAttribute="top" secondItem="WZ9-SF-Ypd" secondAttribute="bottom" constant="20" id="hB3-UD-SYQ"/>
@@ -113,26 +121,39 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="segmentedControl" destination="FNO-Ak-cSp" id="Fxy-DK-EiL"/>
+                        <segue destination="GMP-T9-Aga" kind="show" identifier="toFriendsListSegue" id="9Ff-sn-lsv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aas-5R-XTF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2866" y="482"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Friends-->
         <scene sceneID="Fcp-ly-x0n">
             <objects>
-                <tableViewController id="GMP-T9-Aga" sceneMemberID="viewController">
+                <tableViewController id="GMP-T9-Aga" customClass="FriendsListTableViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="u3g-Mi-be6">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CwG-ug-SRn">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendCell" textLabel="7Eg-Fk-CPQ" style="IBUITableViewCellStyleDefault" id="CwG-ug-SRn">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CwG-ug-SRn" id="2AS-8E-hf5">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7Eg-Fk-CPQ">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -141,6 +162,7 @@
                             <outlet property="delegate" destination="GMP-T9-Aga" id="gVk-Ih-pWa"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Friends" id="5RR-9N-qN1"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1jf-KS-b07" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

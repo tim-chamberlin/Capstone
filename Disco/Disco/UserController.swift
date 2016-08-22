@@ -91,7 +91,7 @@ class UserController {
     // Retrieve current Facebook User ID
     
     func getCurrentUserFBID(completion: (ID: String?, success: Bool) -> Void) {
-        let request = FBSDKGraphRequest(graphPath: "me", parameters: nil, HTTPMethod: NetworkController.HTTPMethod.Get.rawValue)
+        let request = FBSDKGraphRequest(graphPath: "me", parameters: nil, HTTPMethod: "GET")
         request.startWithCompletionHandler { (connection, result, error) in
             if let currentUserID = result["id"] as? String {
                 completion(ID: currentUserID, success: true)
@@ -102,10 +102,15 @@ class UserController {
     
     // Retrieve Friends List
     
-    func getFriends(completion: (success: Bool) -> Void) {
-        let request = FBSDKGraphRequest(graphPath: "me/friends", parameters: nil, HTTPMethod: NetworkController.HTTPMethod.Get.rawValue)
+    func getFriends(completion: (friends: [User]?, success: Bool) -> Void) {
+        let request = FBSDKGraphRequest(graphPath: "me/friends", parameters: nil, HTTPMethod: "GET")
         request.startWithCompletionHandler { (connection, result, error) in
-            print(result)
+            if let data = result["data"] as? [[String: AnyObject]] {
+                let friends = data.flatMap { User(dictionary: $0) }
+                completion(friends: friends, success: true)
+            } else {
+                completion(friends: nil, success: false)
+            }
         }
     }
     
