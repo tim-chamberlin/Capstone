@@ -23,10 +23,7 @@ class ContributingViewController: UIViewController {
         UserController.sharedController.getFriends { (friends, success) in
             if let friends = friends {
                 UserController.sharedController.currentUser?.friends = friends
-                
-//                self.presentingViewController?.performSegueWithIdentifier("toFriendsListSegue", sender: self)
                 self.parentViewController?.performSegueWithIdentifier("toFriendsListSegue", sender: self)
-//                self.performSegueWithIdentifier("toFriendsListSegue", sender: self)
             }
         }
     }

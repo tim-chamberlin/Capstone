@@ -269,7 +269,14 @@
                                             <outlet property="delegate" destination="Ugq-eP-3Pv" id="H8e-co-ljC"/>
                                         </connections>
                                     </tableView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrE-QG-4UY">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zan-cq-cuX">
+                                        <rect key="frame" x="216" y="434" width="129" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Host a new playlist">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrE-QG-4UY">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LwU-v7-sbQ">
@@ -280,7 +287,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must have a Spotify Premium account to create a playlist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8b6-ez-bhj">
-                                                <rect key="frame" x="47" y="331" width="466" height="21"/>
+                                                <rect key="frame" x="20" y="331" width="520" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -288,7 +295,9 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="8b6-ez-bhj" secondAttribute="trailing" constant="20" id="Gb1-Nj-yZ1"/>
                                             <constraint firstAttribute="bottom" secondItem="LwU-v7-sbQ" secondAttribute="bottom" constant="50" id="ezt-Ad-qkc"/>
+                                            <constraint firstItem="8b6-ez-bhj" firstAttribute="leading" secondItem="qrE-QG-4UY" secondAttribute="leading" constant="20" id="tPI-b9-iFb"/>
                                             <constraint firstItem="LwU-v7-sbQ" firstAttribute="top" secondItem="8b6-ez-bhj" secondAttribute="bottom" constant="20" id="tan-aa-0Tj"/>
                                             <constraint firstItem="8b6-ez-bhj" firstAttribute="centerX" secondItem="qrE-QG-4UY" secondAttribute="centerX" id="xc4-nS-Rgd"/>
                                             <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerX" secondItem="qrE-QG-4UY" secondAttribute="centerX" id="ywr-LT-TQL"/>
@@ -297,6 +306,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.56277316430000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="zan-cq-cuX" firstAttribute="centerX" secondItem="KZ2-S6-h4S" secondAttribute="centerX" id="2I2-Dw-una"/>
                                     <constraint firstAttribute="bottom" secondItem="KuZ-5Z-j7q" secondAttribute="bottom" constant="50" id="5Cl-K7-Qo2"/>
                                     <constraint firstAttribute="bottom" secondItem="qrE-QG-4UY" secondAttribute="bottom" id="65u-em-xPB"/>
                                     <constraint firstAttribute="trailing" secondItem="qrE-QG-4UY" secondAttribute="trailing" id="I6a-TS-VfC"/>
@@ -304,6 +314,7 @@
                                     <constraint firstItem="KuZ-5Z-j7q" firstAttribute="leading" secondItem="KZ2-S6-h4S" secondAttribute="leading" id="P4n-iD-HIM"/>
                                     <constraint firstItem="qrE-QG-4UY" firstAttribute="leading" secondItem="KZ2-S6-h4S" secondAttribute="leading" id="YrB-iK-LCq"/>
                                     <constraint firstAttribute="trailing" secondItem="KuZ-5Z-j7q" secondAttribute="trailing" id="dPR-Sq-767"/>
+                                    <constraint firstAttribute="bottom" secondItem="zan-cq-cuX" secondAttribute="bottom" constant="8" id="hhy-ya-wOS"/>
                                     <constraint firstItem="KuZ-5Z-j7q" firstAttribute="top" secondItem="KZ2-S6-h4S" secondAttribute="top" id="lXh-sU-yju"/>
                                 </constraints>
                             </view>

@@ -10,6 +10,8 @@ import Foundation
 
 struct User {
     
+    static let parentDirectory = "users"
+    
     static let kFBID = "id"
     static let kName = "name"
     
