@@ -14,7 +14,14 @@ class UserController {
     
     static let sharedController = UserController()
     
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    
     private let facebookPermissions = ["public_profile","user_friends"]
+    
+    // Spotify Constants
+    static let spotifyClientID = "a0578e15af3a46baa2dbabf176f60952"
+    static let spotifyRedirectURL = NSURL(string: "disco-login://callback")
+    static let spotifyUserDefaultsSessionKey = "SpotifySession"
     
     var currentUser: User?
     
@@ -25,18 +32,28 @@ class UserController {
             if let user = user {
                 // Set user of current session
                 guard let name = user.displayName else { return }
-                self.getCurrentUserFBID({ (ID, success) in
-                    if let FBID = ID {
-                        let currentUser = User(FBID: FBID, name: name)
-                        self.currentUser = currentUser
-                        completion(success: true)
-                    }
-                })
+                
+                // Check Facebook token
+                if let fbAccessToken = FBSDKAccessToken.currentAccessToken() {
+                    print("Access token valid")
+                    self.getCurrentUserFBID({ (ID, success) in
+                        if let FBID = ID {
+                            let currentUser = User(FBID: FBID, name: name)
+                            self.currentUser = currentUser
+                            completion(success: true)
+                        }
+                    })
+                    
+                } else {
+                    print("No access token")
+                    completion(success: false)
+                }
             } else {
                 completion(success: false)
             }
         })
     }
+    
     
     // login
     
@@ -95,6 +112,8 @@ class UserController {
         request.startWithCompletionHandler { (connection, result, error) in
             if let currentUserID = result["id"] as? String {
                 completion(ID: currentUserID, success: true)
+            } else {
+                completion(ID: nil, success: false)
             }
         }
     }
@@ -114,6 +133,58 @@ class UserController {
         }
     }
     
+}
+
+
+// MARK: - Spotify Auth
+
+extension UserController {
     
+    func checkSpotifyUserAuth(completion: (loggedIn: Bool, session: SPTSession?) -> Void) {
+        // Check for valid session
+        if let sessionObject: AnyObject = userDefaults.objectForKey(UserController.spotifyUserDefaultsSessionKey) {
+            guard let sessionDataObject = sessionObject as? NSData, session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObject) as? SPTSession else { return }
+            
+            // If session has expired, renew session
+            if !session.isValid() {
+                SPTAuth.defaultInstance().renewSession(session, callback: { (error, session) in
+                    if error == nil {
+                        self.saveSessionToUserDefaults(session)
+                        completion(loggedIn: true, session: session)
+                    }
+                })
+            } else {
+                print("Session is valid")
+                completion(loggedIn: true, session: session)
+            }
+        } else { // Not logged in (token is nil)
+            completion(loggedIn: false, session: nil)
+        }
+    }
+    
+    func saveSessionToUserDefaults(session: SPTSession) {
+        // Convert to NSData
+        let sessionData = NSKeyedArchiver.archivedDataWithRootObject(session)
+        userDefaults.setObject(sessionData, forKey: UserController.spotifyUserDefaultsSessionKey)
+        userDefaults.synchronize()
+    }
+    
+    func setupSPTAuth() {
+        // Set properties for SPTAuth singleton
+        SPTAuth.defaultInstance().clientID = UserController.spotifyClientID
+        SPTAuth.defaultInstance().redirectURL = UserController.spotifyRedirectURL
+        SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope]
+        SPTAuth.defaultInstance().sessionUserDefaultsKey = UserController.spotifyUserDefaultsSessionKey
+        SPTAuth.defaultInstance().allowNativeLogin = true
+    }
+    
+//    func logoutOfSpotify(session: SPTSession) {
+//        session.accessToken = nil
+//    }
     
 }
+
+
+
+
+

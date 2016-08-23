@@ -13,6 +13,8 @@ import FBSDKCoreKit
 // Firebase Database Reference
 let firebaseRef = FIRDatabase.database().reference()
 
+var player = SPTAudioStreamingController.sharedInstance()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

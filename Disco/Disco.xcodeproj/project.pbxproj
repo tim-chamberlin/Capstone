@@ -20,6 +20,12 @@
 		22456C701D6A462A001B7A9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C6F1D6A462A001B7A9B /* User.swift */; };
 		22456C751D6A4D6E001B7A9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C741D6A4D6E001B7A9B /* HomeViewController.swift */; };
 		22456C7A1D6A8B5D001B7A9B /* FriendsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */; };
+		228381F71D6BDC0F00D78B53 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F61D6BDC0F00D78B53 /* AVFoundation.framework */; };
+		228381F91D6BDC1C00D78B53 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */; };
+		228381FB1D6BDCCC00D78B53 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381FA1D6BDCCC00D78B53 /* Spotify.framework */; };
+		228382031D6BE11F00D78B53 /* ContributingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228382021D6BE11F00D78B53 /* ContributingViewController.swift */; };
+		228382051D6BE13500D78B53 /* HostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228382041D6BE13500D78B53 /* HostingViewController.swift */; };
+		228382071D6BEACD00D78B53 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228382061D6BEACD00D78B53 /* Bolts.framework */; };
 		D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +45,13 @@
 		22456C6F1D6A462A001B7A9B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		22456C741D6A4D6E001B7A9B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewController.swift; sourceTree = "<group>"; };
+		228381F61D6BDC0F00D78B53 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		228381FA1D6BDCCC00D78B53 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
+		228381FC1D6BDCE300D78B53 /* Disco-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Disco-Bridging-Header.h"; sourceTree = "<group>"; };
+		228382021D6BE11F00D78B53 /* ContributingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributingViewController.swift; sourceTree = "<group>"; };
+		228382041D6BE13500D78B53 /* HostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostingViewController.swift; sourceTree = "<group>"; };
+		228382061D6BEACD00D78B53 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Disco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4DD003BFC04492F5C49F5 /* Pods-Disco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.release.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.release.xcconfig"; sourceTree = "<group>"; };
 		C701716C57C37BBB5005548A /* Pods-Disco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.debug.xcconfig"; sourceTree = "<group>"; };
@@ -49,10 +62,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228381F91D6BDC1C00D78B53 /* SystemConfiguration.framework in Frameworks */,
+				228381F71D6BDC0F00D78B53 /* AVFoundation.framework in Frameworks */,
+				228381FB1D6BDCCC00D78B53 /* Spotify.framework in Frameworks */,
 				22456C6A1D6A40E6001B7A9B /* FBSDKShareKit.framework in Frameworks */,
 				D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */,
 				22456C681D6A40E6001B7A9B /* FBSDKCoreKit.framework in Frameworks */,
 				22456C691D6A40E6001B7A9B /* FBSDKLoginKit.framework in Frameworks */,
+				228382071D6BEACD00D78B53 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,10 +88,14 @@
 		1ACFF4544AE7439540EBCA3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				228382061D6BEACD00D78B53 /* Bolts.framework */,
+				228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */,
+				228381F61D6BDC0F00D78B53 /* AVFoundation.framework */,
 				22456C651D6A40E6001B7A9B /* FBSDKCoreKit.framework */,
 				22456C661D6A40E6001B7A9B /* FBSDKLoginKit.framework */,
 				22456C671D6A40E6001B7A9B /* FBSDKShareKit.framework */,
 				734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */,
+				228381FA1D6BDCCC00D78B53 /* Spotify.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -113,6 +134,7 @@
 		22456C621D6A3C8D001B7A9B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				228381FC1D6BDCE300D78B53 /* Disco-Bridging-Header.h */,
 				22456C541D6A3C32001B7A9B /* Main.storyboard */,
 				22456C571D6A3C32001B7A9B /* Assets.xcassets */,
 				22456C591D6A3C32001B7A9B /* LaunchScreen.storyboard */,
@@ -144,6 +166,8 @@
 				22456C6B1D6A4359001B7A9B /* AuthenticationViewController.swift */,
 				22456C741D6A4D6E001B7A9B /* HomeViewController.swift */,
 				22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */,
+				228382021D6BE11F00D78B53 /* ContributingViewController.swift */,
+				228382041D6BE13500D78B53 /* HostingViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -279,6 +303,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				228382031D6BE11F00D78B53 /* ContributingViewController.swift in Sources */,
+				228382051D6BE13500D78B53 /* HostingViewController.swift in Sources */,
 				22456C751D6A4D6E001B7A9B /* HomeViewController.swift in Sources */,
 				22456C701D6A462A001B7A9B /* User.swift in Sources */,
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,
@@ -400,6 +426,7 @@
 			baseConfigurationReference = C701716C57C37BBB5005548A /* Pods-Disco.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -411,6 +438,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tim-chamberlin.Disco";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Disco/Disco-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -419,6 +448,7 @@
 			baseConfigurationReference = C1C4DD003BFC04492F5C49F5 /* Pods-Disco.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -430,6 +460,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tim-chamberlin.Disco";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Disco/Disco-Bridging-Header.h";
 			};
 			name = Release;
 		};

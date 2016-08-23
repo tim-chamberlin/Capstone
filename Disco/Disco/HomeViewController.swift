@@ -10,17 +10,38 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    private var contributingVC: ContributingViewController!
+    private var hostingVC: HostingViewController!
+    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var contributingContainerView: UIView!
+    @IBOutlet weak var hostingContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = UserController.sharedController.currentUser?.name
         
         
-        self.segmentedControl.setEnabled(true, forSegmentAtIndex: 0)
+        setupSegmentedCcontroller()
+        segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
+        
     }
 
+    func setupSegmentedCcontroller() {
+        segmentedControl.selectedSegmentIndex == 0
+        contributingContainerView.hidden = false
+        hostingContainerView.hidden = true
+    }
     
+    func segmentedControlChanged(segmentedControl: UISegmentedControl) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            contributingContainerView.hidden = false
+            hostingContainerView.hidden = true
+        } else if segmentedControl.selectedSegmentIndex == 1 {
+            contributingContainerView.hidden = true
+            hostingContainerView.hidden = false
+        }
+    }
     
     func presentLogoutActionSheet() {
         guard let currentUserName = UserController.sharedController.currentUser?.name else { return }
@@ -43,7 +64,12 @@ class HomeViewController: UIViewController {
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "toFriendsListSegue" {
+        
+        if segue.identifier == "contributingEmbedSegue" {
+            contributingVC = segue.destinationViewController as? ContributingViewController
+        } else if segue.identifier == "hostingEmbedSegue" {
+            hostingVC = segue.destinationViewController as? HostingViewController
+        } else if segue.identifier == "toFriendsListSegue" {
             guard let detailVC = segue.destinationViewController as? FriendsListTableViewController else { return }
             detailVC.friends = UserController.sharedController.currentUser?.friends
         }
