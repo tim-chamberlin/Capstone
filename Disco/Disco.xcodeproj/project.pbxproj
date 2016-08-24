@@ -29,6 +29,7 @@
 		22AFF0A61D6CE44400121CC4 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A51D6CE44400121CC4 /* Playlist.swift */; };
 		22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */; };
 		22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */; };
+		22AFF0AC1D6D26A000121CC4 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0AB1D6D26A000121CC4 /* PlaylistViewController.swift */; };
 		D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		22AFF0A51D6CE44400121CC4 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistController.swift; sourceTree = "<group>"; };
 		22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlaylistViewController.swift; sourceTree = "<group>"; };
+		22AFF0AB1D6D26A000121CC4 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Disco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4DD003BFC04492F5C49F5 /* Pods-Disco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.release.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.release.xcconfig"; sourceTree = "<group>"; };
 		C701716C57C37BBB5005548A /* Pods-Disco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.debug.xcconfig"; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				228382021D6BE11F00D78B53 /* ContributingViewController.swift */,
 				228382041D6BE13500D78B53 /* HostingViewController.swift */,
 				22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */,
+				22AFF0AB1D6D26A000121CC4 /* PlaylistViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				22456C701D6A462A001B7A9B /* User.swift in Sources */,
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
+				22AFF0AC1D6D26A000121CC4 /* PlaylistViewController.swift in Sources */,
 				22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */,
 				22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */,
 				22456C7A1D6A8B5D001B7A9B /* FriendsListTableViewController.swift in Sources */,

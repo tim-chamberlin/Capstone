@@ -18,11 +18,14 @@ class ContributingViewController: UIViewController {
     // MARK: - Navigation
 
     @IBAction func contributeToPlaylistButtonTapped(sender: AnyObject) {
+        
         UserController.sharedController.getFriends { (friends, success) in
             if let friends = friends {
                 UserController.sharedController.currentUser?.friends = friends
                 self.parentViewController?.performSegueWithIdentifier("toFriendsListSegue", sender: self)
             }
         }
+        
+        
     }
 }

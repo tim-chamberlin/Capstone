@@ -68,9 +68,6 @@ class HomeViewController: UIViewController {
             contributingVC = segue.destinationViewController as? ContributingViewController
         } else if segue.identifier == "hostingEmbedSegue" {
             hostingVC = segue.destinationViewController as? HostingViewController
-        } else if segue.identifier == "toFriendsListSegue" {
-            guard let detailVC = segue.destinationViewController as? FriendsListTableViewController else { return }
-            detailVC.friends = UserController.sharedController.currentUser?.friends
         }
     }
     

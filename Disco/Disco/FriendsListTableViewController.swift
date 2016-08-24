@@ -10,12 +10,20 @@ import UIKit
 
 class FriendsListTableViewController: UITableViewController {
 
-    var friends: [User]?
+    var friends = UserController.sharedController.currentUser?.friends
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+    
+        
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,4 +51,7 @@ class FriendsListTableViewController: UITableViewController {
     }
     */
 
+    @IBAction func cancelAction(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
