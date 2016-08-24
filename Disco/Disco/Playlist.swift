@@ -50,6 +50,11 @@ class Playlist {
         } else {
             self.trackIDs = []
         }
-    }
-    
+    }    
 }
+
+enum PlaylistType: String {
+    case Hosting = "hostingPlaylist"
+    case Contributing = "contributingPlaylists"
+}
+

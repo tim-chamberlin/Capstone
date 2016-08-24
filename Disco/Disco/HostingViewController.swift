@@ -8,20 +8,23 @@
 
 import UIKit
 
-class HostingViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAuthViewDelegate, SPTAudioStreamingDelegate {
+class HostingViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var spotifyLoginView: UIView!
     @IBOutlet weak var loginWithSpotifyButton: UIButton!
     
-    var session: SPTSession?
+    private var playlistsTableView: PlaylistListViewController!
     
-    var hostingPlaylists: [Playlist] = []
+    var session: SPTSession?
     
     let spotifyLoginNotificationKey = "spotifyLoginSuccessful"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Specify PlaylistTableView's user
+        guard let currentUser = UserController.sharedController.currentUser else { return }
+        playlistsTableView.user = currentUser
         
         // Provides SPTAuth information for SPTAuthViewController
         UserController.sharedController.setupSPTAuth()
@@ -38,7 +41,6 @@ class HostingViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
         
-        
         // Listen for when Spotify user logs in successfully
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HostingViewController.updateViewWithLoginStatus), name: spotifyLoginNotificationKey, object: nil)
 
@@ -46,37 +48,6 @@ class HostingViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        if var currentUser = UserController.sharedController.currentUser {
-            PlaylistController.sharedController.fetchHostingPlaylistsForUser(currentUser.FBID, completion: { (playlists, success) in
-                if success {
-                    guard let playlists = playlists else {
-                        print("No playlists found for current user")
-                        return
-                    }
-                    self.hostingPlaylists = playlists
-                    self.tableView.reloadData()
-                } else {
-                    print("Error fetching playlists")
-                }
-            })
-        }
-    }
-    
-    // MARK: - UITableViewDataSource Methods
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.hostingPlaylists.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("hostingPlaylistCell", forIndexPath: indexPath)
-        
-        let playlist = self.hostingPlaylists[indexPath.row]
-        
-        cell.textLabel?.text = playlist.name
-        
-        return cell
     }
     
     
@@ -149,6 +120,13 @@ class HostingViewController: UIViewController, UITableViewDataSource, UITableVie
                     print("Success")
                 }
             }
+        }
+    }
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "playlistTVEmbedSegue" {
+            playlistsTableView = segue.destinationViewController as? PlaylistListViewController
         }
     }
     

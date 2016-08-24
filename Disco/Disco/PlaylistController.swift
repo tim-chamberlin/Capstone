@@ -46,10 +46,10 @@ class PlaylistController {
     
     // MARK: - Fetch Playlists
     
-    func fetchHostingPlaylistsForUser(FBID: String, completion:(playlists: [Playlist]?, success: Bool) -> Void) {
+    func fetchPlaylistsForUser(FBID: String, ofType: PlaylistType, completion:(playlists: [Playlist]?, success: Bool) -> Void) {
         guard let currentUser = UserController.sharedController.currentUser else { return }
         
-        firebaseRef.child(User.parentDirectory).child(currentUser.FBID).child(User.kHostingPlaylists).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        firebaseRef.child(User.parentDirectory).child(currentUser.FBID).child(ofType.rawValue).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard let playlistIDsDictionary = snapshot.value as? [String: AnyObject] else {
                 completion(playlists: nil, success: true)
                 return
@@ -75,8 +75,7 @@ class PlaylistController {
                     }
                     }, withCancelBlock: { (error) in
                         //
-                })
-                
+                })   
             }
             
         }) { (error) in

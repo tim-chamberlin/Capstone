@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675151D6DFBB30052D475 /* PlaylistListViewController.swift */; };
 		22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C501D6A3C32001B7A9B /* AppDelegate.swift */; };
 		22456C561D6A3C32001B7A9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22456C541D6A3C32001B7A9B /* Main.storyboard */; };
 		22456C581D6A3C32001B7A9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22456C571D6A3C32001B7A9B /* Assets.xcassets */; };
@@ -29,11 +30,11 @@
 		22AFF0A61D6CE44400121CC4 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A51D6CE44400121CC4 /* Playlist.swift */; };
 		22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */; };
 		22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */; };
-		22AFF0AC1D6D26A000121CC4 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0AB1D6D26A000121CC4 /* PlaylistViewController.swift */; };
 		D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		222675151D6DFBB30052D475 /* PlaylistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
 		22456C4D1D6A3C32001B7A9B /* Disco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Disco.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22456C501D6A3C32001B7A9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22456C551D6A3C32001B7A9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,7 +60,6 @@
 		22AFF0A51D6CE44400121CC4 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistController.swift; sourceTree = "<group>"; };
 		22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlaylistViewController.swift; sourceTree = "<group>"; };
-		22AFF0AB1D6D26A000121CC4 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Disco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4DD003BFC04492F5C49F5 /* Pods-Disco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.release.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.release.xcconfig"; sourceTree = "<group>"; };
 		C701716C57C37BBB5005548A /* Pods-Disco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +133,7 @@
 				22456C711D6A462D001B7A9B /* Models */,
 				22456C721D6A4638001B7A9B /* Model Controllers */,
 				22456C731D6A464B001B7A9B /* View Controllers */,
+				22AFF0AD1D6D2D2D00121CC4 /* Views */,
 				22456C781D6A7DCF001B7A9B /* Helper Classes */,
 				22456C621D6A3C8D001B7A9B /* Resources */,
 			);
@@ -179,7 +180,7 @@
 				228382021D6BE11F00D78B53 /* ContributingViewController.swift */,
 				228382041D6BE13500D78B53 /* HostingViewController.swift */,
 				22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */,
-				22AFF0AB1D6D26A000121CC4 /* PlaylistViewController.swift */,
+				222675151D6DFBB30052D475 /* PlaylistListViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -189,6 +190,13 @@
 			children = (
 			);
 			name = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		22AFF0AD1D6D2D2D00121CC4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,7 +331,7 @@
 				22456C701D6A462A001B7A9B /* User.swift in Sources */,
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
-				22AFF0AC1D6D26A000121CC4 /* PlaylistViewController.swift in Sources */,
+				222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */,
 				22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */,
 				22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */,
 				22456C7A1D6A8B5D001B7A9B /* FriendsListTableViewController.swift in Sources */,
