@@ -149,12 +149,12 @@ extension UserController {
             if !session.isValid() {
                 SPTAuth.defaultInstance().renewSession(session, callback: { (error, session) in
                     if error == nil {
-                        self.saveSessionToUserDefaults(session)
+//                        self.saveSessionToUserDefaults(session)
                         completion(loggedIn: true, session: session)
                     }
                 })
             } else {
-                print("Session is valid")
+                print("Spotify session is valid")
                 completion(loggedIn: true, session: session)
             }
         } else { // Not logged in (token is nil)

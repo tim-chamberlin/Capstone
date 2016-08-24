@@ -16,6 +16,8 @@ class HostingViewController: UIViewController, UITableViewDataSource, UITableVie
     
     var session: SPTSession?
     
+    var hostingPlaylists: [Playlist] = []
+    
     let spotifyLoginNotificationKey = "spotifyLoginSuccessful"
     
     override func viewDidLoad() {
@@ -42,14 +44,37 @@ class HostingViewController: UIViewController, UITableViewDataSource, UITableVie
 
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if var currentUser = UserController.sharedController.currentUser {
+            PlaylistController.sharedController.fetchHostingPlaylistsForUser(currentUser.FBID, completion: { (playlists, success) in
+                if success {
+                    guard let playlists = playlists else {
+                        print("No playlists found for current user")
+                        return
+                    }
+                    self.hostingPlaylists = playlists
+                    self.tableView.reloadData()
+                } else {
+                    print("Error fetching playlists")
+                }
+            })
+        }
+    }
+    
     // MARK: - UITableViewDataSource Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return self.hostingPlaylists.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("", forIndexPath: indexPath)
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("hostingPlaylistCell", forIndexPath: indexPath)
+        
+        let playlist = self.hostingPlaylists[indexPath.row]
+        
+        cell.textLabel?.text = playlist.name
         
         return cell
     }
@@ -134,6 +159,8 @@ class HostingViewController: UIViewController, UITableViewDataSource, UITableVie
         presentSPTAuthViewController()
     }
     
-    @IBAction func logoutOfSpotifyButtonTapped(sender: AnyObject) {
+    @IBAction func hostNewPlaylistTapped(sender: AnyObject) {
+        self.parentViewController?.performSegueWithIdentifier("hostPlaylistSegue", sender: self)
     }
+    
 }

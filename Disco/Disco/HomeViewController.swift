@@ -24,7 +24,6 @@ class HomeViewController: UIViewController {
         
         setupSegmentedCcontroller()
         segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
-        
     }
 
     func setupSegmentedCcontroller() {

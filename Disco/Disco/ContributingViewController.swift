@@ -14,8 +14,6 @@ class ContributingViewController: UIViewController {
         super.viewDidLoad()
 
     }
-    
-
 
     // MARK: - Navigation
 
