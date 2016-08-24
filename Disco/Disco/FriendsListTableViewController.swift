@@ -24,6 +24,7 @@ class FriendsListTableViewController: UITableViewController {
         
     }
     
+    
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,15 +42,17 @@ class FriendsListTableViewController: UITableViewController {
         return cell
     }
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "playlistTVEmbedSegue" {
+            guard let destinationVC = segue.destinationViewController as? PlaylistListViewController else { return }
+            if let indexPath = tableView.indexPathForSelectedRow, selectedUser = self.friends?[indexPath.row] {
+                destinationVC.updateTableViewWithUser(selectedUser, withPlaylistType: .Hosting)
+            }
+        }
     }
-    */
 
     @IBAction func cancelAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)

@@ -10,20 +10,16 @@ import UIKit
 
 class PlaylistListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var user: User? {
-        didSet {
-            guard let user = user else { return }
-            self.updateTableViewWithUser(user, withPlaylistType: .Hosting)
-        }
-    }
-    
+    var user: User?
     var playlists: [Playlist] = []
+    
+//    weak var delegate: PlaylistTableViewDataSource?
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        delegate?.updatePlaylistTableView()
     }
     
     func updateTableViewWithUser(user: User, withPlaylistType: PlaylistType) {
@@ -33,6 +29,7 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
                     print("No playlists found for current user")
                     return
                 }
+                self.user = user
                 self.playlists = playlists
                 self.tableView.reloadData()
             } else {
@@ -56,8 +53,8 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         
         return cell
     }
-    
-    
-    
-    
+}
+
+protocol PlaylistTableViewDataSource: class {
+    func updatePlaylistTableView()
 }

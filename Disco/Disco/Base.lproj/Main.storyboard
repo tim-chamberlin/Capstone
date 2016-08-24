@@ -163,7 +163,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="u2T-az-RDn" kind="show" id="TtQ-1i-6da"/>
+                                    <segue destination="L9M-Gq-vfw" kind="show" identifier="playlistTVEmbedSegue" id="9DW-SH-7n9"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -183,36 +183,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1jf-KS-b07" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4503" y="-247"/>
-        </scene>
-        <!--Hosting View Controller-->
-        <scene sceneID="KOd-wq-Eo4">
-            <objects>
-                <viewController id="u2T-az-RDn" customClass="HostingViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5ZW-05-7Zf"/>
-                        <viewControllerLayoutGuide type="bottom" id="79C-kJ-l6M"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="mLk-OU-jzs">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BwE-fV-yfR">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="79C-kJ-l6M" firstAttribute="top" secondItem="BwE-fV-yfR" secondAttribute="bottom" id="HA2-zh-K7x"/>
-                            <constraint firstItem="BwE-fV-yfR" firstAttribute="top" secondItem="5ZW-05-7Zf" secondAttribute="bottom" id="MSl-Pt-goc"/>
-                            <constraint firstItem="BwE-fV-yfR" firstAttribute="leading" secondItem="mLk-OU-jzs" secondAttribute="leading" id="eVd-GB-YRV"/>
-                            <constraint firstAttribute="trailing" secondItem="BwE-fV-yfR" secondAttribute="trailing" id="x2E-Wt-YYN"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="n19-eG-l9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5209" y="-247"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XRY-UU-hB1">
@@ -524,18 +494,18 @@
             <objects>
                 <viewController id="L9M-Gq-vfw" customClass="PlaylistListViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wXw-yP-xxL">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="384"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KuZ-5Z-j7q">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="384"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" id="Lw7-ZZ-TnH">
-                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lw7-ZZ-TnH" id="RiN-OA-o59">
-                                            <rect key="frame" x="0.0" y="0.0" width="527" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -555,15 +525,18 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="KuZ-5Z-j7q" id="XeZ-Ig-9VX"/>
+                        <outlet property="tableView" destination="KuZ-5Z-j7q" id="khS-wD-QkB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcd-2c-s4r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2973" y="1882"/>
+            <point key="canvasLocation" x="5879" y="632"/>
         </scene>
     </scenes>
     <resources>
         <image name="Login With Spotify Button" width="286" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="9DW-SH-7n9"/>
+    </inferredMetricsTieBreakers>
 </document>

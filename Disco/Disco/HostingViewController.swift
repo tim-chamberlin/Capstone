@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HostingViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingDelegate {
+class HostingViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingDelegate, PlaylistTableViewDataSource {
     
     @IBOutlet weak var spotifyLoginView: UIView!
     @IBOutlet weak var loginWithSpotifyButton: UIButton!
@@ -21,10 +21,10 @@ class HostingViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStre
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        playlistsTableView.delegate = self
+//        setupPlaylistTableView()
         
-        // Specify PlaylistTableView's user
-        guard let currentUser = UserController.sharedController.currentUser else { return }
-        playlistsTableView.user = currentUser
+        updatePlaylistTableView()
         
         // Provides SPTAuth information for SPTAuthViewController
         UserController.sharedController.setupSPTAuth()
@@ -46,9 +46,16 @@ class HostingViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStre
 
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
+    
+    func updatePlaylistTableView() {
+        // Specify PlaylistTableView's user
+        guard let currentUser = UserController.sharedController.currentUser else { return }
+        playlistsTableView.updateTableViewWithUser(currentUser, withPlaylistType: .Hosting)
     }
+    
+//    func setupPlaylistTableView() {
+//        
+//    }
     
     
     // MARK: - Spotify Authentication
