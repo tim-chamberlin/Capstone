@@ -21,7 +21,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.title = UserController.sharedController.currentUser?.name
         
-        
         setupSegmentedCcontroller()
         segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
     }
@@ -63,11 +62,19 @@ class HomeViewController: UIViewController {
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+        // Embedded Views
         if segue.identifier == "contributingEmbedSegue" {
             contributingVC = segue.destinationViewController as? ContributingViewController
         } else if segue.identifier == "hostingEmbedSegue" {
             hostingVC = segue.destinationViewController as? HostingViewController
+        }
+        
+        // To playlist detail
+        if segue.identifier == "toTrackList" {
+            guard let destinationVC = segue.destinationViewController as? TrackListViewController else { return }
+            if let indexPath = contributingVC.contributingPlaylistsTableView.tableView.indexPathForSelectedRow {
+                destinationVC.playlist = contributingVC.contributingPlaylistsTableView.playlists[indexPath.row]
+            }
         }
     }
     

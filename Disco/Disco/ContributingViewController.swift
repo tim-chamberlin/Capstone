@@ -8,29 +8,36 @@
 
 import UIKit
 
-class ContributingViewController: UIViewController, PlaylistTableViewDataSource {
+class ContributingViewController: UIViewController, PlaylistTableViewDataSource, PlaylistTableViewDelegate {
 
-    
     var contributingPlaylistsTableView: PlaylistListViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        contributingPlaylistsTableView.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
         updatePlaylistTableView()
     }
     
-    
+    // MARK: - PlaylistTableViewDataSource
     
     func updatePlaylistTableView() {
         // Specify PlaylistTableView's user
         guard let currentUser = UserController.sharedController.currentUser else { return }
         contributingPlaylistsTableView.updatePlaylistViewWithUser(currentUser, withPlaylistType: .Contributing, withNoPlaylistsText: "You aren't currently contributing to any playlists.")
-        
+    }
+    
+    // MARK: -  PlaylistTableViewDelegate Methods
+    
+    func didSelectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
+        self.parentViewController?.performSegueWithIdentifier("toTrackList", sender: self)
+    }
+    
+    func didDeselectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
+        //
     }
 
     // MARK: - Navigation
