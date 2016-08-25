@@ -34,7 +34,7 @@ class HostingViewController: UIViewController, SPTAudioStreamingDelegate, Playli
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-//        updatePlaylistTableView()
+        updatePlaylistTableView()
     }
     
     func updatePlaylistTableView() {

@@ -137,7 +137,7 @@
             </objects>
             <point key="canvasLocation" x="2866" y="482"/>
         </scene>
-        <!--Friends-->
+        <!--Friends using Disco-->
         <scene sceneID="Fcp-ly-x0n">
             <objects>
                 <tableViewController id="GMP-T9-Aga" customClass="FriendsListTableViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
@@ -172,7 +172,7 @@
                             <outlet property="delegate" destination="GMP-T9-Aga" id="gVk-Ih-pWa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Friends" id="5RR-9N-qN1">
+                    <navigationItem key="navigationItem" title="Friends using Disco" id="5RR-9N-qN1">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Osu-5r-ojA">
                             <connections>
                                 <action selector="cancelAction:" destination="GMP-T9-Aga" id="BVN-ee-1BV"/>
@@ -512,6 +512,10 @@
         <scene sceneID="igQ-st-Kqd">
             <objects>
                 <viewController id="L9M-Gq-vfw" customClass="PlaylistListViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="s8F-Wp-ha4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vjz-LX-lFl"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wXw-yP-xxL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -566,6 +570,10 @@
         <scene sceneID="4Xr-lY-wS9">
             <objects>
                 <viewController id="528-3i-tJA" customClass="SpotifyLoginViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5QD-7R-85G"/>
+                        <viewControllerLayoutGuide type="bottom" id="s2z-Nb-JZ0"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="t7a-rf-7Ld">
                         <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
