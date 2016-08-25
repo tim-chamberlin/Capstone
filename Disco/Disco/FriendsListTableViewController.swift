@@ -10,20 +10,17 @@ import UIKit
 
 class FriendsListTableViewController: UITableViewController {
 
+    var playlistView: PlaylistListViewController!
+    
     var friends = UserController.sharedController.currentUser?.friends
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-    
-        
     }
-    
     
     // MARK: - Table view data source
 
@@ -46,10 +43,10 @@ class FriendsListTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "playlistTVEmbedSegue" {
-            guard let destinationVC = segue.destinationViewController as? PlaylistListViewController else { return }
+        if segue.identifier == "toFriendPlaylistsSegue" {
+            guard let destinationVC = segue.destinationViewController as? FriendPlaylistsViewController else { return }
             if let indexPath = tableView.indexPathForSelectedRow, selectedUser = self.friends?[indexPath.row] {
-                destinationVC.updateTableViewWithUser(selectedUser, withPlaylistType: .Hosting)
+                destinationVC.selectedUser = selectedUser
             }
         }
     }

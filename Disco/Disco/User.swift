@@ -14,14 +14,16 @@ struct User {
     
     static let kFBID = "id"
     static let kName = "name"
-    static let kContributingPlaylists = "contributingPlaylists"
-    static let kHostingPlaylists = "hostingPlaylist"
+    static let kContributingPlaylists = PlaylistType.Contributing.rawValue
+    static let kHostingPlaylists = PlaylistType.Hosting.rawValue
     
     let FBID: String
     let name: String
     var friends: [User] = []
 //    var contributingPlaylists: [Playlist] = []
     var hostingPlaylists: [Playlist]?
+    
+    var hasSpotifyPremium: Bool = false
     
     
     init(FBID: String, name: String){

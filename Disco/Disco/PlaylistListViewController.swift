@@ -16,27 +16,43 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
 //    weak var delegate: PlaylistTableViewDataSource?
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyPlaylistsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        delegate?.updatePlaylistTableView()
     }
     
-    func updateTableViewWithUser(user: User, withPlaylistType: PlaylistType) {
+    func updatePlaylistViewWithUser(user: User, withPlaylistType: PlaylistType, withNoPlaylistsText: String) {
+        
         PlaylistController.sharedController.fetchPlaylistsForUser(user.FBID, ofType: withPlaylistType) { (playlists, success) in
             if success {
                 guard let playlists = playlists else {
                     print("No playlists found for current user")
+                    self.updateInfoLabelWith(withNoPlaylistsText, playlists: self.playlists)
                     return
                 }
                 self.user = user
                 self.playlists = playlists
+                self.updateInfoLabelWith(withNoPlaylistsText, playlists: self.playlists)
                 self.tableView.reloadData()
             } else {
                 print("Error fetching playlists")
             }
         }
     }
+    
+    func updateInfoLabelWith(text: String, playlists: [Playlist]) {
+        emptyPlaylistsLabel.text = text
+        if playlists.isEmpty {
+            tableView.hidden = true
+            emptyPlaylistsLabel.hidden = false
+        } else {
+            tableView.hidden = false
+            emptyPlaylistsLabel.hidden = true
+        }
+    }
+    
     
     // MARK: - UITableViewDataSource Methods
     

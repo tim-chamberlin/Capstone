@@ -8,118 +8,61 @@
 
 import UIKit
 
-class HostingViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStreamingDelegate, PlaylistTableViewDataSource {
-    
-    @IBOutlet weak var spotifyLoginView: UIView!
-    @IBOutlet weak var loginWithSpotifyButton: UIButton!
+public let spotifyLoginNotificationKey = "spotifyLoginSuccessful"
+public let spotifyLogoutNotificationKey = "spotifyLogoutSuccessful"
+
+class HostingViewController: UIViewController, SPTAudioStreamingDelegate, PlaylistTableViewDataSource {
     
     private var playlistsTableView: PlaylistListViewController!
+    private var spotifyLoginVC: SpotifyLoginViewController!
     
-    var session: SPTSession?
-    
-    let spotifyLoginNotificationKey = "spotifyLoginSuccessful"
+    @IBOutlet weak var spotifyLoginView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        playlistsTableView.delegate = self
-//        setupPlaylistTableView()
-        
-        updatePlaylistTableView()
         
         // Provides SPTAuth information for SPTAuthViewController
         UserController.sharedController.setupSPTAuth()
-        
-        UserController.sharedController.checkSpotifyUserAuth { (loggedIn, session) in
-            if loggedIn {
-                if let session = session {
-                    self.session = session
-                    self.updateViewWithLoginStatus()
-                }
-            } else {
-                print("No spotify user logged in")
-                self.updateViewWithLoginStatus()
-            }
-        }
+        checkSpotifyAuth()
         
         // Listen for when Spotify user logs in successfully
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HostingViewController.updateViewWithLoginStatus), name: spotifyLoginNotificationKey, object: nil)
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HostingViewController.checkSpotifyAuth), name: spotifyLoginNotificationKey, object: nil)
+        // Listen for when Spotify user logs out successfully
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HostingViewController.checkSpotifyAuth), name: spotifyLogoutNotificationKey, object: nil)
+        
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+//        updatePlaylistTableView()
+    }
     
     func updatePlaylistTableView() {
         // Specify PlaylistTableView's user
         guard let currentUser = UserController.sharedController.currentUser else { return }
-        playlistsTableView.updateTableViewWithUser(currentUser, withPlaylistType: .Hosting)
+        playlistsTableView.updatePlaylistViewWithUser(currentUser, withPlaylistType: .Hosting, withNoPlaylistsText: "You aren't currently hosting any playlists.")
     }
-    
-//    func setupPlaylistTableView() {
-//        
-//    }
-    
     
     // MARK: - Spotify Authentication
     
-    func updateViewWithLoginStatus() {
-        if session != nil {
-            spotifyLoginView.hidden = true
-        } else {
-            spotifyLoginView.hidden = false
+    func checkSpotifyAuth() {
+        UserController.sharedController.checkSpotifyUserAuth { (loggedIn, session) in
+            if loggedIn {
+                if let _ = session {
+                    self.spotifyLoginView.hidden = true
+                    self.updatePlaylistTableView()
+                }
+            } else {
+                self.spotifyLoginView.hidden = false
+            }
         }
-    }
-    
-    func presentSPTAuthViewController() {
-        
-        // Authenticate with Spotify's authenticationViewController
-        let authVC = SPTAuthViewController.authenticationViewController()
-        authVC.delegate = self
-        authVC.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        authVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        self.definesPresentationContext = true
-        self.presentViewController(authVC, animated: false, completion: nil)
-        
-        // Uncomment to perform authentication in Safari
-//        let loginURL = SPTAuth.defaultInstance().loginURL
-//        UIApplication.sharedApplication().openURL(loginURL)
-    }
-    
-    func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
-        print("Spotify user logged in")
-        self.session = session
-        // Post notification so HostViewController knows about successful login
-        NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
-        
-        self.loginUsingSession(session)
-    }
-    
-    
-    func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
-        print("spotify user failed to login")
-        print(error)
-        authenticationViewController.clearCookies(nil)
-    }
-    
-    func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
-        print("Spotify user cancelled login")
-        authenticationViewController.clearCookies(nil)
     }
     
     // MARK: - Spotify Streaming
     
-    func loginUsingSession(session: SPTSession) {
-        player.delegate = self
-        do {
-            try player.startWithClientId(UserController.spotifyClientID)
-        } catch {
-            print(error)
-        }
-        player.loginWithAccessToken(session.accessToken)
-    }
-    
-    
     func audioStreamingDidLogin(audioStreaming: SPTAudioStreamingController!) {
         let url = NSURL(string: "spotify:track:0j0DNujXWeupLpZobbABoo")
-        if let player = player {
+        if let player = spotifyPlayer {
             player.playURI(url, startingWithIndex: 0) { (error) in
                 if error != nil {
                     print("Error playing track.")
@@ -130,22 +73,17 @@ class HostingViewController: UIViewController, SPTAuthViewDelegate, SPTAudioStre
         }
     }
     
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "playlistTVEmbedSegue" {
             playlistsTableView = segue.destinationViewController as? PlaylistListViewController
+        } else if segue.identifier == "spotifyLoginEmbeddedSegue" {
+            spotifyLoginVC = segue.destinationViewController as? SpotifyLoginViewController
         }
     }
     
-    
     // MARK: - IBActions
-    
-    @IBAction func loginWithSpotifyButtonTapped(sender: AnyObject) {
-        presentSPTAuthViewController()
-    }
     
     @IBAction func hostNewPlaylistTapped(sender: AnyObject) {
         self.parentViewController?.performSegueWithIdentifier("hostPlaylistSegue", sender: self)
     }
-    
 }

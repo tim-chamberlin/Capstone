@@ -13,7 +13,8 @@ import FBSDKCoreKit
 // Firebase Database Reference
 let firebaseRef = FIRDatabase.database().reference()
 
-var player = SPTAudioStreamingController.sharedInstance()
+
+var spotifyPlayer = SPTAudioStreamingController.sharedInstance()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,6 +37,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
+        if SPTAuth.defaultInstance().canHandleURL(url) {
+            SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) in
+                if error != nil {
+                    print("Error logging in Spotify user: \(error.localizedDescription)")
+                    return
+                }
+                
+                
+                print("Spotify user logged in")
+//                HostingViewController.session = session
+                //        // Post notification so HostViewController knows about successful login
+                NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
+                
+                UserController.sharedController.loginToSpotifyUsingSession(session)
+            })
+        }
+
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 

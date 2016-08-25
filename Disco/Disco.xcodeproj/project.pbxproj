@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675151D6DFBB30052D475 /* PlaylistListViewController.swift */; };
+		222675181D6E40000052D475 /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675171D6E40000052D475 /* SpotifyLoginViewController.swift */; };
+		2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */; };
 		22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C501D6A3C32001B7A9B /* AppDelegate.swift */; };
 		22456C561D6A3C32001B7A9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22456C541D6A3C32001B7A9B /* Main.storyboard */; };
 		22456C581D6A3C32001B7A9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22456C571D6A3C32001B7A9B /* Assets.xcassets */; };
@@ -35,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		222675151D6DFBB30052D475 /* PlaylistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
+		222675171D6E40000052D475 /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
+		222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendPlaylistsViewController.swift; sourceTree = "<group>"; };
 		22456C4D1D6A3C32001B7A9B /* Disco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Disco.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22456C501D6A3C32001B7A9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22456C551D6A3C32001B7A9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 				228382041D6BE13500D78B53 /* HostingViewController.swift */,
 				22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */,
 				222675151D6DFBB30052D475 /* PlaylistListViewController.swift */,
+				222675171D6E40000052D475 /* SpotifyLoginViewController.swift */,
+				222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -327,9 +333,11 @@
 				228382051D6BE13500D78B53 /* HostingViewController.swift in Sources */,
 				22AFF0A61D6CE44400121CC4 /* Playlist.swift in Sources */,
 				22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */,
+				2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */,
 				22456C751D6A4D6E001B7A9B /* HomeViewController.swift in Sources */,
 				22456C701D6A462A001B7A9B /* User.swift in Sources */,
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,
+				222675181D6E40000052D475 /* SpotifyLoginViewController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
 				222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */,
 				22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */,

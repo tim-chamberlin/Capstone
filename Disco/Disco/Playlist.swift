@@ -54,7 +54,7 @@ class Playlist {
 }
 
 enum PlaylistType: String {
-    case Hosting = "hostingPlaylist"
+    case Hosting = "hostingPlaylists"
     case Contributing = "contributingPlaylists"
 }
 
