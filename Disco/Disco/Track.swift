@@ -10,13 +10,13 @@ import Foundation
 
 class Track {
     
-    static let kSpotifyID = "spotifyID"
+    static let kSpotifyURI = "spotifyURI"
     static let kPlaylistID = "playlistID"
     static let kVoteCount = "voteCount"
     static let kName = "name"
     static let kArtist = "artist"
     
-    let spotifyID: String
+    let spotifyURI: String
     let playlistID: String
     var voteCount: Int
     
@@ -24,21 +24,23 @@ class Track {
     let artist: String
     
     var jsonValue: [String: AnyObject] {
-        return [Track.kSpotifyID: self.spotifyID, Track.kPlaylistID: self.playlistID, Track.kVoteCount: self.voteCount, Track.kName: self.name, Track.kArtist: self.artist]
+        return [Track.kSpotifyURI: self.spotifyURI, Track.kPlaylistID: self.playlistID, Track.kVoteCount: self.voteCount, Track.kName: self.name, Track.kArtist: self.artist]
     }
     
     init(spotifyID: String, playlistID: String, voteCount: Int = 0, name: String = "", artist: String = "") {
-        self.spotifyID = spotifyID
+        self.spotifyURI = spotifyID
         self.playlistID = playlistID
         self.voteCount = voteCount
         self.name = name
         self.artist = artist
     }
     
+    
+    // Init from Firebase
     init?(dictionary: [String: AnyObject], playlistID: String) {
-        guard let spotifyID = dictionary[Track.kSpotifyID] as? String, playlistID = dictionary[Track.kPlaylistID] as? String, voteCount = dictionary[Track.kVoteCount] as? Int else { return nil }
+        guard let spotifyID = dictionary[Track.kSpotifyURI] as? String, playlistID = dictionary[Track.kPlaylistID] as? String, voteCount = dictionary[Track.kVoteCount] as? Int else { return nil }
         
-        self.spotifyID = spotifyID
+        self.spotifyURI = spotifyID
         self.playlistID = playlistID
         self.voteCount = voteCount
         
@@ -51,4 +53,24 @@ class Track {
             self.artist = ""
         }
     }
+    
+    // Init from Spotify API
+    init?(dictionary: [String:AnyObject]) {
+        guard let spotifyURI = dictionary["uri"] as? String, trackName = dictionary["name"] as? String else { return nil }
+        
+        guard let artistsInfo = dictionary["artists"] as? [[String: AnyObject]] else { return nil }
+        let artistNames = artistsInfo.flatMap({ $0["name"] as? String })
+        let test = artistNames.joinWithSeparator(", ")
+        
+        self.spotifyURI = spotifyURI
+        self.name = trackName
+        self.artist = test
+        
+        self.playlistID = ""
+        self.voteCount = 0
+    }
+     
+    
+    
+    
 }
