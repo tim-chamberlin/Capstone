@@ -34,8 +34,8 @@ class PlaylistController {
         }
     }
     
-    func createPlaylistReferenceForUserID(playlistID: String, userID: String, completion:(success: Bool) -> Void) {
-        firebaseRef.child(User.parentDirectory).child(userID).child(User.kHostingPlaylists).child(playlistID).setValue(true) { (error, _) in
+    func createPlaylistReferenceForUserID(playlistID: String, userID: String, playlistType: PlaylistType, completion:(success: Bool) -> Void) {
+        firebaseRef.child(User.parentDirectory).child(userID).child(playlistType.rawValue).child(playlistID).setValue(true) { (error, _) in
             if error == nil {
                 completion(success: true)
             } else {
@@ -94,8 +94,24 @@ class PlaylistController {
         
     }
     
-    func addUserAsPlaylistContributor() {
-        
+    func addUserAsPlaylistContributor(playlist: Playlist, user: User, completion: (success: Bool) -> Void) {
+        // Add to user object
+        firebaseRef.child(User.parentDirectory).child(user.FBID).child(PlaylistType.Contributing.rawValue).child(playlist.uid).setValue(true) { (error, _) in
+            if error != nil {
+                print(error?.localizedDescription)
+                completion(success: false)
+            } else {
+                // Add to playlist object
+                firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kContributorsList).updateChildValues([user.FBID: true], withCompletionBlock: { (error, _) in
+                    if error != nil {
+                        print(error?.localizedDescription)
+                        completion(success: false)
+                    } else {
+                        completion(success: true)
+                    }
+                })
+            }
+        }
     }
     
     func removeUserAsPlaylistContributor() {

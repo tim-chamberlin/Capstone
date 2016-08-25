@@ -8,30 +8,58 @@
 
 import UIKit
 
-class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSource {
+class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSource, PlaylistTableViewDelegate {
 
     
     var playlistView: PlaylistListViewController!
     
     var selectedUser: User?
+    var selectedPlaylist: Playlist?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let selectedUser = selectedUser {
+        
+        playlistView.delegate = self
+        
+        if selectedUser != nil {
             updatePlaylistTableView()
-            self.title = selectedUser.name
+            self.title = "Contribute to playlist"
         }
     }
 
+    // MARK: - PlaylistTableViewDataSource Methods
     
     func updatePlaylistTableView() {
         guard let selectedUser = selectedUser else { return }
         playlistView.updatePlaylistViewWithUser(selectedUser, withPlaylistType: .Hosting, withNoPlaylistsText: "\(selectedUser.name) isn't currently hosting any playlist.")
+        
+        
+    }
+    
+    // MARK: - PlaylistTableViewDelegate
+    
+    func didSelectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
+        guard let selectedCell = playlistView.tableView.cellForRowAtIndexPath(indexPath) else { return }
+        selectedPlaylist = playlistView.playlists[indexPath.row]
+        
+        selectedCell.accessoryType = .Checkmark
+    }
+    
+    func didDeselectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
+        guard let deSelectedCell = playlistView.tableView.cellForRowAtIndexPath(indexPath) else { return }
+        deSelectedCell.accessoryType = .None
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "embedPlaylistTableViewSegue" {
             playlistView = segue.destinationViewController as? PlaylistListViewController
+        }
+    }
+    
+    @IBAction func doneButtonTapped(sender: AnyObject) {
+        guard let currentUser = UserController.sharedController.currentUser, playlist = selectedPlaylist else { return }
+        PlaylistController.sharedController.addUserAsPlaylistContributor(playlist, user: currentUser) { (success) in
+            //
         }
     }
 }

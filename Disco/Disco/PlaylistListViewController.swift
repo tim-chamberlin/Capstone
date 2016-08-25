@@ -13,14 +13,13 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
     var user: User?
     var playlists: [Playlist] = []
     
-//    weak var delegate: PlaylistTableViewDataSource?
+    weak var delegate: PlaylistTableViewDelegate?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyPlaylistsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        delegate?.updatePlaylistTableView()
     }
     
     func updatePlaylistViewWithUser(user: User, withPlaylistType: PlaylistType, withNoPlaylistsText: String) {
@@ -69,8 +68,23 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         
         return cell
     }
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.delegate?.didSelectRowAtIndexPathInPlaylistTableView(indexPath: indexPath)
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        self.delegate?.didDeselectRowAtIndexPathInPlaylistTableView(indexPath: indexPath)
+    }
 }
 
 protocol PlaylistTableViewDataSource: class {
     func updatePlaylistTableView()
+    
+}
+
+@objc protocol PlaylistTableViewDelegate: class {
+    func didSelectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath)
+    func didDeselectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath)
 }

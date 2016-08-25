@@ -36,7 +36,7 @@ class NewPlaylistViewController: UIViewController {
             PlaylistController.sharedController.createPlaylist(playlistName, completion: { (success, playlist) in
                 if success {
                     guard let playlist = playlist, currentUser = UserController.sharedController.currentUser else { return }
-                    PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist.uid, userID: currentUser.FBID, completion: { (success) in
+                    PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist.uid, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
                         if success {
                             self.dismissViewControllerAnimated(true, completion: nil)
                         }
