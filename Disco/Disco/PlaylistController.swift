@@ -14,8 +14,6 @@ class PlaylistController {
     
     static let sharedController = PlaylistController()
     
-    var playlists: [Playlist] = []
-    
     
     // MARK: - Create Playlist
     
