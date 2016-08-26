@@ -10,6 +10,7 @@
 		222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675151D6DFBB30052D475 /* PlaylistListViewController.swift */; };
 		222675181D6E40000052D475 /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675171D6E40000052D475 /* SpotifyLoginViewController.swift */; };
 		2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */; };
+		2238AD8A1D70C21500C7F013 /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */; };
 		2245227A1D6F647800F5F792 /* TrackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224522791D6F647800F5F792 /* TrackListViewController.swift */; };
 		2245227C1D6F66C200F5F792 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245227B1D6F66C200F5F792 /* Track.swift */; };
 		2245227E1D6F66CE00F5F792 /* TrackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245227D1D6F66CE00F5F792 /* TrackController.swift */; };
@@ -44,6 +45,7 @@
 		222675151D6DFBB30052D475 /* PlaylistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
 		222675171D6E40000052D475 /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
 		222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendPlaylistsViewController.swift; sourceTree = "<group>"; };
+		2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
 		224522791D6F647800F5F792 /* TrackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListViewController.swift; sourceTree = "<group>"; };
 		2245227B1D6F66C200F5F792 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		2245227D1D6F66CE00F5F792 /* TrackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackController.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		22AFF0AD1D6D2D2D00121CC4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				2245227E1D6F66CE00F5F792 /* TrackController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
 				2245227C1D6F66C200F5F792 /* Track.swift in Sources */,
+				2238AD8A1D70C21500C7F013 /* TrackTableViewCell.swift in Sources */,
 				222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */,
 				22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */,
 				22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */,

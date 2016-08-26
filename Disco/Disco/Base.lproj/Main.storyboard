@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pDS-om-Cxj">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -464,33 +465,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RBz-gj-mK9">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RBz-gj-mK9">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trackCell" textLabel="1ei-2h-MHi" detailTextLabel="MLA-eQ-wAg" style="IBUITableViewCellStyleSubtitle" id="nn1-Kt-lAq">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trackCell" rowHeight="100" id="nn1-Kt-lAq" customClass="TrackTableViewCell" customModule="Disco" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nn1-Kt-lAq" id="pAh-GK-g4f">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1ei-2h-MHi">
-                                                    <rect key="frame" x="15" y="5" width="32" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MLA-eQ-wAg">
-                                                    <rect key="frame" x="15" y="25" width="41" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="E5s-9W-1SM" userLabel="Voting Stack View">
+                                                    <rect key="frame" x="556" y="8" width="32" height="83"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qv7-F9-ZrQ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="Qv7-F9-ZrQ" secondAttribute="height" multiplier="1:1" id="bru-Jk-CnO"/>
+                                                                <constraint firstAttribute="height" constant="32" id="w0f-7W-sQh"/>
+                                                            </constraints>
+                                                            <state key="normal" image="UpVoteUnselected"/>
+                                                            <connections>
+                                                                <action selector="upVoteButtonTapped:" destination="nn1-Kt-lAq" eventType="touchUpInside" id="f8V-0B-afs"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUx-Qf-2V1">
+                                                            <rect key="frame" x="0.0" y="32" width="32" height="19"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SHE-ak-qtu">
+                                                            <rect key="frame" x="0.0" y="51" width="32" height="32"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="SHE-ak-qtu" secondAttribute="height" multiplier="1:1" id="ewM-5y-ZP1"/>
+                                                                <constraint firstAttribute="height" constant="32" id="t2P-rS-kTp"/>
+                                                            </constraints>
+                                                            <state key="normal" image="DownVoteUnselected"/>
+                                                            <connections>
+                                                                <action selector="downVoteButtonTapped:" destination="nn1-Kt-lAq" eventType="touchUpInside" id="XVl-dh-JWF"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="SHE-ak-qtu" firstAttribute="leading" secondItem="E5s-9W-1SM" secondAttribute="leading" id="JdT-oS-j7U"/>
+                                                        <constraint firstAttribute="bottom" secondItem="SHE-ak-qtu" secondAttribute="bottom" id="Kmz-u4-26V"/>
+                                                        <constraint firstItem="SHE-ak-qtu" firstAttribute="top" secondItem="xUx-Qf-2V1" secondAttribute="bottom" id="YPd-u2-TcH"/>
+                                                        <constraint firstAttribute="width" constant="32" id="ZC9-Pb-BAX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="SHE-ak-qtu" secondAttribute="trailing" id="eSa-gn-wT2"/>
+                                                        <constraint firstAttribute="bottom" secondItem="SHE-ak-qtu" secondAttribute="bottom" id="hy2-WV-pmf"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Qv7-F9-ZrQ" secondAttribute="trailing" id="oqk-9f-3x8"/>
+                                                        <constraint firstItem="Qv7-F9-ZrQ" firstAttribute="top" secondItem="E5s-9W-1SM" secondAttribute="top" id="rTy-Sq-F0h"/>
+                                                        <constraint firstItem="xUx-Qf-2V1" firstAttribute="top" secondItem="Qv7-F9-ZrQ" secondAttribute="bottom" id="wcr-uc-Sce"/>
+                                                        <constraint firstItem="Qv7-F9-ZrQ" firstAttribute="leading" secondItem="E5s-9W-1SM" secondAttribute="leading" id="xmq-5m-cZc"/>
+                                                    </constraints>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OOV-HC-3eY" userLabel="Track Info Stack View">
+                                                    <rect key="frame" x="8" y="22" width="528" height="55"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPa-o0-zgF">
+                                                            <rect key="frame" x="0.0" y="0.0" width="528" height="27"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIN-LC-CbV">
+                                                            <rect key="frame" x="0.0" y="35" width="528" height="20"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="E5s-9W-1SM" firstAttribute="top" secondItem="pAh-GK-g4f" secondAttribute="top" constant="8" id="7Dw-O0-DMY"/>
+                                                <constraint firstItem="OOV-HC-3eY" firstAttribute="centerY" secondItem="pAh-GK-g4f" secondAttribute="centerY" id="Ev1-g0-lfv"/>
+                                                <constraint firstItem="E5s-9W-1SM" firstAttribute="leading" secondItem="OOV-HC-3eY" secondAttribute="trailing" constant="20" id="Jdi-5c-FVV"/>
+                                                <constraint firstItem="OOV-HC-3eY" firstAttribute="leading" secondItem="pAh-GK-g4f" secondAttribute="leadingMargin" id="bNp-7A-gPg"/>
+                                                <constraint firstAttribute="trailing" secondItem="E5s-9W-1SM" secondAttribute="trailing" constant="12" id="t89-mw-OmT"/>
+                                                <constraint firstAttribute="bottom" secondItem="E5s-9W-1SM" secondAttribute="bottom" constant="8" id="yvR-we-l6Z"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="artistLabel" destination="zIN-LC-CbV" id="ckv-es-vuF"/>
+                                            <outlet property="downVoteButton" destination="SHE-ak-qtu" id="Bpj-ry-9QH"/>
+                                            <outlet property="trackLabel" destination="VPa-o0-zgF" id="Ivt-fT-qJ0"/>
+                                            <outlet property="upVoteButton" destination="Qv7-F9-ZrQ" id="DCz-Sk-XP3"/>
+                                            <outlet property="voteCountLabel" destination="xUx-Qf-2V1" id="ggm-dV-pDB"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -758,7 +822,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="DownVoteUnselected" width="125" height="124"/>
         <image name="Login With Spotify Button" width="286" height="50"/>
+        <image name="UpVoteUnselected" width="125" height="124"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0GN-RK-MvO"/>

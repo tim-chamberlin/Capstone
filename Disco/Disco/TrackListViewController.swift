@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TrackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddTrackToPlaylistDelegate {
+class TrackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddTrackToPlaylistDelegate, TrackTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,15 +34,28 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath)
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell else { return UITableViewCell() }
         
         let track = playlist.tracks[indexPath.row]
-        cell.textLabel?.text = track.name
-        cell.detailTextLabel?.text = track.artist
+        cell.updateCellWithTrack(track)
+        cell.delegate = self
         
         return cell
     }
     
+    
+    // MARK: - Delegate Methods
+    
+    func didPressVoteButton(voteType: VoteType) {
+//        if voteType == VoteType.Up {
+//            print("Upvoted track")
+//        } else if voteType == VoteType.Down {
+//            print("Downvoted track")
+//        }
+
+        print(voteType)
+    
+    }
     
     func willAddTrackToPlaylist(track: Track) {
         track.playlistID = self.playlist.uid
