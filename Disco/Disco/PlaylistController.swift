@@ -80,8 +80,23 @@ class PlaylistController {
         }
     }
     
-    func addTrackToPlaylist() {
-        
+    func addTrack(track: Track, toPlaylist playlist: Playlist, completion: (success: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).childByAutoId().setValue(track.jsonValue) { (error, _) in
+            if error == nil {
+                completion(success: true)
+            } else {
+                print(error?.localizedDescription)
+                completion(success: false)
+            }
+        }
+    }
+    
+    func fetchTrackListFromPlaylist(playlist: Playlist, completion: (success: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            //
+            }) { (error) in
+                //
+        }
     }
     
     func removeTrackFromPlaylist() {

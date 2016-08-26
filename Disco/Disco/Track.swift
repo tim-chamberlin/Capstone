@@ -17,7 +17,7 @@ class Track {
     static let kArtist = "artist"
     
     let spotifyURI: String
-    let playlistID: String
+    var playlistID: String
     var voteCount: Int
     
     let name: String

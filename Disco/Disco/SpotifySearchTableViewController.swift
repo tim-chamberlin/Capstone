@@ -16,9 +16,12 @@ class SpotifySearchTableViewController: UITableViewController, UISearchResultsUp
     var selectedTrack: Track?
     var selectedTrackIndexPath: NSIndexPath?
     
+    weak var delegate: AddTrackToPlaylistDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
+        print(self.navigationController?.presentedViewController)
     }
     
     // MARK: - SearchController Methods
@@ -94,15 +97,27 @@ class SpotifySearchTableViewController: UITableViewController, UISearchResultsUp
     // MARK: - IBActions
     
     @IBAction func addTrackButtonTapped(sender: AnyObject) {
+        searchController?.active = false
         if let selectedTrack = selectedTrack {
-            print(selectedTrack.name)
+            delegate?.willAddTrackToPlaylist(selectedTrack)
+            self.dismissViewControllerAnimated(true, completion: nil)
         } else {
-            print("no track selected")
+            return
         }
     }
     
     @IBAction func cancelAction(sender: AnyObject) {
+        searchController?.active = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
+
+protocol AddTrackToPlaylistDelegate: class {
+    func willAddTrackToPlaylist(track: Track)
+}
+
+
+
+
+

@@ -22,6 +22,7 @@ class Playlist {
     let name: String
     let hostID: String
     var trackIDs: [String]
+    var tracks: [Track] = []
     var contributorIDs: [String]
     var contributors: [User] = []
     

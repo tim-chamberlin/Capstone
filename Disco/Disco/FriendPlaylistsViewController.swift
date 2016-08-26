@@ -47,6 +47,8 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
         deSelectedCell.accessoryType = .None
     }
     
+    // MARK: - Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "embedPlaylistTableViewSegue" {
             playlistView = segue.destinationViewController as? PlaylistListViewController

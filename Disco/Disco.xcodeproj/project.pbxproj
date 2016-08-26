@@ -223,8 +223,8 @@
 				224522821D6F7A4600F5F792 /* Contribute to playlist VCs */,
 				22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */,
 				222675151D6DFBB30052D475 /* PlaylistListViewController.swift */,
-				224522851D6F7A8700F5F792 /* Spotify Search */,
 				224522791D6F647800F5F792 /* TrackListViewController.swift */,
+				224522851D6F7A8700F5F792 /* Spotify Search */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
