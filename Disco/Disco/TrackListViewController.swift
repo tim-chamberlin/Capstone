@@ -10,19 +10,22 @@ import UIKit
 
 class TrackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddTrackToPlaylistDelegate {
     
-    var playlist: Playlist!
-//    var tracks: [Track] = []
-    
     @IBOutlet weak var tableView: UITableView!
+    
+    var playlist: Playlist!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = playlist.name
         
-        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (tracks, success) in
-            if let tracks = tracks {
-                print("\(tracks.count) tracks in playlist")
-            }
+        // Add observer for new tracks
+        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
+            dispatch_async(dispatch_get_main_queue(), {
+                if let track = track {
+                    self.playlist.tracks.append(track)
+                    self.tableView.reloadData()
+                }
+            })
         }
     }
     
@@ -35,7 +38,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let track = playlist.tracks[indexPath.row]
         cell.textLabel?.text = track.name
-        
+        cell.detailTextLabel?.text = track.artist
         
         return cell
     }

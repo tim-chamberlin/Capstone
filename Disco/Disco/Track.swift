@@ -37,15 +37,15 @@ class Track {
     
     
     // Init from Firebase
-    init?(dictionary: [String: AnyObject], uid: String) {
-        guard let spotifyID = dictionary[Track.kSpotifyURI] as? String, playlistID = dictionary[Track.kPlaylistID] as? String, voteCount = dictionary[Track.kVoteCount] as? Int else { return nil }
+    init?(firebaseDictionary: [String: AnyObject], uid: String) {
+        guard let spotifyID = firebaseDictionary[Track.kSpotifyURI] as? String, playlistID = firebaseDictionary[Track.kPlaylistID] as? String, voteCount = firebaseDictionary[Track.kVoteCount] as? Int else { return nil }
         
         self.spotifyURI = spotifyID
         self.playlistID = playlistID
         self.voteCount = voteCount
         
         
-        if let name = dictionary[Track.kName] as? String, artist = dictionary[Track.kArtist] as? String {
+        if let name = firebaseDictionary[Track.kName] as? String, artist = firebaseDictionary[Track.kArtist] as? String {
             self.name = name
             self.artist = artist
         } else {
@@ -55,10 +55,10 @@ class Track {
     }
     
     // Init from Spotify API
-    init?(dictionary: [String:AnyObject]) {
-        guard let spotifyURI = dictionary["uri"] as? String, trackName = dictionary["name"] as? String else { return nil }
+    init?(spotifyDictionary: [String:AnyObject]) {
+        guard let spotifyURI = spotifyDictionary["uri"] as? String, trackName = spotifyDictionary["name"] as? String else { return nil }
         
-        guard let artistsInfo = dictionary["artists"] as? [[String: AnyObject]] else { return nil }
+        guard let artistsInfo = spotifyDictionary["artists"] as? [[String: AnyObject]] else { return nil }
         let artistNames = artistsInfo.flatMap({ $0["name"] as? String })
         let test = artistNames.joinWithSeparator(", ")
         

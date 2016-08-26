@@ -32,11 +32,10 @@ class TrackController {
                 dispatch_async(dispatch_get_main_queue(), {
                     guard let tracksDictionary = jsonDictionary["tracks"] as? [String: AnyObject], itemsDictionary = tracksDictionary["items"] as? [[String : AnyObject]] else {
                         print("Error formatting data")
-                        
                         completion(tracks: [], success: false)
                         return
                     }
-                    let tracks = itemsDictionary.flatMap { Track(dictionary: $0) }
+                    let tracks = itemsDictionary.flatMap { Track(spotifyDictionary: $0) }
                     completion(tracks: tracks, success: true)
                 })
             }

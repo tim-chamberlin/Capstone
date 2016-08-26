@@ -92,21 +92,24 @@ class PlaylistController {
     
     // MARK: - Fetch Tracks
     
-    func fetchTrackListFromPlaylist(playlist: Playlist, completion: (success: Bool) -> Void) {
+    func fetchTrackListFromPlaylist(playlist: Playlist, completion: (tracks: [Track]?, success: Bool) -> Void) {
         firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            //
+            guard let tracksArray = snapshot.value as? [String: [String: AnyObject]] else { return }
+            let tracks = tracksArray.flatMap { Track(firebaseDictionary: $0.1, uid: $0.0) }
+            completion(tracks: tracks, success: true)
         }) { (error) in
             //
         }
     }
     
-    func addTrackObserverForPlaylist(playlist: Playlist, completion: (tracks: [Track]?, success: Bool) -> Void) {
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).observeEventType(.Value, withBlock: { (snapshot) in
-            guard let tracksArray = snapshot.value as? [String: [String: AnyObject]] else { return }
-            let tracks = tracksArray.flatMap { Track(dictionary: $0.1, uid: $0.0) }
-            print(tracks[0].name)
+    func addTrackObserverForPlaylist(playlist: Playlist, completion: (track: Track?, success: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            guard let trackDictionary = snapshot.value as? [String: AnyObject] else { return }
+            let track = Track(firebaseDictionary: trackDictionary, uid: playlist.uid)
+            completion(track: track, success: true)
         }) { (error) in
             print(error.localizedDescription)
+            completion(track: nil, success: false)
         }
     }
     
