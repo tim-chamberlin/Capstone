@@ -118,7 +118,6 @@ class UserController {
         }
     }
     
-    
     // Retrieve Friends List
     
     func getFriends(completion: (friends: [User]?, success: Bool) -> Void) {
@@ -132,9 +131,7 @@ class UserController {
             }
         }
     }
-    
 }
-
 
 // MARK: - Spotify Auth
 

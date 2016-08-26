@@ -18,10 +18,12 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         title = playlist.name
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
+        
+        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (tracks, success) in
+            if let tracks = tracks {
+                print("\(tracks.count) tracks in playlist")
+            }
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

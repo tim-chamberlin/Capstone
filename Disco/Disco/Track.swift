@@ -37,7 +37,7 @@ class Track {
     
     
     // Init from Firebase
-    init?(dictionary: [String: AnyObject], playlistID: String) {
+    init?(dictionary: [String: AnyObject], uid: String) {
         guard let spotifyID = dictionary[Track.kSpotifyURI] as? String, playlistID = dictionary[Track.kPlaylistID] as? String, voteCount = dictionary[Track.kVoteCount] as? Int else { return nil }
         
         self.spotifyURI = spotifyID

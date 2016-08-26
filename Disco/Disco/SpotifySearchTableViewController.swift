@@ -120,14 +120,8 @@ class SpotifySearchTableViewController: UITableViewController, UISearchResultsUp
         searchController?.active = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
 }
 
 protocol AddTrackToPlaylistDelegate: class {
     func willAddTrackToPlaylist(track: Track)
 }
-
-
-
-
-

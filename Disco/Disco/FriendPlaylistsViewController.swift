@@ -10,9 +10,7 @@ import UIKit
 
 class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSource, PlaylistTableViewDelegate {
 
-    
-    var playlistView: PlaylistListViewController!
-    
+    var playlistView: PlaylistListViewController!    
     var selectedUser: User?
     var selectedPlaylist: Playlist?
     
@@ -54,9 +52,9 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
             playlistView = segue.destinationViewController as? PlaylistListViewController
         } else if segue.identifier == "unwindToHomeVC" {
             guard let currentUser = UserController.sharedController.currentUser, playlist = selectedPlaylist else { return }
-            PlaylistController.sharedController.addUserAsPlaylistContributor(playlist, user: currentUser) { (success) in
+            PlaylistController.sharedController.addContributor(currentUser, toPlaylist: playlist, completion: { (success) in
                 self.dismissViewControllerAnimated(true, completion: nil)
-            }
+            })
         }
     }
 }
