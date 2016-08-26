@@ -8,9 +8,13 @@
 
 import UIKit
 
-class SpotifySearchTableViewController: UITableViewController, UISearchResultsUpdating {
-
+class SpotifySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate {
+    
     var searchController: UISearchController?
+    
+    var searchedTracks: [Track] = []
+    var selectedTrack: Track?
+    var selectedTrackIndexPath: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,41 +24,85 @@ class SpotifySearchTableViewController: UITableViewController, UISearchResultsUp
     // MARK: - SearchController Methods
     
     func setupSearchController() {
-        let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ResultsTVC")
-        searchController = UISearchController(searchResultsController: resultsController)
+        searchController = UISearchController(searchResultsController: nil)
         guard let searchController = searchController else { return }
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search for a song on Spotify..."
-        searchController.definesPresentationContext = true
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        guard let text = searchController.searchBar.text, resultsController = searchController.searchResultsController as? SpotifySearchResultsTableViewController else { return }
-        
-        TrackController.searchSpotifyForTrackWithText(text, responseLimit: "20", filterByType: "track") { (tracks, success) in
-            if let tracks = tracks {
-//                print("Track: \(tracks[0].name), artist: \(tracks[0].artist)")
-                resultsController.searchedTracks = tracks
-            }
+        // Clear check mark
+        if let selectedCellIndexPath = tableView.indexPathForSelectedRow, cell = tableView.cellForRowAtIndexPath(selectedCellIndexPath) {
+            cell.accessoryType = .None
         }
-        resultsController.tableView.reloadData()
+
+        if let text = searchController.searchBar.text where !text.isEmpty {
+            TrackController.searchSpotifyForTrackWithText(text, responseLimit: "20", filterByType: "track") { (tracks, success) in
+                self.searchedTracks = tracks
+            }
+        } else {
+            searchedTracks = []
+        }
+        self.tableView.reloadData()
     }
     
-
+    
     // MARK: - Table view data source
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return searchedTracks.count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("searchedTrackCell", forIndexPath: indexPath)
+        
+        if searchedTracks.count == 0 {
+            cell.textLabel?.text = ""
+            cell.detailTextLabel?.text = ""
+        } else {
+            let track = searchedTracks[indexPath.row]
+            cell.textLabel?.text = track.name
+            cell.detailTextLabel?.text = track.artist
+        }
+        
+        if indexPath == selectedTrackIndexPath {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
+        }
+        
         return cell
     }
-
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+        selectedTrack = searchedTracks[indexPath.row]
+        selectedTrackIndexPath = indexPath
+        cell.accessoryType = .Checkmark
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+        cell.accessoryType = .None
+    }
+    
+    
+    
+    // MARK: - IBActions
+    
+    @IBAction func addTrackButtonTapped(sender: AnyObject) {
+        if let selectedTrack = selectedTrack {
+            print(selectedTrack.name)
+        } else {
+            print("no track selected")
+        }
+    }
+    
+    @IBAction func cancelAction(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 }

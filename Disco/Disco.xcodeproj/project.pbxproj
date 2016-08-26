@@ -14,7 +14,6 @@
 		2245227C1D6F66C200F5F792 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245227B1D6F66C200F5F792 /* Track.swift */; };
 		2245227E1D6F66CE00F5F792 /* TrackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245227D1D6F66CE00F5F792 /* TrackController.swift */; };
 		224522801D6F70DB00F5F792 /* SpotifySearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2245227F1D6F70DB00F5F792 /* SpotifySearchTableViewController.swift */; };
-		224522841D6F7A8000F5F792 /* SpotifySearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224522831D6F7A8000F5F792 /* SpotifySearchResultsTableViewController.swift */; };
 		224522871D6F7F1200F5F792 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224522861D6F7F1200F5F792 /* NetworkController.swift */; };
 		22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C501D6A3C32001B7A9B /* AppDelegate.swift */; };
 		22456C561D6A3C32001B7A9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22456C541D6A3C32001B7A9B /* Main.storyboard */; };
@@ -49,7 +48,6 @@
 		2245227B1D6F66C200F5F792 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		2245227D1D6F66CE00F5F792 /* TrackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackController.swift; sourceTree = "<group>"; };
 		2245227F1D6F70DB00F5F792 /* SpotifySearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifySearchTableViewController.swift; sourceTree = "<group>"; };
-		224522831D6F7A8000F5F792 /* SpotifySearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifySearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		224522861D6F7F1200F5F792 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		22456C4D1D6A3C32001B7A9B /* Disco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Disco.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22456C501D6A3C32001B7A9B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				2245227F1D6F70DB00F5F792 /* SpotifySearchTableViewController.swift */,
-				224522831D6F7A8000F5F792 /* SpotifySearchResultsTableViewController.swift */,
 			);
 			name = "Spotify Search";
 			sourceTree = "<group>";
@@ -374,7 +371,6 @@
 				224522871D6F7F1200F5F792 /* NetworkController.swift in Sources */,
 				224522801D6F70DB00F5F792 /* SpotifySearchTableViewController.swift in Sources */,
 				228382031D6BE11F00D78B53 /* ContributingViewController.swift in Sources */,
-				224522841D6F7A8000F5F792 /* SpotifySearchResultsTableViewController.swift in Sources */,
 				228382051D6BE13500D78B53 /* HostingViewController.swift in Sources */,
 				22AFF0A61D6CE44400121CC4 /* Playlist.swift in Sources */,
 				22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */,

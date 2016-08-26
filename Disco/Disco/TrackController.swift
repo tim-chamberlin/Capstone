@@ -13,10 +13,10 @@ class TrackController {
     
     static let spotifySearchBaseURL = NSURL(string: "https://api.spotify.com/v1/search")
     
-    static func searchSpotifyForTrackWithText(text: String, responseLimit: String, filterByType type: String, completion: (tracks: [Track]?, success: Bool) -> Void) {
+    static func searchSpotifyForTrackWithText(text: String, responseLimit: String, filterByType type: String, completion: (tracks: [Track], success: Bool) -> Void) {
         guard let spotifySearchBaseURL = spotifySearchBaseURL else {
             print("Optional URL return nil")
-            completion(tracks: nil, success: false)
+            completion(tracks: [], success: false)
             return
         }
         let urlParameters = ["q":text,
@@ -28,7 +28,7 @@ class TrackController {
                 
                 guard let tracksDictionary = jsonDictionary["tracks"] as? [String: AnyObject], itemsDictionary = tracksDictionary["items"] as? [[String : AnyObject]] else {
                     print("Error formatting data")
-                    completion(tracks: nil, success: false)
+                    completion(tracks: [], success: false)
                     return
                 }
                 let tracks = itemsDictionary.flatMap { Track(dictionary: $0) }

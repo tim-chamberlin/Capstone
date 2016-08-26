@@ -477,7 +477,7 @@
             </objects>
             <point key="canvasLocation" x="3763" y="565"/>
         </scene>
-        <!--Spotify Search Table View Controller-->
+        <!--Add a Song-->
         <scene sceneID="EIw-j5-O2r">
             <objects>
                 <tableViewController id="99p-Ve-vXa" customClass="SpotifySearchTableViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
@@ -486,50 +486,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="cyM-Nb-TQa">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchedTrackCell" textLabel="o7j-f0-IbR" detailTextLabel="1az-ye-8v7" style="IBUITableViewCellStyleSubtitle" id="cyM-Nb-TQa">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cyM-Nb-TQa" id="D1z-IL-B24">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="99p-Ve-vXa" id="usV-6F-PmB"/>
-                            <outlet property="delegate" destination="99p-Ve-vXa" id="Okm-Tf-YqZ"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="FTP-eZ-0di"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dN7-7E-HZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5196" y="565"/>
-        </scene>
-        <!--Spotify Search Results Table View Controller-->
-        <scene sceneID="Lpe-C7-fHS">
-            <objects>
-                <tableViewController storyboardIdentifier="ResultsTVC" id="x3O-at-hSB" customClass="SpotifySearchResultsTableViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EWD-Pi-Z20">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchedTrackCell" textLabel="zt0-se-ZPg" detailTextLabel="62b-o2-m0f" style="IBUITableViewCellStyleSubtitle" id="zW8-GQ-mAZ">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zW8-GQ-mAZ" id="riY-gt-D55">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zt0-se-ZPg">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o7j-f0-IbR">
                                             <rect key="frame" x="15" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="62b-o2-m0f">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1az-ye-8v7">
                                             <rect key="frame" x="15" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -541,14 +512,26 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="x3O-at-hSB" id="Wdz-Sv-onn"/>
-                            <outlet property="delegate" destination="x3O-at-hSB" id="G5x-pU-L1a"/>
+                            <outlet property="dataSource" destination="99p-Ve-vXa" id="usV-6F-PmB"/>
+                            <outlet property="delegate" destination="99p-Ve-vXa" id="Okm-Tf-YqZ"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Add a Song" id="kqd-yV-aub">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="2eI-YP-bD4">
+                            <connections>
+                                <action selector="cancelAction:" destination="99p-Ve-vXa" id="g8D-Gy-qwA"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="PbD-XC-EAC">
+                            <connections>
+                                <action selector="addTrackButtonTapped:" destination="99p-Ve-vXa" id="MRO-3e-uSi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hKs-3e-YuG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dN7-7E-HZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5839" y="565"/>
+            <point key="canvasLocation" x="5196" y="565"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WxJ-83-LAo">
