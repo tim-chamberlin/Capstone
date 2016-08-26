@@ -8,11 +8,15 @@
 
 import UIKit
 
-class SpotifySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate {
+class SpotifySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     var searchController: UISearchController?
     
-    var searchedTracks: [Track] = []
+    var searchedTracks: [Track] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     var selectedTrack: Track?
     var selectedTrackIndexPath: NSIndexPath?
     
@@ -21,7 +25,6 @@ class SpotifySearchTableViewController: UITableViewController, UISearchResultsUp
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        print(self.navigationController?.presentedViewController)
     }
     
     // MARK: - SearchController Methods
@@ -34,22 +37,29 @@ class SpotifySearchTableViewController: UITableViewController, UISearchResultsUp
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.delegate = self
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        // Clear check mark
-        if let selectedCellIndexPath = tableView.indexPathForSelectedRow, cell = tableView.cellForRowAtIndexPath(selectedCellIndexPath) {
-            cell.accessoryType = .None
-        }
 
         if let text = searchController.searchBar.text where !text.isEmpty {
             TrackController.searchSpotifyForTrackWithText(text, responseLimit: "20", filterByType: "track") { (tracks, success) in
-                self.searchedTracks = tracks
+                if !tracks.isEmpty {
+                    self.searchedTracks = tracks
+                }
             }
         } else {
             searchedTracks = []
         }
-        self.tableView.reloadData()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        // Clear check mark when search text changes
+        if let selectedCellIndexPath = tableView.indexPathForSelectedRow, cell = tableView.cellForRowAtIndexPath(selectedCellIndexPath) {
+            cell.accessoryType = .None
+            self.selectedTrackIndexPath = nil
+            self.selectedTrack = nil
+        }
     }
     
     

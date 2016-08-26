@@ -52,13 +52,11 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "embedPlaylistTableViewSegue" {
             playlistView = segue.destinationViewController as? PlaylistListViewController
-        }
-    }
-    
-    @IBAction func doneButtonTapped(sender: AnyObject) {
-        guard let currentUser = UserController.sharedController.currentUser, playlist = selectedPlaylist else { return }
-        PlaylistController.sharedController.addUserAsPlaylistContributor(playlist, user: currentUser) { (success) in
-            self.dismissViewControllerAnimated(true, completion: nil)
+        } else if segue.identifier == "unwindToHomeVC" {
+            guard let currentUser = UserController.sharedController.currentUser, playlist = selectedPlaylist else { return }
+            PlaylistController.sharedController.addUserAsPlaylistContributor(playlist, user: currentUser) { (success) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
 }

@@ -32,11 +32,6 @@ class HostingViewController: UIViewController, SPTAudioStreamingDelegate, Playli
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        updatePlaylistTableView()
-    }
-    
     func updatePlaylistTableView() {
         // Specify PlaylistTableView's user
         guard let currentUser = UserController.sharedController.currentUser else { return }

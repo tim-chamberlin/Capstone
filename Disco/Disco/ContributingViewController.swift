@@ -17,11 +17,6 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
         contributingPlaylistsTableView.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        updatePlaylistTableView()
-    }
-    
     // MARK: - PlaylistTableViewDataSource
     
     func updatePlaylistTableView() {

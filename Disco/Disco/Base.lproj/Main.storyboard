@@ -601,12 +601,13 @@
                     <navigationItem key="navigationItem" id="XoY-Lb-27W">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="w0H-mh-0gU">
                             <connections>
-                                <action selector="doneButtonTapped:" destination="tRr-mm-ZK2" id="vue-1f-rkO"/>
+                                <segue destination="IUk-EM-GRM" kind="unwind" identifier="unwindToHomeVC" unwindAction="unwindToHomeViewController:" id="BhL-7g-KK7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6mR-zd-ZPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="IUk-EM-GRM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5297" y="-850"/>
         </scene>
@@ -619,24 +620,24 @@
                         <viewControllerLayoutGuide type="bottom" id="Vjz-LX-lFl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wXw-yP-xxL">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="384"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You aren't contributing to any playlists yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg9-74-riC">
-                                <rect key="frame" x="20" y="182" width="520" height="21"/>
+                                <rect key="frame" x="20" y="258" width="560" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KuZ-5Z-j7q">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="384"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" id="Lw7-ZZ-TnH">
-                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lw7-ZZ-TnH" id="RiN-OA-o59">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -714,7 +715,6 @@
         <!--Navigation Controller-->
         <scene sceneID="uCE-Bh-hUS">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nSL-5S-Pgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gel-Sf-jtR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5sF-qJ-RW6">
@@ -726,6 +726,7 @@
                         <segue destination="99p-Ve-vXa" kind="relationship" relationship="rootViewController" id="5ye-7f-k2F"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nSL-5S-Pgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4488" y="565"/>
         </scene>
@@ -734,6 +735,6 @@
         <image name="Login With Spotify Button" width="286" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4uN-4y-MnF"/>
+        <segue reference="0GN-RK-MvO"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -27,7 +27,6 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         PlaylistController.sharedController.fetchPlaylistsForUser(user.FBID, ofType: withPlaylistType) { (playlists, success) in
             if success {
                 guard let playlists = playlists else {
-                    print("No \(withPlaylistType.rawValue) found for \(user.name)")
                     self.updateInfoLabelWith(withNoPlaylistsText, playlists: self.playlists)
                     return
                 }

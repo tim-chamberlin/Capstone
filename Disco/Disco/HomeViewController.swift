@@ -23,6 +23,9 @@ class HomeViewController: UIViewController {
         
         setupSegmentedCcontroller()
         segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
+        
+        contributingVC.updatePlaylistTableView()
+        hostingVC.updatePlaylistTableView()
     }
 
     func setupSegmentedCcontroller() {
@@ -61,6 +64,9 @@ class HomeViewController: UIViewController {
     }
     
     
+    
+    // MARK: - Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Embedded Views
         if segue.identifier == "contributingEmbedSegue" {
@@ -76,6 +82,10 @@ class HomeViewController: UIViewController {
                 destinationVC.playlist = contributingVC.contributingPlaylistsTableView.playlists[indexPath.row]
             }
         }
+    }
+    
+    @IBAction func unwindToHomeViewController(segue: UIStoryboardSegue) {
+        contributingVC.updatePlaylistTableView()
     }
     
     // MARK: - IBActions
