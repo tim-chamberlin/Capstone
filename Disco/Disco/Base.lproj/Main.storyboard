@@ -693,10 +693,13 @@
                     <navigationItem key="navigationItem" id="XoY-Lb-27W">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="w0H-mh-0gU">
                             <connections>
-                                <segue destination="IUk-EM-GRM" kind="unwind" identifier="unwindToHomeVC" unwindAction="unwindToHomeViewController:" id="BhL-7g-KK7"/>
+                                <action selector="doneAction:" destination="tRr-mm-ZK2" id="piO-W2-sOI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="IUk-EM-GRM" kind="unwind" identifier="unwindToHomeVC" unwindAction="unwindToHomeViewController:" id="2HC-te-eUg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6mR-zd-ZPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IUk-EM-GRM" userLabel="Exit" sceneMemberID="exit"/>
