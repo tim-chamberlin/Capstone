@@ -63,14 +63,17 @@ class Playlist {
             self.contributorIDs = []
         }
         
+        self.trackUids = []
+        self.tracks = []
+        
         // Track list array might be empty in Firebase
-        if let tracksArray = dictionary[Playlist.kTrackList] as? [String: [String:AnyObject]] {
-            self.trackUids = tracksArray.flatMap { $0.0 }
-            self.tracks = tracksArray.flatMap { Track(firebaseDictionary: $0.1, uid: uid) }
-        } else {
-            self.trackUids = []
-            self.tracks = []
-        }
+//        if let tracksArray = dictionary[Playlist.kTrackList] as? [String: [String:AnyObject]] {
+//            self.trackUids = tracksArray.flatMap { $0.0 }
+//            self.tracks = tracksArray.flatMap { Track(firebaseDictionary: $0.1, uid: $0.0) }
+//        } else {
+//            self.trackUids = []
+//            self.tracks = []
+//        }
     }    
 }
 

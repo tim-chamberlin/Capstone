@@ -38,6 +38,8 @@ class TrackTableViewCell: UITableViewCell {
         self.trackLabel.text = track.name
         self.artistLabel.text = track.artist
         self.voteCountLabel.text = String(track.voteCount)
+        
+        updateCellWithVoteType(track.currentUserVoteStatus)
     }
     
     func updateCellWithVoteType(voteType: VoteType) {
@@ -59,11 +61,11 @@ class TrackTableViewCell: UITableViewCell {
         case .Neutral, .Down:
             updateCellWithVoteType(.Up)
             delegate?.didPressVoteButton(self, voteType: .Up)
-            self.voteStatus = .Up
+            track?.currentUserVoteStatus = .Up
         case .Up:
             updateCellWithVoteType(.Neutral)
             delegate?.didPressVoteButton(self, voteType: .Neutral)
-            self.voteStatus = .Neutral
+            track?.currentUserVoteStatus = .Neutral
         }
     }
     
@@ -72,11 +74,11 @@ class TrackTableViewCell: UITableViewCell {
         case .Neutral, .Up:
             updateCellWithVoteType(.Down)
             delegate?.didPressVoteButton(self, voteType: .Down)
-            self.voteStatus = .Down
+            track?.currentUserVoteStatus = .Down
         case .Down:
             updateCellWithVoteType(.Neutral)
             delegate?.didPressVoteButton(self, voteType: .Neutral)
-            self.voteStatus = .Neutral
+            track?.currentUserVoteStatus = .Neutral
         }
     }
 }

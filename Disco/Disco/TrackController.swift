@@ -42,8 +42,19 @@ class TrackController {
         }
     }
     
-    func getVoteStatusForTrack(track: Track, inPlaylist playlist: Playlist, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
-        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+    
+    func attachVoteListener(forTrack track: Track, inPlaylist playlist: Playlist, completion: (newVoteCount: Int, success: Bool) -> Void) {
+        // TODO: Will tracks have UIDs at this point?
+        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).child(track.firebaseUID).child(Track.kVoteCount).observeEventType(.Value, withBlock: { (snapshot) in
+            guard let voteCount = snapshot.value as? Int else { return }
+            completion(newVoteCount: voteCount, success: true)
+        }) { (error) in
+            //
+        }
+    }
+    
+    func getVoteStatusForTrackWithID(trackID: String, inPlaylistWithID playlistID: String, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
+        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlistID).child(trackID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard let voteStatus = snapshot.value as? Int else {
                 completion(voteStatus: .Neutral, success: true)
                 return

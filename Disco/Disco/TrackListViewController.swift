@@ -18,19 +18,31 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         title = playlist.name
-        playlist.tracks = []
+        
         // Add observer for new tracks
         PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
             dispatch_async(dispatch_get_main_queue(), {
                 if let track = track {
+                    
                     self.playlist.tracks.append(track)
                     self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
-                    self.tableView.reloadData()
+                    
+                    // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
+                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, user: self.currentUser, completion: { (voteStatus, success) in
+                        track.currentUserVoteStatus = voteStatus
+                        self.tableView.reloadData()
+                    })
+                    
+                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist, completion: { (newVoteCount, success) in
+                        track.voteCount = newVoteCount
+                        self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
+                        self.tableView.reloadData()
+                    })
                 }
             })
         }
     }
-    
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return playlist.tracks.count
     }
@@ -40,13 +52,19 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let track = playlist.tracks[indexPath.row]
         
-        TrackController.sharedController.getVoteStatusForTrack(track, inPlaylist: self.playlist, user: currentUser) { (voteStatus, success) in
-            if success {
-                cell.updateCellWithVoteType(voteStatus)
-            }
-        }
+        
+//        TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist) { (newVoteCount, success) in
+//            if success {
+//                track.voteCount = newVoteCount
+//                self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
+//                cell.voteCountLabel.text = String(newVoteCount)
+//                self.tableView.reloadData()
+//                
+//            }
+//        }
         
         cell.track = track
+        cell.voteStatus = track.currentUserVoteStatus
         cell.updateCellWithTrack(track)
         cell.delegate = self
         
@@ -58,7 +76,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
         guard let currentUser = UserController.sharedController.currentUser, track = sender.track else { return }
         
-        TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: sender.voteStatus, onTrack: track, inPlaylist: playlist) { (success) in
+        TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist) { (success) in
             //
         }
     }
