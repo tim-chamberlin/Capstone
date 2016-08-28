@@ -32,26 +32,26 @@ class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
         //        UIApplication.sharedApplication().openURL(loginURL)
     }
     
-        func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
-            print("Spotify user logged in")
-            // Post notification so HostViewController knows about successful login
-            NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
+    func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
+        print("Spotify user logged in")
+        // Post notification so HostViewController knows about successful login
+        NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
+        
+        UserController.sharedController.loginToSpotifyUsingSession(session)
+        authenticationViewController.clearCookies(nil)
+    }
     
-            UserController.sharedController.loginToSpotifyUsingSession(session)
-            authenticationViewController.clearCookies(nil)
-        }
     
+    func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
+        print("spotify user failed to login")
+        print(error)
+        authenticationViewController.clearCookies(nil)
+    }
     
-        func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
-            print("spotify user failed to login")
-            print(error)
-            authenticationViewController.clearCookies(nil)
-        }
-    
-        func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
-            print("Spotify user cancelled login")
-            authenticationViewController.clearCookies(nil)
-        }
+    func authenticationViewControllerDidCancelLogin(authenticationViewController: SPTAuthViewController!) {
+        print("Spotify user cancelled login")
+        authenticationViewController.clearCookies(nil)
+    }
     
     @IBAction func loginWithSpotifyButtonTapped(sender: AnyObject) {
         presentSPTAuthViewController()

@@ -151,4 +151,14 @@ class PlaylistController {
     func removeContributor(user: User, fromPlaylist playlist: Playlist, completion:(success: Bool) -> Void) {
         
     }
+
+    // MARK: - Helper Functions
+    
+    func sortPlaylistByVoteCount(playlist: Playlist) -> [Track] {
+        let sortedTracks = playlist.tracks.sort { (a, b) -> Bool in
+            return a.voteCount > b.voteCount
+        }
+        return sortedTracks
+    }
 }
+

@@ -423,15 +423,17 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="Jgg-ue-2FY">
                             <connections>
-                                <action selector="createNewPlaylist:" destination="1I7-Lm-3hJ" id="cl6-e6-0VY"/>
+                                <action selector="createPlaylistAction:" destination="1I7-Lm-3hJ" id="GTe-f1-s8W"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="playlistNameTextField" destination="I6n-vE-rIg" id="X35-p3-Aot"/>
+                        <segue destination="MeL-MZ-Glx" kind="unwind" identifier="unwindToHomeSegue" unwindAction="unwindToHomeViewController:" id="KNY-cL-AZb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E6g-JZ-1qy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="MeL-MZ-Glx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4575" y="-121"/>
         </scene>
@@ -522,17 +524,17 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OOV-HC-3eY" userLabel="Track Info Stack View">
-                                                    <rect key="frame" x="8" y="22" width="528" height="55"/>
+                                                    <rect key="frame" x="8" y="27" width="528" height="46"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPa-o0-zgF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="528" height="27"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="528" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIN-LC-CbV">
-                                                            <rect key="frame" x="0.0" y="35" width="528" height="20"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <rect key="frame" x="0.0" y="29" width="528" height="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>

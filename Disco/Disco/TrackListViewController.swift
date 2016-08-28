@@ -17,12 +17,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         title = playlist.name
-        
+        playlist.tracks = []
         // Add observer for new tracks
         PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
             dispatch_async(dispatch_get_main_queue(), {
                 if let track = track {
                     self.playlist.tracks.append(track)
+                    self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)   
                     self.tableView.reloadData()
                 }
             })
@@ -47,14 +48,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - Delegate Methods
     
     func didPressVoteButton(voteType: VoteType) {
-//        if voteType == VoteType.Up {
-//            print("Upvoted track")
-//        } else if voteType == VoteType.Down {
-//            print("Downvoted track")
-//        }
-
         print(voteType)
-    
     }
     
     func willAddTrackToPlaylist(track: Track) {

@@ -85,7 +85,11 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func unwindToHomeViewController(segue: UIStoryboardSegue) {
-        contributingVC.updatePlaylistTableView()
+        if let _ = segue.sourceViewController as? FriendPlaylistsViewController {
+            contributingVC.updatePlaylistTableView()
+        } else if let _ = segue.sourceViewController as? NewPlaylistViewController {
+            hostingVC.updatePlaylistTableView()
+        }
     }
     
     // MARK: - IBActions
