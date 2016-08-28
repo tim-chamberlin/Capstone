@@ -40,7 +40,7 @@ class TrackTableViewCell: UITableViewCell {
         self.voteCountLabel.text = String(track.voteCount)
     }
     
-    func updateCellWithVoteAction(voteType: VoteType) {
+    func updateCellWithVoteType(voteType: VoteType) {
         switch voteType {
         case .Up:
             upVoteButton.setImage(UIImage(named: "UpVoteSelected"), forState: .Normal)
@@ -57,11 +57,11 @@ class TrackTableViewCell: UITableViewCell {
     @IBAction func upVoteButtonTapped(sender: AnyObject) {
         switch self.voteStatus {
         case .Neutral, .Down:
-            updateCellWithVoteAction(.Up)
+            updateCellWithVoteType(.Up)
             delegate?.didPressVoteButton(self, voteType: .Up)
             self.voteStatus = .Up
         case .Up:
-            updateCellWithVoteAction(.Neutral)
+            updateCellWithVoteType(.Neutral)
             delegate?.didPressVoteButton(self, voteType: .Neutral)
             self.voteStatus = .Neutral
         }
@@ -70,11 +70,11 @@ class TrackTableViewCell: UITableViewCell {
     @IBAction func downVoteButtonTapped(sender: AnyObject) {
         switch self.voteStatus {
         case .Neutral, .Up:
-            updateCellWithVoteAction(.Down)
+            updateCellWithVoteType(.Down)
             delegate?.didPressVoteButton(self, voteType: .Down)
             self.voteStatus = .Down
         case .Down:
-            updateCellWithVoteAction(.Neutral)
+            updateCellWithVoteType(.Neutral)
             delegate?.didPressVoteButton(self, voteType: .Neutral)
             self.voteStatus = .Neutral
         }

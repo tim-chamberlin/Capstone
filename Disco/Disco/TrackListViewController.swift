@@ -13,6 +13,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     
     var playlist: Playlist!
+    var currentUser: User = UserController.sharedController.currentUser!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell else { return UITableViewCell() }
         
         let track = playlist.tracks[indexPath.row]
+        
+        TrackController.sharedController.getVoteStatusForTrack(track, inPlaylist: self.playlist, user: currentUser) { (voteStatus, success) in
+            if success {
+                cell.updateCellWithVoteType(voteStatus)
+            }
+        }
+        
         cell.track = track
         cell.updateCellWithTrack(track)
         cell.delegate = self

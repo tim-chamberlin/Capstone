@@ -42,10 +42,22 @@ class TrackController {
         }
     }
     
-    func getVoteStatusForTrack(track: Track, inPlaylist playlist: Playlist, user: User, completion:(voteStatus: Int, success: Bool) -> Void) {
+    func getVoteStatusForTrack(track: Track, inPlaylist playlist: Playlist, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
         firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            guard let voteStatus = snapshot.value as? Int else { return }
-            completion(voteStatus: voteStatus, success: true)
+            guard let voteStatus = snapshot.value as? Int else {
+                completion(voteStatus: .Neutral, success: true)
+                return
+            }
+            switch voteStatus {
+            case -1:
+                completion(voteStatus: .Down, success: true)
+            case 0:
+                completion(voteStatus: .Neutral, success: true)
+            case 1:
+                completion(voteStatus: .Up, success: true)
+            default:
+                break
+            }
         }) { (error) in
             //
         }
