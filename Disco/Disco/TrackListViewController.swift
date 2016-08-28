@@ -23,7 +23,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             dispatch_async(dispatch_get_main_queue(), {
                 if let track = track {
                     self.playlist.tracks.append(track)
-                    self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)   
+                    self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
                     self.tableView.reloadData()
                 }
             })
@@ -38,17 +38,21 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell else { return UITableViewCell() }
         
         let track = playlist.tracks[indexPath.row]
+        cell.track = track
         cell.updateCellWithTrack(track)
         cell.delegate = self
         
         return cell
     }
     
-    
     // MARK: - Delegate Methods
     
-    func didPressVoteButton(voteType: VoteType) {
-        print(voteType)
+    func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
+        guard let currentUser = UserController.sharedController.currentUser, track = sender.track else { return }
+        
+        TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: sender.voteStatus, onTrack: track, inPlaylist: playlist) { (success) in
+            //
+        }
     }
     
     func willAddTrackToPlaylist(track: Track) {

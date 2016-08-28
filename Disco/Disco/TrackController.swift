@@ -26,7 +26,7 @@ class TrackController {
         let urlParameters = ["q":text,
                              "limit":responseLimit,
                              "type":type]
-    
+        
         NetworkController.performRequestForURL(spotifySearchBaseURL, httpMethod: .Get, urlParameters: urlParameters) { (data, error) in
             if let data = data, jsonDictionary = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
                 dispatch_async(dispatch_get_main_queue(), {
@@ -42,4 +42,59 @@ class TrackController {
         }
     }
     
+    func getVoteStatusForTrack(track: Track, inPlaylist playlist: Playlist, user: User, completion:(voteStatus: Int, success: Bool) -> Void) {
+        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            guard let voteStatus = snapshot.value as? Int else { return }
+            completion(voteStatus: voteStatus, success: true)
+        }) { (error) in
+            //
+        }
+    }
+    
+    
+    func user(user: User, didVoteWithType voteType: VoteType, withVoteStatus voteStatus: VoteType, onTrack track: Track, inPlaylist playlist: Playlist, completion: (success: Bool) -> Void) {
+        // get track's current votecount
+        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).child(track.firebaseUID).child(Track.kVoteCount).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            guard var voteCount = snapshot.value as? Int else { return }
+            
+            switch voteStatus {
+            case .Up:
+                switch voteType {
+                case .Up: break
+                case .Down: voteCount -= 2
+                case .Neutral: voteCount -= 1
+                }
+            case .Down:
+                switch voteType {
+                case .Up: voteCount += 2
+                case .Down: break
+                case .Neutral: voteCount += 1
+                }
+            case .Neutral:
+                switch voteType {
+                case .Up: voteCount += 1
+                case .Down: voteCount -= 1
+                case .Neutral: break
+                }
+            }
+            
+            // set track's votecount in playlist model
+            firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).child(track.firebaseUID).child(Track.kVoteCount).setValue(voteCount, withCompletionBlock: { (error, _) in
+                if error != nil {
+                    print(error?.localizedDescription)
+                } else {
+                    switch voteType {
+                    case .Up:
+                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).setValue(1)
+                    case .Down:
+                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).setValue(-1)
+                    case .Neutral:
+                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).setValue(0)
+                    }
+                }
+            })
+        }) { (error) in
+            //
+        }
+    }
 }

@@ -18,11 +18,11 @@ class TrackTableViewCell: UITableViewCell {
     
     weak var delegate: TrackTableViewCellDelegate?
     
+    var track: Track?
     var voteStatus: VoteType = .Neutral
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -58,11 +58,11 @@ class TrackTableViewCell: UITableViewCell {
         switch self.voteStatus {
         case .Neutral, .Down:
             updateCellWithVoteAction(.Up)
-            delegate?.didPressVoteButton(.Up)
+            delegate?.didPressVoteButton(self, voteType: .Up)
             self.voteStatus = .Up
         case .Up:
             updateCellWithVoteAction(.Neutral)
-            delegate?.didPressVoteButton(.Neutral)
+            delegate?.didPressVoteButton(self, voteType: .Neutral)
             self.voteStatus = .Neutral
         }
     }
@@ -71,11 +71,11 @@ class TrackTableViewCell: UITableViewCell {
         switch self.voteStatus {
         case .Neutral, .Up:
             updateCellWithVoteAction(.Down)
-            delegate?.didPressVoteButton(.Down)
+            delegate?.didPressVoteButton(self, voteType: .Down)
             self.voteStatus = .Down
         case .Down:
             updateCellWithVoteAction(.Neutral)
-            delegate?.didPressVoteButton(.Neutral)
+            delegate?.didPressVoteButton(self, voteType: .Neutral)
             self.voteStatus = .Neutral
         }
     }
@@ -88,5 +88,5 @@ enum VoteType {
 }
 
 protocol TrackTableViewCellDelegate: class {
-    func didPressVoteButton(voteType: VoteType)
+    func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType)
 }

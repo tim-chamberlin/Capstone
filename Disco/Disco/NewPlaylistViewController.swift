@@ -37,7 +37,7 @@ class NewPlaylistViewController: UIViewController {
         PlaylistController.sharedController.createPlaylist(playlistName, completion: { (success, playlist) in
             if success {
                 guard let playlist = playlist else { return }
-                PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist.uid, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
+                PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
                     self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
                 })
             }

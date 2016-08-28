@@ -16,6 +16,7 @@ class Track {
     static let kName = "name"
     static let kArtist = "artist"
     
+    let firebaseUID: String
     let spotifyURI: String
     var playlistID: String
     var voteCount: Int
@@ -27,7 +28,8 @@ class Track {
         return [Track.kSpotifyURI: self.spotifyURI, Track.kPlaylistID: self.playlistID, Track.kVoteCount: self.voteCount, Track.kName: self.name, Track.kArtist: self.artist]
     }
     
-    init(spotifyID: String, playlistID: String, voteCount: Int = 0, name: String = "", artist: String = "") {
+    init(firebaseUID: String, spotifyID: String, playlistID: String, voteCount: Int = 0, name: String = "", artist: String = "") {
+        self.firebaseUID = firebaseUID
         self.spotifyURI = spotifyID
         self.playlistID = playlistID
         self.voteCount = voteCount
@@ -35,11 +37,10 @@ class Track {
         self.artist = artist
     }
     
-    
     // Init from Firebase
     init?(firebaseDictionary: [String: AnyObject], uid: String) {
         guard let spotifyID = firebaseDictionary[Track.kSpotifyURI] as? String, playlistID = firebaseDictionary[Track.kPlaylistID] as? String, voteCount = firebaseDictionary[Track.kVoteCount] as? Int else { return nil }
-        
+        self.firebaseUID = uid
         self.spotifyURI = spotifyID
         self.playlistID = playlistID
         self.voteCount = voteCount
@@ -66,6 +67,7 @@ class Track {
         self.name = trackName
         self.artist = test
         
+        self.firebaseUID = ""
         self.playlistID = ""
         self.voteCount = 0
     }
