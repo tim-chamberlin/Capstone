@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trackCell" rowHeight="100" id="Evv-cf-PLL" customClass="TrackTableViewCell" customModule="Disco" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Evv-cf-PLL" id="Inw-Ht-4FZ">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C2v-Bw-ZGH" userLabel="Voting Stack View">
+                        <rect key="frame" x="556" y="8" width="32" height="83"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yau-ei-Chf">
+                                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="04A-8f-agS"/>
+                                    <constraint firstAttribute="width" secondItem="Yau-ei-Chf" secondAttribute="height" multiplier="1:1" id="bXz-P4-iMW"/>
+                                </constraints>
+                                <state key="normal" image="UpVoteUnselected"/>
+                                <connections>
+                                    <action selector="upVoteButtonTapped:" destination="Evv-cf-PLL" eventType="touchUpInside" id="uVf-zW-t61"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KvK-fG-wMR">
+                                <rect key="frame" x="0.0" y="32" width="32" height="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nji-bG-BSe">
+                                <rect key="frame" x="0.0" y="51" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="nji-bG-BSe" secondAttribute="height" multiplier="1:1" id="PZh-bt-cmn"/>
+                                    <constraint firstAttribute="height" constant="32" id="e1E-qP-9aW"/>
+                                </constraints>
+                                <state key="normal" image="DownVoteUnselected"/>
+                                <connections>
+                                    <action selector="downVoteButtonTapped:" destination="Evv-cf-PLL" eventType="touchUpInside" id="614-jC-sGa"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="0t7-bI-Be4"/>
+                            <constraint firstAttribute="bottom" secondItem="nji-bG-BSe" secondAttribute="bottom" id="78j-SW-rwC"/>
+                            <constraint firstItem="KvK-fG-wMR" firstAttribute="top" secondItem="Yau-ei-Chf" secondAttribute="bottom" id="8m3-dj-qoc"/>
+                            <constraint firstItem="Yau-ei-Chf" firstAttribute="leading" secondItem="C2v-Bw-ZGH" secondAttribute="leading" id="E9h-KI-ThE"/>
+                            <constraint firstItem="nji-bG-BSe" firstAttribute="leading" secondItem="C2v-Bw-ZGH" secondAttribute="leading" id="Gf1-pQ-3de"/>
+                            <constraint firstItem="Yau-ei-Chf" firstAttribute="top" secondItem="C2v-Bw-ZGH" secondAttribute="top" id="K2E-r5-qhW"/>
+                            <constraint firstAttribute="bottom" secondItem="nji-bG-BSe" secondAttribute="bottom" id="P4B-LX-hSl"/>
+                            <constraint firstAttribute="trailing" secondItem="nji-bG-BSe" secondAttribute="trailing" id="Yjy-fo-pr8"/>
+                            <constraint firstAttribute="trailing" secondItem="Yau-ei-Chf" secondAttribute="trailing" id="a12-2i-c0b"/>
+                            <constraint firstItem="nji-bG-BSe" firstAttribute="top" secondItem="KvK-fG-wMR" secondAttribute="bottom" id="mmH-2k-pBL"/>
+                        </constraints>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NlL-pq-LlM" userLabel="Track Info Stack View">
+                        <rect key="frame" x="8" y="27" width="528" height="46"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgM-Bh-g3M">
+                                <rect key="frame" x="0.0" y="0.0" width="528" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJA-IB-wwM">
+                                <rect key="frame" x="0.0" y="29" width="528" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="C2v-Bw-ZGH" firstAttribute="leading" secondItem="NlL-pq-LlM" secondAttribute="trailing" constant="20" id="8EV-Qa-QSd"/>
+                    <constraint firstItem="C2v-Bw-ZGH" firstAttribute="top" secondItem="Inw-Ht-4FZ" secondAttribute="top" constant="8" id="8Jr-Lx-8Km"/>
+                    <constraint firstItem="NlL-pq-LlM" firstAttribute="leading" secondItem="Inw-Ht-4FZ" secondAttribute="leadingMargin" id="9zd-bF-Luo"/>
+                    <constraint firstAttribute="bottom" secondItem="C2v-Bw-ZGH" secondAttribute="bottom" constant="8" id="baM-bE-KJO"/>
+                    <constraint firstItem="NlL-pq-LlM" firstAttribute="centerY" secondItem="Inw-Ht-4FZ" secondAttribute="centerY" id="cut-Wn-rzm"/>
+                    <constraint firstAttribute="trailing" secondItem="C2v-Bw-ZGH" secondAttribute="trailing" constant="12" id="hY0-3e-bAk"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="artistLabel" destination="VJA-IB-wwM" id="E86-dh-nFU"/>
+                <outlet property="downVoteButton" destination="nji-bG-BSe" id="Ytc-ZF-Dtr"/>
+                <outlet property="trackLabel" destination="cgM-Bh-g3M" id="QYf-H2-BpQ"/>
+                <outlet property="upVoteButton" destination="Yau-ei-Chf" id="5x2-cP-jt9"/>
+                <outlet property="voteCountLabel" destination="KvK-fG-wMR" id="f5u-Zk-Hor"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="DownVoteUnselected" width="125" height="124"/>
+        <image name="UpVoteUnselected" width="125" height="124"/>
+    </resources>
+</document>

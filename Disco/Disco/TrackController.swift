@@ -75,7 +75,7 @@ class TrackController {
     }
     
     
-    func user(user: User, didVoteWithType voteType: VoteType, withVoteStatus voteStatus: VoteType, onTrack track: Track, inPlaylist playlist: Playlist, completion: (success: Bool) -> Void) {
+    func user(user: User, didVoteWithType voteType: VoteType, withVoteStatus voteStatus: VoteType, onTrack track: Track, inPlaylist playlist: Playlist, ofPlaylistType playlistType: PlaylistType, completion: (success: Bool) -> Void) {
         // get track's current votecount
         firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).child(track.firebaseUID).child(Track.kVoteCount).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard var voteCount = snapshot.value as? Int else { return }
@@ -108,11 +108,11 @@ class TrackController {
                 } else {
                     switch voteType {
                     case .Up:
-                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).setValue(1)
+                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(playlistType.rawValue).child(playlist.uid).child(track.firebaseUID).setValue(1)
                     case .Down:
-                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).setValue(-1)
+                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(playlistType.rawValue).child(playlist.uid).child(track.firebaseUID).setValue(-1)
                     case .Neutral:
-                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlist.uid).child(track.firebaseUID).setValue(0)
+                        firebaseRef.child(User.parentDirectory).child(user.FBID).child(playlistType.rawValue).child(playlist.uid).child(track.firebaseUID).setValue(0)
                     }
                 }
             })

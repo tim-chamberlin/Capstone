@@ -18,7 +18,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         title = playlist.name
-        
+        self.playlist.tracks = []
         // Add observer for new tracks
         PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
             dispatch_async(dispatch_get_main_queue(), {
@@ -42,27 +42,25 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             })
         }
     }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if section == 0 {
+//            return 1
+//        } else if section == 1 {
+//            return playlist.tracks.count - 1
+//        }
         return playlist.tracks.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell else { return UITableViewCell() }
         
+        
         let track = playlist.tracks[indexPath.row]
-        
-        
-//        TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist) { (newVoteCount, success) in
-//            if success {
-//                track.voteCount = newVoteCount
-//                self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
-//                cell.voteCountLabel.text = String(newVoteCount)
-//                self.tableView.reloadData()
-//                
-//            }
-//        }
-        
         cell.track = track
         cell.voteStatus = track.currentUserVoteStatus
         cell.updateCellWithTrack(track)
@@ -71,12 +69,21 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if section == 0 {
+//            return "Now Playing"
+//        } else if section == 1 {
+//            return "Up Next"
+//        }
+//        return ""
+//    }
+    
     // MARK: - Delegate Methods
     
     func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
         guard let currentUser = UserController.sharedController.currentUser, track = sender.track else { return }
         
-        TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist) { (success) in
+        TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist, ofPlaylistType: .Contributing) { (success) in
             //
         }
     }

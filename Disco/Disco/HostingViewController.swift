@@ -11,16 +11,16 @@ import UIKit
 public let spotifyLoginNotificationKey = "spotifyLoginSuccessful"
 public let spotifyLogoutNotificationKey = "spotifyLogoutSuccessful"
 
-class HostingViewController: UIViewController, SPTAudioStreamingDelegate, PlaylistTableViewDataSource {
+class HostingViewController: UIViewController, PlaylistTableViewDataSource, PlaylistTableViewDelegate {
     
-    private var playlistsTableView: PlaylistListViewController!
+    var playlistsTableView: PlaylistListViewController!
     private var spotifyLoginVC: SpotifyLoginViewController!
     
     @IBOutlet weak var spotifyLoginView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        playlistsTableView.delegate = self
         // Provides SPTAuth information for SPTAuthViewController
         UserController.sharedController.setupSPTAuth()
         checkSpotifyAuth()
@@ -38,6 +38,14 @@ class HostingViewController: UIViewController, SPTAudioStreamingDelegate, Playli
         playlistsTableView.updatePlaylistViewWithUser(currentUser, withPlaylistType: .Hosting, withNoPlaylistsText: "You aren't currently hosting any playlists.")
     }
     
+    func didSelectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
+        self.parentViewController?.performSegueWithIdentifier("toStreamingController", sender: self)
+    }
+    
+    func didDeselectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
+        //
+    }
+    
     // MARK: - Spotify Authentication
     
     func checkSpotifyAuth() {
@@ -49,21 +57,6 @@ class HostingViewController: UIViewController, SPTAudioStreamingDelegate, Playli
                 }
             } else {
                 self.spotifyLoginView.hidden = false
-            }
-        }
-    }
-    
-    // MARK: - Spotify Streaming
-    
-    func audioStreamingDidLogin(audioStreaming: SPTAudioStreamingController!) {
-        let url = NSURL(string: "spotify:track:0j0DNujXWeupLpZobbABoo")
-        if let player = spotifyPlayer {
-            player.playURI(url, startingWithIndex: 0) { (error) in
-                if error != nil {
-                    print("Error playing track.")
-                } else {
-                    print("Success")
-                }
             }
         }
     }

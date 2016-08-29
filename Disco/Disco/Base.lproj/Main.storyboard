@@ -119,6 +119,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3TJ-ya-iSf">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="on6-OR-v2A"/>
                         <barButtonItem key="leftBarButtonItem" title="Logout" style="done" id="1Oa-eb-6HA">
                             <connections>
                                 <action selector="logoutButtonTapped:" destination="5aj-mc-2ib" id="DEI-2y-wWU"/>
@@ -133,6 +134,7 @@
                         <segue destination="lCO-tp-cNY" kind="presentation" identifier="hostPlaylistSegue" id="hAi-lc-jHs"/>
                         <segue destination="iZx-yG-NdQ" kind="show" id="Aex-la-Qs7"/>
                         <segue destination="JxT-15-A5g" kind="show" identifier="toTrackList" id="Kjr-vj-sQi"/>
+                        <segue destination="kbA-bE-dLe" kind="show" identifier="toStreamingController" id="eM8-G5-uEq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aas-5R-XTF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -184,7 +186,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1jf-KS-b07" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4575" y="-850"/>
+            <point key="canvasLocation" x="4543" y="-1762"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XRY-UU-hB1">
@@ -336,6 +338,53 @@
             </objects>
             <point key="canvasLocation" x="2973" y="1261"/>
         </scene>
+        <!--Streaming View Controller-->
+        <scene sceneID="SE3-uW-FIi">
+            <objects>
+                <viewController id="kbA-bE-dLe" customClass="StreamingViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Pvt-25-jpz"/>
+                        <viewControllerLayoutGuide type="bottom" id="LTd-Yx-l5q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iYK-89-T8Y">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LSm-eL-tfw">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trackCell" id="8ko-Ob-iEX">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8ko-Ob-iEX" id="WYF-pb-Wm4">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="kbA-bE-dLe" id="T5w-l6-Oov"/>
+                                    <outlet property="delegate" destination="kbA-bE-dLe" id="fqQ-xE-ke3"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LTd-Yx-l5q" firstAttribute="top" secondItem="LSm-eL-tfw" secondAttribute="bottom" id="HqB-HW-HmB"/>
+                            <constraint firstItem="LSm-eL-tfw" firstAttribute="top" secondItem="Pvt-25-jpz" secondAttribute="bottom" constant="-64" id="q8C-Yr-0lC"/>
+                            <constraint firstItem="LSm-eL-tfw" firstAttribute="leading" secondItem="iYK-89-T8Y" secondAttribute="leading" id="rZl-gu-vPQ"/>
+                            <constraint firstAttribute="trailing" secondItem="LSm-eL-tfw" secondAttribute="trailing" id="ui5-2G-x6k"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="LSm-eL-tfw" id="2Sl-un-zte"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Ze-m5-ev4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3725" y="481"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="aIL-50-he5">
             <objects>
@@ -435,7 +484,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E6g-JZ-1qy" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="MeL-MZ-Glx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4575" y="-121"/>
+            <point key="canvasLocation" x="4543" y="-1033"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eqp-jo-vaa">
@@ -453,7 +502,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AFA-wM-HxU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3763" y="-121"/>
+            <point key="canvasLocation" x="3731" y="-1033"/>
         </scene>
         <!--Track List View Controller-->
         <scene sceneID="cNC-ox-fNT">
@@ -587,7 +636,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UB5-X2-SCA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3763" y="565"/>
+            <point key="canvasLocation" x="3731" y="-347"/>
         </scene>
         <!--Add a Song-->
         <scene sceneID="EIw-j5-O2r">
@@ -643,7 +692,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dN7-7E-HZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5196" y="565"/>
+            <point key="canvasLocation" x="5164" y="-347"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WxJ-83-LAo">
@@ -661,7 +710,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0O-pB-LVq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3763" y="-850"/>
+            <point key="canvasLocation" x="3731" y="-1762"/>
         </scene>
         <!--Friend Playlists View Controller-->
         <scene sceneID="rrD-qF-32j">
@@ -704,7 +753,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6mR-zd-ZPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IUk-EM-GRM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5297" y="-850"/>
+            <point key="canvasLocation" x="5265" y="-1762"/>
         </scene>
         <!--Playlist List View Controller-->
         <scene sceneID="igQ-st-Kqd">
@@ -823,7 +872,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSL-5S-Pgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4488" y="565"/>
+            <point key="canvasLocation" x="4456" y="-347"/>
         </scene>
     </scenes>
     <resources>

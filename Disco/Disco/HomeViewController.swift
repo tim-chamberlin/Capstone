@@ -81,6 +81,11 @@ class HomeViewController: UIViewController {
             if let indexPath = contributingVC.contributingPlaylistsTableView.tableView.indexPathForSelectedRow {
                 destinationVC.playlist = contributingVC.contributingPlaylistsTableView.playlists[indexPath.row]
             }
+        } else if segue.identifier == "toStreamingController" {
+            guard let destinationVC = segue.destinationViewController as? StreamingViewController else { return }
+            if let indexPath = hostingVC.playlistsTableView.tableView.indexPathForSelectedRow {
+                destinationVC.playlist = hostingVC.playlistsTableView.playlists[indexPath.row]
+            }
         }
     }
     
