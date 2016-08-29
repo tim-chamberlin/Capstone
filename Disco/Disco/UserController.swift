@@ -54,7 +54,6 @@ class UserController {
         })
     }
     
-    
     // login
     
     func loginWithFacebook(viewController: UIViewController, completion: (success: Bool) -> Void) {
@@ -100,10 +99,6 @@ class UserController {
         fbLoginManager.logOut()
         completion(success: true)
     }
-    
-    
-    
-    
     
     // Retrieve current Facebook User ID
     
@@ -151,38 +146,35 @@ extension UserController {
         
         guard let currentUser = UserController.sharedController.currentUser else { return }
         
+        completion(loggedIn: true, session: SPTAuth.defaultInstance().session)
+        
         // Check for valid session in NSUserDefaults
-        if let sessionObject: AnyObject = userDefaults.objectForKey(currentUser.FBID) {
-            guard let sessionDataObject = sessionObject as? NSData, session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObject) as? SPTSession else { return }
-            
-            // If session has expired, renew session
-            if !session.isValid() {
-                SPTAuth.defaultInstance().renewSession(session, callback: { (error, session) in
-                    if error == nil {
-//                         self.saveSessionToUserDefaults(session)
-                        completion(loggedIn: false, session: session)
-                    }
-                })
-            } else {
-                print("Spotify session is valid")
-                completion(loggedIn: true, session: session)
-            }
-            
-        } else { // Not logged in (token is nil)
-            print("Spotify user not logged in")
-            completion(loggedIn: false, session: nil)
-        }
+//        if let sessionObject: AnyObject = userDefaults.objectForKey(currentUser.FBID) {
+//            guard let sessionDataObject = sessionObject as? NSData, session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObject) as? SPTSession else { return }
+//            
+//            
+//            
+//        } else { // Not logged in (token is nil)
+//            print("Spotify user not logged in")
+//            completion(loggedIn: false, session: nil)
+//        }
     }
     
+    // Called when user initially logs in through Spotify
     func loginToSpotifyUsingSession(session: SPTSession) {
-//        spotifyPlayer.delegate = self
         do {
             try spotifyPlayer.startWithClientId(UserController.spotifyClientID)
+            
+            // Post notification so HostViewController knows about successful login
+            NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
         } catch {
             print(error)
         }
-        spotifyPlayer.loginWithAccessToken(session.accessToken)
-        saveSessionToUserDefaults(session)
+        
+        
+        
+        
+//        saveSessionToUserDefaults(session)
     }
     
     func logoutOfSpotify(session: SPTSession, completion:() -> Void) {

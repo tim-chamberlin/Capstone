@@ -43,7 +43,6 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
         }
     }
     
-    
     // MARK: - IBActions
 
     @IBAction func contributeToPlaylistButtonTapped(sender: AnyObject) {

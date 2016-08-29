@@ -13,7 +13,6 @@ import FBSDKCoreKit
 // Firebase Database Reference
 let firebaseRef = FIRDatabase.database().reference()
 
-
 var spotifyPlayer = SPTAudioStreamingController.sharedInstance()
 
 @UIApplicationMain

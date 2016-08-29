@@ -14,12 +14,31 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         super.viewDidLoad()
         
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
+        
+        spotifyPlayer.delegate = self
+        audioStreamingDidLogin(spotifyPlayer)
     }
     
-    
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100
+    override func addTrackObservers() {
+        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
+            dispatch_async(dispatch_get_main_queue(), {
+                if let track = track {
+                    self.playlist.tracks.append(track)
+                    self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
+                    // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
+                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Hosting, user: self.currentUser, completion: { (voteStatus, success) in
+                        track.currentUserVoteStatus = voteStatus
+                        self.tableView.reloadData()
+                    })
+                    
+                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist, completion: { (newVoteCount, success) in
+                        track.voteCount = newVoteCount
+                        self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
+                        self.tableView.reloadData()
+                    })
+                }
+            })
+        }
     }
     
     
@@ -47,4 +66,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
+    @IBAction override func addSongButtonTapped(sender: AnyObject) {
+        self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
+    }
 }

@@ -57,13 +57,13 @@ class Track {
         }
         
         // Get current user's vote on the track
-        TrackController.sharedController.getVoteStatusForTrackWithID(firebaseUID, inPlaylistWithID: playlistID, user: UserController.sharedController.currentUser!) { (voteStatus, success) in
-            if success {
-                self.currentUserVoteStatus = voteStatus
-            } else {
-                self.currentUserVoteStatus = .Neutral
-            }
-        }
+//        TrackController.sharedController.getVoteStatusForTrackWithID(firebaseUID, inPlaylistWithID: playlistID, ofType: .Hosting, user: UserController.sharedController.currentUser!) { (voteStatus, success) in
+//            if success {
+//                self.currentUserVoteStatus = voteStatus
+//            } else {
+//                self.currentUserVoteStatus = .Neutral
+//            }
+//        }
     }
     
     // Init from Spotify API

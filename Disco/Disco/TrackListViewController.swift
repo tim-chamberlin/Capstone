@@ -17,9 +17,14 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         title = playlist.name
         self.playlist.tracks = []
         // Add observer for new tracks
+        addTrackObservers()
+    }
+    
+    func addTrackObservers() {
         PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
             dispatch_async(dispatch_get_main_queue(), {
                 if let track = track {
@@ -28,7 +33,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                     self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
                     
                     // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
-                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, user: self.currentUser, completion: { (voteStatus, success) in
+                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Contributing, user: self.currentUser, completion: { (voteStatus, success) in
                         track.currentUserVoteStatus = voteStatus
                         self.tableView.reloadData()
                     })
@@ -67,6 +72,10 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.delegate = self
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
     }
     
 //    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -16,14 +16,23 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
     var playlistsTableView: PlaylistListViewController!
     private var spotifyLoginVC: SpotifyLoginViewController!
     
+    var session: SPTSession?
+    
     @IBOutlet weak var spotifyLoginView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("session: \(self.session)")
+        
+        
+//        checkSpotifyAuth()
+        
+        
         playlistsTableView.delegate = self
         // Provides SPTAuth information for SPTAuthViewController
         UserController.sharedController.setupSPTAuth()
-        checkSpotifyAuth()
+        
         
         // Listen for when Spotify user logs in successfully
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HostingViewController.checkSpotifyAuth), name: spotifyLoginNotificationKey, object: nil)
@@ -51,7 +60,8 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
     func checkSpotifyAuth() {
         UserController.sharedController.checkSpotifyUserAuth { (loggedIn, session) in
             if loggedIn {
-                if let _ = session {
+                if let session = session {
+                    self.session = session
                     self.spotifyLoginView.hidden = true
                     self.updatePlaylistTableView()
                 }

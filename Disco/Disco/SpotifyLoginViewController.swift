@@ -14,7 +14,6 @@ class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     func presentSPTAuthViewController() {
@@ -34,9 +33,6 @@ class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
         print("Spotify user logged in")
-        // Post notification so HostViewController knows about successful login
-        NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
-        
         UserController.sharedController.loginToSpotifyUsingSession(session)
         authenticationViewController.clearCookies(nil)
     }

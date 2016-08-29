@@ -53,8 +53,8 @@ class TrackController {
         }
     }
     
-    func getVoteStatusForTrackWithID(trackID: String, inPlaylistWithID playlistID: String, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
-        firebaseRef.child(User.parentDirectory).child(user.FBID).child(User.kContributingPlaylists).child(playlistID).child(trackID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+    func getVoteStatusForTrackWithID(trackID: String, inPlaylistWithID playlistID: String, ofType playlistType: PlaylistType, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
+        firebaseRef.child(User.parentDirectory).child(user.FBID).child(playlistType.rawValue).child(playlistID).child(trackID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard let voteStatus = snapshot.value as? Int else {
                 completion(voteStatus: .Neutral, success: true)
                 return
@@ -106,6 +106,7 @@ class TrackController {
                 if error != nil {
                     print(error?.localizedDescription)
                 } else {
+                    // set user's vote in the user model
                     switch voteType {
                     case .Up:
                         firebaseRef.child(User.parentDirectory).child(user.FBID).child(playlistType.rawValue).child(playlist.uid).child(track.firebaseUID).setValue(1)
