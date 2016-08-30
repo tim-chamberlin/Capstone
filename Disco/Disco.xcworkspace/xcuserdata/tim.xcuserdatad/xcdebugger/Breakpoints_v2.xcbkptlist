@@ -24,12 +24,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494274123.527223"
+            timestampString = "494285845.004032"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "audioStreaming(_:didChangePlaybackState:)"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "popQueue(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -40,11 +40,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494274072.86347"
+            timestampString = "494285845.004032"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "audioStreamingDidLogout(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Disco/StreamingViewController.swift"
+            timestampString = "494285845.004032"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "audioStreaming(_:didChangePlaybackState:)"
             landmarkType = "5">
          </BreakpointContent>

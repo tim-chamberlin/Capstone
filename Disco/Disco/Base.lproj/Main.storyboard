@@ -377,19 +377,10 @@
                                         <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6lT-ut-7Kb">
-                                                <rect key="frame" x="197" y="10" width="207" height="30"/>
+                                                <rect key="frame" x="248" y="10" width="105" height="30"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhg-gX-PJC">
-                                                        <rect key="frame" x="0.0" y="0.0" width="82" height="30"/>
-                                                        <state key="normal" title="&lt;&lt; Previous">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="previousButtonTapped:" destination="kbA-bE-dLe" eventType="touchUpInside" id="xZo-oi-Uvt"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcZ-wa-C10">
-                                                        <rect key="frame" x="102" y="0.0" width="30" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                         <state key="normal" title="Play">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
@@ -398,7 +389,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d2q-PB-G3m">
-                                                        <rect key="frame" x="152" y="0.0" width="55" height="30"/>
+                                                        <rect key="frame" x="50" y="0.0" width="55" height="30"/>
                                                         <state key="normal" title="Next &gt;&gt;">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220305D21D760D0E00A72C35 /* SpotifyStreamingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220305D11D760D0E00A72C35 /* SpotifyStreamingController.swift */; };
 		222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675151D6DFBB30052D475 /* PlaylistListViewController.swift */; };
 		2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */; };
 		2238AD8A1D70C21500C7F013 /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		220305D11D760D0E00A72C35 /* SpotifyStreamingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyStreamingController.swift; sourceTree = "<group>"; };
 		222675151D6DFBB30052D475 /* PlaylistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
 		222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendPlaylistsViewController.swift; sourceTree = "<group>"; };
 		2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				22456C6D1D6A4620001B7A9B /* UserController.swift */,
 				22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */,
 				2245227D1D6F66CE00F5F792 /* TrackController.swift */,
+				220305D11D760D0E00A72C35 /* SpotifyStreamingController.swift */,
 			);
 			name = "Model Controllers";
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				229EA60E1D73BB8400DCC453 /* StreamingViewController.swift in Sources */,
 				2245227E1D6F66CE00F5F792 /* TrackController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
+				220305D21D760D0E00A72C35 /* SpotifyStreamingController.swift in Sources */,
 				2245227C1D6F66C200F5F792 /* Track.swift in Sources */,
 				2238AD8A1D70C21500C7F013 /* TrackTableViewCell.swift in Sources */,
 				222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */,

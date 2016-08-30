@@ -13,8 +13,10 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     
     var playlist: Playlist!
+    
     var nowPlaying: Track?
     var upNext: [Track] = []
+    
     var currentUser: User = UserController.sharedController.currentUser!
     
     override func viewDidLoad() {
@@ -27,29 +29,38 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func addTrackObservers() {
-        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
+        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, didAdd) in
             dispatch_async(dispatch_get_main_queue(), {
                 if let track = track {
-                    self.playlist.tracks.append(track)
-                    self.playlist.tracks = TrackController.sortTracklistByVoteCount(self.playlist.tracks)
-                    self.nowPlaying = self.playlist.tracks[0]
-                    // upNext array is all tracks but the first
-                    self.upNext = self.playlist.tracks.filter({ (track) -> Bool in
-                        return track != self.playlist.tracks[0]
-                    })
-                    
-                    // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
-                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Contributing, user: self.currentUser, completion: { (voteStatus, success) in
-                        track.currentUserVoteStatus = voteStatus
-                        self.tableView.reloadData()
-                    })
-                    
-                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist, completion: { (newVoteCount, success) in
-                        track.voteCount = newVoteCount
+                    if didAdd {
+                        self.playlist.tracks.append(track)
                         self.playlist.tracks = TrackController.sortTracklistByVoteCount(self.playlist.tracks)
-                        self.upNext = TrackController.sortTracklistByVoteCount(self.upNext)
-                        self.tableView.reloadData()
-                    })
+                        self.nowPlaying = self.playlist.tracks[0]
+                        // upNext array is all tracks but the first
+                        self.upNext = self.playlist.tracks.filter({ (track) -> Bool in
+                            return track != self.playlist.tracks[0]
+                        })
+                        
+                        // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
+                        TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Contributing, user: self.currentUser, completion: { (voteStatus, success) in
+                            track.currentUserVoteStatus = voteStatus
+                            self.tableView.reloadData()
+                        })
+                        
+                        TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist, completion: { (newVoteCount, success) in
+                            track.voteCount = newVoteCount
+                            self.playlist.tracks = TrackController.sortTracklistByVoteCount(self.playlist.tracks)
+                            self.upNext = TrackController.sortTracklistByVoteCount(self.upNext)
+                            self.tableView.reloadData()
+                        })
+                    } else { // track removed
+                        print("\(track.name) was removed from playlist \(self.playlist.uid)")
+                        self.playlist.tracks = self.playlist.tracks.filter { $0 != track }
+                        self.nowPlaying = self.playlist.tracks[0]
+                        self.upNext = self.playlist.tracks.filter({ (track) -> Bool in
+                            return track != self.playlist.tracks[0]
+                        })
+                    }
                 }
             })
         }
@@ -62,7 +73,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             return 0
         }
     }
-
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let _ = nowPlaying {
             if section == 0 {

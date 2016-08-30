@@ -8,6 +8,8 @@
 
 import UIKit
 
+let kTrackInfoDidUpdate = "TrackInfoDidUpdate"
+
 class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
     var session: SPTSession!
@@ -22,8 +24,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         title = playlist.name
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         
-        
-        
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
         
@@ -31,31 +31,52 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         let session = SPTAuth.defaultInstance().session
         UserController.sharedController.loginToSpotifyUsingSession(session)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StreamingViewController.updateTrackData), name: kTrackInfoDidUpdate, object: nil)
+        
+    }
+    
+    deinit {
+        spotifyPlayer.logout()
+        PlaylistController.sharedController.removeTrackObserverForPlaylist(playlist) { (success) in
+            //
+        }
+    }
+    
+    func updateTrackData() {
+        playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
+        nowPlaying = playlist.tracks[0]
+        upNext = playlist.tracks.filter({ (track) -> Bool in
+            return track != playlist.tracks[0]
+        })
+        upNext = TrackController.sortTracklistByVoteCount(upNext)
+        tableView.reloadData()
     }
     
     override func addTrackObservers() {
-        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
+        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { [weak self] (track, didAdd) in
             dispatch_async(dispatch_get_main_queue(), {
-                if let track = track {
-                    self.playlist.tracks.append(track)
-                    self.playlist.tracks = TrackController.sortTracklistByVoteCount(self.playlist.tracks)
-                    self.nowPlaying = self.playlist.tracks[0]
-                    self.upNext = self.playlist.tracks.filter({ (track) -> Bool in
-                        return track != self.playlist.tracks[0]
-                    })
-                    
-                    // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
-                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Hosting, user: self.currentUser, completion: { (voteStatus, success) in
-                        track.currentUserVoteStatus = voteStatus
-                        self.tableView.reloadData()
-                    })
-                    
-                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist, completion: { (newVoteCount, success) in
-                        track.voteCount = newVoteCount
-                        self.playlist.tracks = TrackController.sortTracklistByVoteCount(self.playlist.tracks)
-                        self.upNext = TrackController.sortTracklistByVoteCount(self.upNext)
-                        self.tableView.reloadData()
-                    })
+                if let track = track, this = self {
+                    if didAdd {
+                        this.playlist.tracks.append(track)
+                        NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
+                        
+                        // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
+                        TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: this.playlist.uid, ofType: .Hosting, user: this.currentUser, completion: { (voteStatus, success) in
+                            track.currentUserVoteStatus = voteStatus
+                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
+                            this.tableView.reloadData()
+                        })
+                        
+                        // Listen for other votes
+                        TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: this.playlist, completion: { (newVoteCount, success) in
+                            track.voteCount = newVoteCount
+                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
+                        })
+                    } else { // track removed
+                        print("\(track.name) was removed from playlist \(this.playlist.uid)")
+                        this.playlist.tracks = this.playlist.tracks.filter { $0 != track }
+                        NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
+                    }
                 }
             })
         }
@@ -84,52 +105,12 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         if !playlist.tracks.isEmpty {
             // Queue the first track
             let nowPlaying = self.playlist.tracks[0]
-            self.playSongWithURI(nowPlaying.spotifyURI)
+            SpotifyStreamingController.playSongWithURI(nowPlaying.spotifyURI)
         }
     }
     
-    func playSongWithURI(spotifyURI: String) {
-        let url = NSURL(string: spotifyURI)
-        if let player = spotifyPlayer {
-            player.playURI(url, startingWithIndex: 0) { (error) in
-                if error != nil {
-                    print("Error playing track")
-                } else {
-                    print("Success")
-                    self.addNextSongToQueue()
-                    self.player.setIsPlaying(false, callback: { (error) in
-                        if error != nil {
-                            print(error)
-                        }
-                    })
-                }
-            }
-        }
-    }
-    
-    
-    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePlaybackState playbackState: SPTPlaybackState!) {
-        
-        if audioStreaming.currentPlaybackPosition > (audioStreaming.currentTrackDuration + 5) {
-            print("Track is ending")
-            if !upNext.isEmpty {
-                playSongWithURI(self.upNext[0].spotifyURI)
-            } else {
-                return
-            }
-        }
-    }
-    
-    func addNextSongToQueue() {
-        if !playlist.tracks.isEmpty {
-            guard let spotifyURL = NSURL(string: playlist.tracks[1].spotifyURL) else { return }
-            player.queueURI(spotifyURL, callback: { (error) in
-                if error != nil {
-                    print(error)
-                }
-                
-            })
-        }
+    func audioStreamingDidLogout(audioStreaming: SPTAudioStreamingController!) {
+        //
     }
     
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didEncounterError error: NSError!) {
@@ -138,27 +119,32 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         playbackControlsView.hidden = true
     }
     
-    func toggleIsPlaying() {
-        if isPlaying {
-            player.setIsPlaying(false, callback: { (error) in
-                if error != nil {
-                    print(error)
-                    self.isPlaying = true
-                } else {
-                    self.isPlaying = false
-                    self.playButton.setTitle("Play", forState: .Normal)
-                }
-            })
-        } else {
-            player.setIsPlaying(true, callback: { (error) in
-                if error != nil {
-                    print(error)
-                    self.isPlaying = false
-                } else {
-                    self.isPlaying = true
-                    self.playButton.setTitle("Pause", forState: .Normal)
-                }
-            })
+    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePlaybackState playbackState: SPTPlaybackState!) {
+        
+        
+        if audioStreaming.currentPlaybackPosition > (audioStreaming.currentTrackDuration + 2) {
+            print("Track ended")            
+            if !upNext.isEmpty {
+                
+                popQueue({ [weak self] (success) in
+                    guard let nextTrack = self?.upNext[0] else { return }
+                    SpotifyStreamingController.addNextSongToQueue(nextTrack)
+                    print("\(self?.upNext[0].name) queued")
+                    })
+//                SpotifyStreamingController.playSongWithURI(self.upNext[0].spotifyURI)
+                
+            } else {
+                return
+            }
+        }
+        
+        
+    }
+    
+    func popQueue(completion: (success: Bool) -> Void) {
+        guard let nowPlaying = nowPlaying else { return }
+        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: playlist) { (error) in
+            print("Removed song after it was played")
         }
     }
     
@@ -167,17 +153,17 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     @IBAction func playButtonTapped(sender: AnyObject) {
-        toggleIsPlaying()
+        SpotifyStreamingController.toggleIsPlaying(isPlaying) { [weak self] (isPlaying) in
+            if isPlaying {
+                self?.playButton.setTitle("Play", forState: .Normal)
+            } else {
+                self?.playButton.setTitle("Pause", forState: .Normal)
+            }
+        }
     }
     
     @IBAction func nextButtonTapped(sender: AnyObject) {
         spotifyPlayer.skipNext { (error) in
-            //
-        }
-    }
-    
-    @IBAction func previousButtonTapped(sender: AnyObject) {
-        spotifyPlayer.skipPrevious { (error) in
             //
         }
     }
