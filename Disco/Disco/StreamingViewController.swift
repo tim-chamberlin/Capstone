@@ -8,15 +8,26 @@
 
 import UIKit
 
-class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate {
+class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
+    
+    var session: SPTSession!
+    var player: SPTAudioStreamingController = spotifyPlayer
+    var isPlaying: Bool = false
+    
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var playbackControlsView: UIView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        title = playlist.name
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         
         spotifyPlayer.delegate = self
-        audioStreamingDidLogin(spotifyPlayer)
+        spotifyPlayer.playbackDelegate = self
+        
+        addTrackObservers()
+        let session = SPTAuth.defaultInstance().session
+        UserController.sharedController.loginToSpotifyUsingSession(session)
+        
     }
     
     override func addTrackObservers() {
@@ -25,6 +36,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                 if let track = track {
                     self.playlist.tracks.append(track)
                     self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
+                    
                     // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
                     TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Hosting, user: self.currentUser, completion: { (voteStatus, success) in
                         track.currentUserVoteStatus = voteStatus
@@ -41,7 +53,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
-    
     override func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
         guard let currentUser = UserController.sharedController.currentUser, track = sender.track else { return }
         
@@ -50,23 +61,106 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
+    func presentErrorMessage() {
+        let alert = UIAlertController(title: "You aren't a Spotify Premium Member", message: "You must be logged into a Spotify Premium account to stream music. You can still make cool playlists though!", preferredStyle: .Alert)
+        let okayAction = UIAlertAction(title: "OK", style: .Default) { (_) in
+            return
+        }
+        alert.addAction(okayAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     // MARK: - Spotify Streaming
     
     func audioStreamingDidLogin(audioStreaming: SPTAudioStreamingController!) {
-        let url = NSURL(string: "spotify:track:0j0DNujXWeupLpZobbABoo")
-        if let player = spotifyPlayer {
-            player.playURI(url, startingWithIndex: 0) { (error) in
-                if error != nil {
-                    print("Error playing track.")
-                } else {
-                    print("Success")
+        if !playlist.tracks.isEmpty {
+            // Queue the first track
+            let nowPlaying = self.playlist.tracks[0]
+            let url = NSURL(string: nowPlaying.spotifyURI)
+            if let player = spotifyPlayer {
+                player.playURI(url, startingWithIndex: 0) { (error) in
+                    if error != nil {
+                        print("Error playing track")
+                    } else {
+                        print("Success")
+                        self.addNextSongToQueue()
+                        self.player.setIsPlaying(false, callback: { (error) in
+                            if error != nil {
+                                print(error)
+                            }
+                        })
+                    }
                 }
             }
+        }
+    }
+    
+    
+    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePlaybackState playbackState: SPTPlaybackState!) {
+//        addNextSongToQueue()
+    }
+    
+    func addNextSongToQueue() {
+        if !playlist.tracks.isEmpty {
+            guard let spotifyURL = NSURL(string: playlist.tracks[1].spotifyURL) else { return }
+            player.queueURI(spotifyURL, callback: { (error) in
+                if error != nil {
+                    print(error)
+                }
+                
+            })
+        }
+        
+    }
+    
+    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didEncounterError error: NSError!) {
+        print("Streaming error: \(error.localizedDescription)")
+        presentErrorMessage()
+        playbackControlsView.hidden = true
+    }
+    
+    func toggleIsPlaying() {
+        if isPlaying {
+            player.setIsPlaying(false, callback: { (error) in
+                if error != nil {
+                    print(error)
+                    self.isPlaying = true
+                } else {
+                    self.isPlaying = false
+                    self.playButton.setTitle("Play", forState: .Normal)
+                }
+            })
+        } else {
+            player.setIsPlaying(true, callback: { (error) in
+                if error != nil {
+                    print(error)
+                    self.isPlaying = false
+                } else {
+                    self.isPlaying = true
+                    self.playButton.setTitle("Pause", forState: .Normal)
+                }
+            })
         }
     }
     
     @IBAction override func addSongButtonTapped(sender: AnyObject) {
         self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
     }
+    
+    @IBAction func playButtonTapped(sender: AnyObject) {
+        toggleIsPlaying()
+    }
+    
+    @IBAction func nextButtonTapped(sender: AnyObject) {
+        spotifyPlayer.skipNext { (error) in
+            //
+        }
+    }
+    
+    @IBAction func previousButtonTapped(sender: AnyObject) {
+        spotifyPlayer.skipPrevious { (error) in
+            //
+        }
+    }
+    
 }

@@ -48,9 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Spotify user logged in")
 //                HostingViewController.session = session
                 //        // Post notification so HostViewController knows about successful login
-                NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
+//                NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
                 
-                UserController.sharedController.loginToSpotifyUsingSession(session)
+//                UserController.sharedController.loginToSpotifyUsingSession(session)
             })
         }
 

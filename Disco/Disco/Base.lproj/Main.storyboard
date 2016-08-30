@@ -292,44 +292,58 @@
                                             <action selector="hostNewPlaylistTapped:" destination="Ugq-eP-3Pv" eventType="touchUpInside" id="lDj-Ov-ACx"/>
                                         </connections>
                                     </button>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDQ-fF-ht7" userLabel="Spotify Login Container">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
-                                        <connections>
-                                            <segue destination="528-3i-tJA" kind="embed" identifier="spotifyLoginEmbeddedSegue" id="yVB-2w-RDf"/>
-                                        </connections>
-                                    </containerView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.56277316430000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Gc6-9y-J40" secondAttribute="trailing" id="0TC-YF-xsa"/>
                                     <constraint firstItem="zan-cq-cuX" firstAttribute="centerX" secondItem="KZ2-S6-h4S" secondAttribute="centerX" id="2I2-Dw-una"/>
-                                    <constraint firstItem="pDQ-fF-ht7" firstAttribute="top" secondItem="KZ2-S6-h4S" secondAttribute="top" id="Mae-LD-LNq"/>
-                                    <constraint firstAttribute="bottom" secondItem="pDQ-fF-ht7" secondAttribute="bottom" id="bY8-em-Ahp"/>
                                     <constraint firstItem="zan-cq-cuX" firstAttribute="top" secondItem="Gc6-9y-J40" secondAttribute="bottom" constant="50" id="gS0-Ri-y5x"/>
                                     <constraint firstAttribute="bottom" secondItem="zan-cq-cuX" secondAttribute="bottom" constant="8" id="hhy-ya-wOS"/>
-                                    <constraint firstItem="pDQ-fF-ht7" firstAttribute="leading" secondItem="KZ2-S6-h4S" secondAttribute="leading" id="iUb-k1-srp"/>
                                     <constraint firstItem="Gc6-9y-J40" firstAttribute="leading" secondItem="KZ2-S6-h4S" secondAttribute="leading" id="opK-0O-OcH"/>
-                                    <constraint firstAttribute="trailing" secondItem="pDQ-fF-ht7" secondAttribute="trailing" id="u7F-wD-Lu3"/>
                                     <constraint firstItem="Gc6-9y-J40" firstAttribute="top" secondItem="KZ2-S6-h4S" secondAttribute="top" id="xUw-nx-Sa1"/>
-                                    <constraint firstItem="zan-cq-cuX" firstAttribute="top" secondItem="pDQ-fF-ht7" secondAttribute="bottom" id="zrI-FD-sWp"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="zrI-FD-sWp"/>
-                                    </mask>
-                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t7a-rf-7Ld" userLabel="Login to Spotify View">
+                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LwU-v7-sbQ" userLabel="Login to Spotify button">
+                                        <rect key="frame" x="137" y="211" width="286" height="50"/>
+                                        <state key="normal" backgroundImage="Login With Spotify Button"/>
+                                        <connections>
+                                            <action selector="loginToSpotifyTapped:" destination="Ugq-eP-3Pv" eventType="touchUpInside" id="8fK-s0-K6w"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must have a Spotify Premium account to create a playlist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8b6-ez-bhj">
+                                        <rect key="frame" x="8" y="162" width="544" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerX" secondItem="t7a-rf-7Ld" secondAttribute="centerX" id="DNC-YD-emo"/>
+                                    <constraint firstItem="8b6-ez-bhj" firstAttribute="trailing" secondItem="t7a-rf-7Ld" secondAttribute="trailingMargin" id="OeK-kT-haO"/>
+                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerY" secondItem="t7a-rf-7Ld" secondAttribute="centerY" id="Oes-I3-xAZ"/>
+                                    <constraint firstItem="8b6-ez-bhj" firstAttribute="leading" secondItem="t7a-rf-7Ld" secondAttribute="leadingMargin" id="fBt-b0-jPS"/>
+                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="top" secondItem="8b6-ez-bhj" secondAttribute="bottom" constant="28" id="pzB-LE-RPj"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="KZ2-S6-h4S" firstAttribute="leading" secondItem="kkb-7T-Z4q" secondAttribute="leading" id="7QE-wa-2V4"/>
+                            <constraint firstAttribute="trailing" secondItem="t7a-rf-7Ld" secondAttribute="trailing" id="Dj8-k4-LQi"/>
+                            <constraint firstItem="t7a-rf-7Ld" firstAttribute="leading" secondItem="kkb-7T-Z4q" secondAttribute="leading" id="Leq-WW-Ci3"/>
                             <constraint firstItem="KZ2-S6-h4S" firstAttribute="top" secondItem="kkb-7T-Z4q" secondAttribute="top" id="Mdi-rW-Xjz"/>
                             <constraint firstAttribute="bottom" secondItem="KZ2-S6-h4S" secondAttribute="bottom" id="aQ2-ce-ViQ"/>
+                            <constraint firstAttribute="bottom" secondItem="t7a-rf-7Ld" secondAttribute="bottom" id="sWf-tp-2Kx"/>
                             <constraint firstAttribute="trailing" secondItem="KZ2-S6-h4S" secondAttribute="trailing" id="ssg-qo-Hcj"/>
+                            <constraint firstItem="t7a-rf-7Ld" firstAttribute="top" secondItem="kkb-7T-Z4q" secondAttribute="top" id="tbK-Tt-EqQ"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="spotifyLoginView" destination="pDQ-fF-ht7" id="gA1-iP-AON"/>
+                        <outlet property="spotifyLoginView" destination="t7a-rf-7Ld" id="uzg-wz-6FD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="80K-UE-Bve" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -348,21 +362,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LSm-eL-tfw">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tI9-kz-XUu">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="kbA-bE-dLe" id="T5w-l6-Oov"/>
-                                    <outlet property="delegate" destination="kbA-bE-dLe" id="fqQ-xE-ke3"/>
-                                </connections>
-                            </tableView>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LSm-eL-tfw">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="550"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="kbA-bE-dLe" id="T5w-l6-Oov"/>
+                                            <outlet property="delegate" destination="kbA-bE-dLe" id="fqQ-xE-ke3"/>
+                                        </connections>
+                                    </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPL-nz-gli">
+                                        <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6lT-ut-7Kb">
+                                                <rect key="frame" x="197" y="10" width="207" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhg-gX-PJC">
+                                                        <rect key="frame" x="0.0" y="0.0" width="82" height="30"/>
+                                                        <state key="normal" title="&lt;&lt; Previous">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="previousButtonTapped:" destination="kbA-bE-dLe" eventType="touchUpInside" id="xZo-oi-Uvt"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcZ-wa-C10">
+                                                        <rect key="frame" x="102" y="0.0" width="30" height="30"/>
+                                                        <state key="normal" title="Play">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="playButtonTapped:" destination="kbA-bE-dLe" eventType="touchUpInside" id="1kn-uD-EKw"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d2q-PB-G3m">
+                                                        <rect key="frame" x="152" y="0.0" width="55" height="30"/>
+                                                        <state key="normal" title="Next &gt;&gt;">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="nextButtonTapped:" destination="kbA-bE-dLe" eventType="touchUpInside" id="Klh-zm-fcm"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="6lT-ut-7Kb" firstAttribute="centerX" secondItem="OPL-nz-gli" secondAttribute="centerX" id="EoT-Cb-J6E"/>
+                                            <constraint firstAttribute="height" constant="50" id="Jng-9b-cBV"/>
+                                            <constraint firstItem="6lT-ut-7Kb" firstAttribute="centerY" secondItem="OPL-nz-gli" secondAttribute="centerY" id="pVa-Cs-yxa"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="LSm-eL-tfw" firstAttribute="top" secondItem="tI9-kz-XUu" secondAttribute="top" id="2bv-2r-6b0"/>
+                                    <constraint firstItem="LSm-eL-tfw" firstAttribute="leading" secondItem="tI9-kz-XUu" secondAttribute="leading" id="Qj8-Fd-H6J"/>
+                                    <constraint firstAttribute="trailing" secondItem="LSm-eL-tfw" secondAttribute="trailing" id="vge-Iz-JTc"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="LTd-Yx-l5q" firstAttribute="top" secondItem="LSm-eL-tfw" secondAttribute="bottom" id="HqB-HW-HmB"/>
-                            <constraint firstItem="LSm-eL-tfw" firstAttribute="top" secondItem="Pvt-25-jpz" secondAttribute="bottom" constant="-64" id="q8C-Yr-0lC"/>
-                            <constraint firstItem="LSm-eL-tfw" firstAttribute="leading" secondItem="iYK-89-T8Y" secondAttribute="leading" id="rZl-gu-vPQ"/>
-                            <constraint firstAttribute="trailing" secondItem="LSm-eL-tfw" secondAttribute="trailing" id="ui5-2G-x6k"/>
+                            <constraint firstItem="tI9-kz-XUu" firstAttribute="top" secondItem="iYK-89-T8Y" secondAttribute="top" id="4df-vP-iIT"/>
+                            <constraint firstItem="LTd-Yx-l5q" firstAttribute="top" secondItem="tI9-kz-XUu" secondAttribute="bottom" id="55n-cw-QGz"/>
+                            <constraint firstAttribute="trailing" secondItem="tI9-kz-XUu" secondAttribute="trailing" id="60e-7u-hN5"/>
+                            <constraint firstItem="tI9-kz-XUu" firstAttribute="leading" secondItem="iYK-89-T8Y" secondAttribute="leading" id="vGi-Sf-pdd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="P7g-Ds-vUZ">
@@ -373,6 +440,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="playButton" destination="TcZ-wa-C10" id="EEp-5T-BUG"/>
+                        <outlet property="playbackControlsView" destination="OPL-nz-gli" id="mcy-S1-Ptn"/>
                         <outlet property="tableView" destination="LSm-eL-tfw" id="2Sl-un-zte"/>
                         <segue destination="gel-Sf-jtR" kind="presentation" identifier="addTrackToPlaylistSegue" id="8d0-9S-XdE"/>
                     </connections>
@@ -669,49 +738,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcd-2c-s4r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7912" y="995"/>
-        </scene>
-        <!--Spotify Login View Controller-->
-        <scene sceneID="4Xr-lY-wS9">
-            <objects>
-                <viewController id="528-3i-tJA" customClass="SpotifyLoginViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5QD-7R-85G"/>
-                        <viewControllerLayoutGuide type="bottom" id="s2z-Nb-JZ0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="t7a-rf-7Ld">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LwU-v7-sbQ">
-                                <rect key="frame" x="137" y="211" width="286" height="50"/>
-                                <state key="normal" backgroundImage="Login With Spotify Button"/>
-                                <connections>
-                                    <action selector="loginWithSpotifyButtonTapped:" destination="528-3i-tJA" eventType="touchUpInside" id="Txb-Kk-Fev"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must have a Spotify Premium account to create a playlist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8b6-ez-bhj">
-                                <rect key="frame" x="20" y="170" width="520" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerX" secondItem="t7a-rf-7Ld" secondAttribute="centerX" id="EFa-ee-wSU"/>
-                            <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerY" secondItem="t7a-rf-7Ld" secondAttribute="centerY" id="GsO-yp-ywq"/>
-                            <constraint firstItem="8b6-ez-bhj" firstAttribute="leading" secondItem="t7a-rf-7Ld" secondAttribute="leadingMargin" id="Meb-y4-nmr"/>
-                            <constraint firstItem="8b6-ez-bhj" firstAttribute="trailing" secondItem="t7a-rf-7Ld" secondAttribute="trailingMargin" id="a72-tF-O11"/>
-                            <constraint firstItem="LwU-v7-sbQ" firstAttribute="top" secondItem="8b6-ez-bhj" secondAttribute="bottom" constant="20" id="sA6-3Z-Ecr"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="loginWithSpotifyButton" destination="LwU-v7-sbQ" id="scV-5Y-dOF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="K9O-Ok-e5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3161" y="1891"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uCE-Bh-hUS">

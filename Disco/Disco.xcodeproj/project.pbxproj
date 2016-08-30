@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675151D6DFBB30052D475 /* PlaylistListViewController.swift */; };
-		222675181D6E40000052D475 /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675171D6E40000052D475 /* SpotifyLoginViewController.swift */; };
 		2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */; };
 		2238AD8A1D70C21500C7F013 /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */; };
 		2245227A1D6F647800F5F792 /* TrackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224522791D6F647800F5F792 /* TrackListViewController.swift */; };
@@ -45,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		222675151D6DFBB30052D475 /* PlaylistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
-		222675171D6E40000052D475 /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
 		222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendPlaylistsViewController.swift; sourceTree = "<group>"; };
 		2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
 		224522791D6F647800F5F792 /* TrackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackListViewController.swift; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 		224522811D6F70F300F5F792 /* Home VCs */ = {
 			isa = PBXGroup;
 			children = (
-				222675171D6E40000052D475 /* SpotifyLoginViewController.swift */,
 				22456C741D6A4D6E001B7A9B /* HomeViewController.swift */,
 				228382021D6BE11F00D78B53 /* ContributingViewController.swift */,
 				228382041D6BE13500D78B53 /* HostingViewController.swift */,
@@ -390,7 +387,6 @@
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,
 				2245227A1D6F647800F5F792 /* TrackListViewController.swift in Sources */,
 				229EA60E1D73BB8400DCC453 /* StreamingViewController.swift in Sources */,
-				222675181D6E40000052D475 /* SpotifyLoginViewController.swift in Sources */,
 				2245227E1D6F66CE00F5F792 /* TrackController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
 				2245227C1D6F66C200F5F792 /* Track.swift in Sources */,

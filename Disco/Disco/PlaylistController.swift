@@ -23,7 +23,7 @@ class PlaylistController {
         let playlist = Playlist(uid: key, name: name)
         firebaseRef.child(Playlist.parentDirectory).child(key).setValue(playlist.jsonValue) { (error, _) in
             if error == nil {
-                print("Create new playlist")
+                print("Created new playlist")
                 completion(success: true, playlist: playlist)
             } else {
                 print("Error creating new playlist in Firebase: \(error?.localizedDescription)")
@@ -33,7 +33,7 @@ class PlaylistController {
     }
     
     func createPlaylistReferenceForUserID(playlist: Playlist, userID: String, playlistType: PlaylistType, completion:(success: Bool) -> Void) {
-        firebaseRef.child(User.parentDirectory).child(userID).child(playlistType.rawValue).child(playlist.uid).setValue(playlist.trackUids) { (error, _) in
+        firebaseRef.child(User.parentDirectory).child(userID).child(playlistType.rawValue).child(playlist.uid).setValue(true) { (error, _) in
             if error == nil {
                 completion(success: true)
             } else {

@@ -11,6 +11,7 @@ import Foundation
 class Track {
     
     static let kSpotifyURI = "spotifyURI"
+    static let kSpotifyURL = "spotifyURL"
     static let kPlaylistID = "playlistID"
     static let kVoteCount = "voteCount"
     static let kName = "name"
@@ -18,6 +19,7 @@ class Track {
     
     let firebaseUID: String
     let spotifyURI: String
+    let spotifyURL: String
     var playlistID: String
     var voteCount: Int
     
@@ -27,12 +29,13 @@ class Track {
     let artist: String
     
     var jsonValue: [String: AnyObject] {
-        return [Track.kSpotifyURI: self.spotifyURI, Track.kPlaylistID: self.playlistID, Track.kVoteCount: self.voteCount, Track.kName: self.name, Track.kArtist: self.artist]
+        return [Track.kSpotifyURI: self.spotifyURI, Track.kPlaylistID: self.playlistID, Track.kSpotifyURL: self.spotifyURL, Track.kVoteCount: self.voteCount, Track.kName: self.name, Track.kArtist: self.artist]
     }
     
-    init(firebaseUID: String, spotifyID: String, playlistID: String, voteCount: Int = 0, name: String = "", artist: String = "") {
+    init(firebaseUID: String, spotifyUID: String, spotifyURL: String, playlistID: String, voteCount: Int = 0, name: String = "", artist: String = "") {
         self.firebaseUID = firebaseUID
-        self.spotifyURI = spotifyID
+        self.spotifyURI = spotifyUID
+        self.spotifyURL = spotifyURL
         self.playlistID = playlistID
         self.voteCount = voteCount
         self.name = name
@@ -41,9 +44,10 @@ class Track {
     
     // Init from Firebase
     init?(firebaseDictionary: [String: AnyObject], uid: String) {
-        guard let spotifyID = firebaseDictionary[Track.kSpotifyURI] as? String, playlistID = firebaseDictionary[Track.kPlaylistID] as? String, voteCount = firebaseDictionary[Track.kVoteCount] as? Int else { return nil }
+        guard let spotifyUID = firebaseDictionary[Track.kSpotifyURI] as? String, spotifyURL = firebaseDictionary[Track.kSpotifyURL] as? String, playlistID = firebaseDictionary[Track.kPlaylistID] as? String, voteCount = firebaseDictionary[Track.kVoteCount] as? Int else { return nil }
         self.firebaseUID = uid
-        self.spotifyURI = spotifyID
+        self.spotifyURL = spotifyURL
+        self.spotifyURI = spotifyUID
         self.playlistID = playlistID
         self.voteCount = voteCount
         
@@ -55,26 +59,18 @@ class Track {
             self.name = ""
             self.artist = ""
         }
-        
-        // Get current user's vote on the track
-//        TrackController.sharedController.getVoteStatusForTrackWithID(firebaseUID, inPlaylistWithID: playlistID, ofType: .Hosting, user: UserController.sharedController.currentUser!) { (voteStatus, success) in
-//            if success {
-//                self.currentUserVoteStatus = voteStatus
-//            } else {
-//                self.currentUserVoteStatus = .Neutral
-//            }
-//        }
     }
     
     // Init from Spotify API
     init?(spotifyDictionary: [String:AnyObject]) {
-        guard let spotifyURI = spotifyDictionary["uri"] as? String, trackName = spotifyDictionary["name"] as? String else { return nil }
+        guard let spotifyURI = spotifyDictionary["uri"] as? String, spotifyURL = spotifyDictionary["href"] as? String, trackName = spotifyDictionary["name"] as? String else { return nil }
         
         guard let artistsInfo = spotifyDictionary["artists"] as? [[String: AnyObject]] else { return nil }
         let artistNames = artistsInfo.flatMap({ $0["name"] as? String })
         let test = artistNames.joinWithSeparator(", ")
         
         self.spotifyURI = spotifyURI
+        self.spotifyURL = spotifyURL
         self.name = trackName
         self.artist = test
         

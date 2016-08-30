@@ -10,7 +10,7 @@ import UIKit
 
 class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSource, PlaylistTableViewDelegate {
 
-    var playlistView: PlaylistListViewController!    
+    var playlistView: PlaylistListViewController!
     var selectedUser: User?
     var selectedPlaylist: Playlist?
     
