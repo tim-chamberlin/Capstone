@@ -30,29 +30,18 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         addTrackObservers()
         let session = SPTAuth.defaultInstance().session
         UserController.sharedController.loginToSpotifyUsingSession(session)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StreamingViewController.updateTrackData), name: kTrackInfoDidUpdate, object: nil)
-        
     }
     
     deinit {
+        // TODO: Add modal view segue to streaming vc and alert user that they will stop playing music
         spotifyPlayer.logout()
         PlaylistController.sharedController.removeTrackObserverForPlaylist(playlist) { (success) in
             //
         }
     }
     
-    func updateTrackData() {
-        playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
-        nowPlaying = playlist.tracks[0]
-        upNext = playlist.tracks.filter({ (track) -> Bool in
-            return track != playlist.tracks[0]
-        })
-        upNext = TrackController.sortTracklistByVoteCount(upNext)
-        tableView.reloadData()
-    }
-    
     override func addTrackObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TrackListViewController.updateTrackData), name: kTrackInfoDidUpdate, object: nil)
         PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { [weak self] (track, didAdd) in
             dispatch_async(dispatch_get_main_queue(), {
                 if let track = track, this = self {
@@ -64,7 +53,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                         TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: this.playlist.uid, ofType: .Hosting, user: this.currentUser, completion: { (voteStatus, success) in
                             track.currentUserVoteStatus = voteStatus
                             NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                            this.tableView.reloadData()
                         })
                         
                         // Listen for other votes
@@ -127,11 +115,15 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             if !upNext.isEmpty {
                 
                 popQueue({ [weak self] (success) in
-                    guard let nextTrack = self?.upNext[0] else { return }
-                    SpotifyStreamingController.addNextSongToQueue(nextTrack)
-                    print("\(self?.upNext[0].name) queued")
+                    guard let nowPlaying = self?.nowPlaying else { return }
+                    
+                    SpotifyStreamingController.playSongWithURI(nowPlaying.spotifyURI)
+                    
+//                    guard let nextTrack = self?.upNext[0] else { return }
+//                    SpotifyStreamingController.addNextSongToQueue(nextTrack)
+//                    print("\(self?.upNext[0].name) queued")
+                    
                     })
-//                SpotifyStreamingController.playSongWithURI(self.upNext[0].spotifyURI)
                 
             } else {
                 return

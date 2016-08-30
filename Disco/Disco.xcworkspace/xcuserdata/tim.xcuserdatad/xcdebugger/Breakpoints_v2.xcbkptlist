@@ -24,27 +24,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494285845.004032"
+            timestampString = "494286814.328326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "popQueue(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494285845.004032"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "audioStreamingDidLogout(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -56,13 +40,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494285845.004032"
+            timestampString = "494286814.328326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "deinit"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Disco/StreamingViewController.swift"
+            timestampString = "494286671.233029"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "audioStreaming(_:didChangePlaybackState:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Disco/StreamingViewController.swift"
+            timestampString = "494286751.465324"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "audioStreaming(_:didChangePlaybackState:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Disco.StreamingViewController.audioStreaming (Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.SPTAudioStreamingController&gt;, didChangePlaybackState : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.SPTPlaybackState&gt;) -&gt; ()"
+                  moduleName = "Disco"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tim/Desktop/Coding/Swift/DevMountain/Capstone/Disco/Disco/StreamingViewController.swift"
+                  timestampString = "494286815.535862"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "117"
+                  endingLineNumber = "117"
+                  offsetFromSymbolStart = "1183">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Disco.StreamingViewController.(audioStreaming (Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.SPTAudioStreamingController&gt;, didChangePlaybackState : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.SPTPlaybackState&gt;) -&gt; ()).(closure #1)"
+                  moduleName = "Disco"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tim/Desktop/Coding/Swift/DevMountain/Capstone/Disco/Disco/StreamingViewController.swift"
+                  timestampString = "494286815.536047"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "117"
+                  endingLineNumber = "117"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
