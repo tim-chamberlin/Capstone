@@ -15,6 +15,7 @@ class TrackTableViewCell: UITableViewCell {
     @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var upVoteButton: UIButton!
     @IBOutlet weak var downVoteButton: UIButton!
+    @IBOutlet weak var votingStackView: UIStackView!
     
     weak var delegate: TrackTableViewCellDelegate?
     

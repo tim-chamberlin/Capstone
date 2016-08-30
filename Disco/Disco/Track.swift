@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Track {
+class Track: Equatable {
     
     static let kSpotifyURI = "spotifyURI"
     static let kSpotifyURL = "spotifyURL"
@@ -79,8 +79,9 @@ class Track {
         self.voteCount = 0
         self.currentUserVoteStatus = .Neutral
     }
-     
-    
-    
-    
+}
+
+
+func == (lhs: Track, rhs: Track) -> Bool {
+    return lhs.firebaseUID == rhs.firebaseUID
 }

@@ -162,13 +162,6 @@ class PlaylistController {
         
     }
 
-    // MARK: - Helper Functions
     
-    func sortPlaylistByVoteCount(playlist: Playlist) -> [Track] {
-        let sortedTracks = playlist.tracks.sort { (a, b) -> Bool in
-            return a.voteCount > b.voteCount
-        }
-        return sortedTracks
-    }
 }
 

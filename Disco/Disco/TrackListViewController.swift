@@ -13,6 +13,8 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     
     var playlist: Playlist!
+    var nowPlaying: Track?
+    var upNext: [Track] = []
     var currentUser: User = UserController.sharedController.currentUser!
     
     override func viewDidLoad() {
@@ -28,9 +30,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, success) in
             dispatch_async(dispatch_get_main_queue(), {
                 if let track = track {
-                    
                     self.playlist.tracks.append(track)
-                    self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
+                    self.playlist.tracks = TrackController.sortTracklistByVoteCount(self.playlist.tracks)
+                    self.nowPlaying = self.playlist.tracks[0]
+                    // upNext array is all tracks but the first
+                    self.upNext = self.playlist.tracks.filter({ (track) -> Bool in
+                        return track != self.playlist.tracks[0]
+                    })
                     
                     // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
                     TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Contributing, user: self.currentUser, completion: { (voteStatus, success) in
@@ -40,7 +46,8 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                     
                     TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist, completion: { (newVoteCount, success) in
                         track.voteCount = newVoteCount
-                        self.playlist.tracks = PlaylistController.sharedController.sortPlaylistByVoteCount(self.playlist)
+                        self.playlist.tracks = TrackController.sortTracklistByVoteCount(self.playlist.tracks)
+                        self.upNext = TrackController.sortTracklistByVoteCount(self.upNext)
                         self.tableView.reloadData()
                     })
                 }
@@ -49,27 +56,44 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        if let _ = nowPlaying {
+            return 2
+        } else { // No tracks
+            return 0
+        }
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if section == 0 {
-//            return 1
-//        } else if section == 1 {
-//            return playlist.tracks.count - 1
-//        }
-        return playlist.tracks.count
+        if let _ = nowPlaying {
+            if section == 0 {
+                return 1
+            } else if section == 1 {
+                return upNext.count
+            }
+        }
+        // No tracks
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell else { return UITableViewCell() }
         
-        
-        let track = playlist.tracks[indexPath.row]
-        cell.track = track
-        cell.voteStatus = track.currentUserVoteStatus
-        cell.updateCellWithTrack(track)
-        cell.delegate = self
+        if let nowPlaying = nowPlaying {
+            if indexPath.section == 0 {
+                let track = nowPlaying
+                cell.track = track
+                cell.voteStatus = track.currentUserVoteStatus
+                cell.updateCellWithTrack(track)
+                cell.votingStackView.hidden = true
+                cell.delegate = self
+            } else {
+                let track = upNext[indexPath.row]
+                cell.track = track
+                cell.voteStatus = track.currentUserVoteStatus
+                cell.updateCellWithTrack(track)
+                cell.delegate = self
+            }
+        }
         
         return cell
     }
@@ -78,14 +102,15 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         return 100
     }
     
-//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if section == 0 {
-//            return "Now Playing"
-//        } else if section == 1 {
-//            return "Up Next"
-//        }
-//        return ""
-//    }
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Now Playing"
+        } else if section == 1 {
+            return "Up Next"
+        } else {
+            return ""
+        }
+    }
     
     // MARK: - Delegate Methods
     

@@ -121,4 +121,15 @@ class TrackController {
             //
         }
     }
+    
+    
+    
+    // MARK: - Helper Functions
+    
+    static func sortTracklistByVoteCount(trackList: [Track]) -> [Track] {
+        let sortedTracks = trackList.sort { (a, b) -> Bool in
+            return a.voteCount > b.voteCount
+        }
+        return sortedTracks
+    }
 }

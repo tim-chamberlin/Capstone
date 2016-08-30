@@ -93,6 +93,7 @@
                 <outlet property="trackLabel" destination="cgM-Bh-g3M" id="QYf-H2-BpQ"/>
                 <outlet property="upVoteButton" destination="Yau-ei-Chf" id="5x2-cP-jt9"/>
                 <outlet property="voteCountLabel" destination="KvK-fG-wMR" id="f5u-Zk-Hor"/>
+                <outlet property="votingStackView" destination="C2v-Bw-ZGH" id="HIf-5s-sIk"/>
             </connections>
         </tableViewCell>
     </objects>

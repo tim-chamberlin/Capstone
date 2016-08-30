@@ -17,7 +17,6 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
     
     var session: SPTSession? {
         didSet {
-            print("Changed value of session: \(session)")
             updateViewForLogin()
         }
     }
