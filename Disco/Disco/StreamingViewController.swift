@@ -28,6 +28,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         spotifyPlayer.playbackDelegate = self
         
         addTrackObservers()
+        
         let session = SPTAuth.defaultInstance().session
         UserController.sharedController.loginToSpotifyUsingSession(session)
     }
@@ -47,6 +48,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                 if let track = track, this = self {
                     if didAdd {
                         this.playlist.tracks.append(track)
+                        
                         NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
                         
                         // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
@@ -107,30 +109,27 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         playbackControlsView.hidden = true
     }
     
-    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePlaybackState playbackState: SPTPlaybackState!) {
-        
-        
-        if audioStreaming.currentPlaybackPosition > (audioStreaming.currentTrackDuration + 2) {
-            print("Track ended")            
+    
+    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
+        if let upNext = upNext {
             if !upNext.isEmpty {
-                
-                popQueue({ [weak self] (success) in
-                    guard let nowPlaying = self?.nowPlaying else { return }
-                    
-                    SpotifyStreamingController.playSongWithURI(nowPlaying.spotifyURI)
-                    
-//                    guard let nextTrack = self?.upNext[0] else { return }
-//                    SpotifyStreamingController.addNextSongToQueue(nextTrack)
-//                    print("\(self?.upNext[0].name) queued")
-                    
-                    })
-                
+                SpotifyStreamingController.addNextSongToQueue(upNext[0]) {
+                    print("Added next song to queue")
+                }
             } else {
                 return
             }
         }
+    }
+    
+    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {
         
-        
+    }
+    
+    func audioStreamingDidSkipToNextTrack(audioStreaming: SPTAudioStreamingController!) {
+        popQueue { (success) in
+            print("Popped top song from queue")
+        }
     }
     
     func popQueue(completion: (success: Bool) -> Void) {
@@ -147,9 +146,11 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBAction func playButtonTapped(sender: AnyObject) {
         SpotifyStreamingController.toggleIsPlaying(isPlaying) { [weak self] (isPlaying) in
             if isPlaying {
-                self?.playButton.setTitle("Play", forState: .Normal)
-            } else {
                 self?.playButton.setTitle("Pause", forState: .Normal)
+                self?.isPlaying = true
+            } else {
+                self?.playButton.setTitle("Play", forState: .Normal)
+                self?.isPlaying = false
             }
         }
     }

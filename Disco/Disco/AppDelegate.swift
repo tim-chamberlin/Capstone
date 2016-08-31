@@ -28,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Init Facebook
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+        // Setup Spotify User
+        UserController.sharedController.setupSPTAuth()
+        
         return true
     }
 

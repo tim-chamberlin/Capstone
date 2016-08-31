@@ -15,11 +15,7 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
     
     var playlistsTableView: PlaylistListViewController!
     
-    var session: SPTSession? {
-        didSet {
-            updateViewForLogin()
-        }
-    }
+//    var session: SPTSession?
     
     @IBOutlet weak var spotifyLoginView: UIView!
     
@@ -31,8 +27,15 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
         checkSpotifyAuth()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+
+        checkSpotifyAuth()
+    }
+    
     func updateViewForLogin() {
-        if let _ = session {
+        let session = SPTAuth.defaultInstance().session
+        if session.isValid() {
             self.spotifyLoginView.hidden = true
             self.updatePlaylistTableView()
         } else {
@@ -58,9 +61,9 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
         print("Spotify user logged in")
-        self.session = session
-        UserController.sharedController.saveSessionToUserDefaults(session)
-        authenticationViewController.clearCookies(nil)
+        updateViewForLogin()
+//        self.session = session
+//        authenticationViewController.clearCookies(nil)
     }
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {
@@ -77,27 +80,51 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
     func presentSPTAuthViewController() {
         
         // Authenticate with Spotify's authenticationViewController
-        let authVC = SPTAuthViewController.authenticationViewController()
-        authVC.delegate = self
-        authVC.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        authVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        let spotifyAuthViewController = SPTAuthViewController.authenticationViewController()
+        spotifyAuthViewController.delegate = self
+        spotifyAuthViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        spotifyAuthViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         self.definesPresentationContext = true
-        self.presentViewController(authVC, animated: false, completion: nil)
+        self.presentViewController(spotifyAuthViewController, animated: false, completion: nil)
         
         // Uncomment to perform authentication in Safari
         //        let loginURL = SPTAuth.defaultInstance().loginURL
         //        UIApplication.sharedApplication().openURL(loginURL)
     }
     
-    func checkSpotifyAuth() {
-        UserController.sharedController.checkSpotifyUserAuth { (loggedIn, session) in
-            if loggedIn {
-                if let _ = session {
-                    self.session = session
-                }
-            } else {
-                self.session = nil
+    func renewSpotifyTokenAndShowPlayer() {
+        let auth = SPTAuth.defaultInstance()
+        auth.renewSession(auth.session) { (error, session) in
+            auth.session = session
+            if (error != nil) {
+                print("Error renewing Spotify session")
+                return
             }
+            // show player
+            self.updateViewForLogin()
+        }
+    }
+    
+    
+    
+    func checkSpotifyAuth() {
+        let auth = SPTAuth.defaultInstance()
+        
+        if auth.session == nil {
+            return
+        }
+        
+        if !auth.session.isValid() {
+            // Should hide login
+            updateViewForLogin()
+            return
+        }
+        
+        if auth.hasTokenRefreshService {
+            self.renewSpotifyTokenAndShowPlayer()
+        } else {
+            // Should show login
+            updateViewForLogin()
         }
     }
     

@@ -15,7 +15,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     var playlist: Playlist!
     
     var nowPlaying: Track?
-    var upNext: [Track] = []
+    var upNext: [Track]?
     
     var currentUser: User = UserController.sharedController.currentUser!
     
@@ -69,6 +69,8 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         upNext = playlist.tracks.filter({ (track) -> Bool in
             return track != playlist.tracks[0]
         })
+        
+        guard var upNext = upNext else { return }
         upNext = TrackController.sortTracklistByVoteCount(upNext)
         tableView.reloadData()
     }
@@ -86,6 +88,9 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             if section == 0 {
                 return 1
             } else if section == 1 {
+                guard let upNext = upNext else {
+                    return 0
+                }
                 return upNext.count
             }
         }
@@ -105,7 +110,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.votingStackView.hidden = true
                 cell.delegate = self
             } else {
-                let track = upNext[indexPath.row]
+                guard let track = upNext?[indexPath.row] else { return UITableViewCell() }
                 cell.track = track
                 cell.voteStatus = track.currentUserVoteStatus
                 cell.updateCellWithTrack(track)

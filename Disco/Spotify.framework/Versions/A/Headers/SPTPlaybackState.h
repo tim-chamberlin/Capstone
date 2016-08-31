@@ -14,42 +14,27 @@
  limitations under the License.
  */
 
-#import <Foundation/Foundation.h>
 
-
-@interface SPTPlaybackTrack : NSObject
-
-@property (readonly, nonnull) NSString *name;
-@property (readonly, nonnull) NSString *uri;
-@property (readonly, nonnull) NSString *artistName;
-@property (readonly, nonnull) NSString *artistUri;
-@property (readonly, nonnull) NSString *albumName;
-@property (readonly, nonnull) NSString *albumUri;
-@property (readonly, nonnull) NSString *albumCoverArtUri;
-@property (readonly) NSUInteger durationMs;
-@property (readonly) NSUInteger indexInContext;
-
-- (instancetype _Nullable)initWithName:(NSString* _Nonnull)name
-                                   uri:(NSString* _Nonnull)uri
-                            artistName:(NSString* _Nonnull)artistName
-                             artistUri:(NSString* _Nonnull)artistUri
-                             albumName:(NSString* _Nonnull)albumName
-                              albumUri:(NSString* _Nonnull)albumUri
-                      albumCoverArtUri:(NSString* _Nonnull)albumCoverArtUri
-                              duration:(NSUInteger)durationMs
-                        indexInContext:(NSUInteger)indexInContext;
-
-@end
-
-
+/**
+ Represent aggregated playar state.
+ The next substates are exposed: 
+ -isPlaying
+ -isRepeating
+ -isShuffling
+ -isActiveDevice
+ -positionMs
+ */
 @interface SPTPlaybackState : NSObject
 
-@property (readonly, nullable) SPTPlaybackTrack *prevTrack;
-@property (readonly, nullable) SPTPlaybackTrack *currentTrack;
-@property (readonly, nullable) SPTPlaybackTrack *nextTrack;
+@property (nonatomic, readonly) BOOL isPlaying;
+@property (nonatomic, readonly) BOOL isRepeating;
+@property (nonatomic, readonly) BOOL isShuffling;
+@property (nonatomic, readonly) BOOL isActiveDevice;
+@property (nonatomic, readonly) NSTimeInterval position;
 
-- (instancetype _Nullable)initWithPrevTrack:(SPTPlaybackTrack* _Nullable)prevTrack
-                               currentTrack:(SPTPlaybackTrack* _Nullable)currentTrack
-                                  nextTrack:(SPTPlaybackTrack* _Nullable)nextTrack;
-
+- (instancetype _Nullable)initWithIsPlaying:(BOOL)isPlaying
+							  isRepeating:(BOOL)isRepeating
+							  isShuffling:(BOOL)isShuffling
+						   isActiveDevice:(BOOL)isActiveDevice
+							   position:(NSTimeInterval)position;
 @end

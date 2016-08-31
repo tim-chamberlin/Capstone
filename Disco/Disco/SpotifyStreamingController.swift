@@ -34,9 +34,8 @@ class SpotifyStreamingController {
     }
     
     static func playSongWithURI(spotifyURI: String) {
-        let url = NSURL(string: spotifyURI)
         if let player = spotifyPlayer {
-            player.playURI(url, startingWithIndex: 0) { (error) in
+            player.playSpotifyURI(spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
                 if error != nil {
                     print("Error playing track")
                 } else {
@@ -48,17 +47,17 @@ class SpotifyStreamingController {
                         }
                     })
                 }
-            }
+            })
         }
     }
     
-    static func addNextSongToQueue(upNext: Track) {
-        guard let spotifyURI = NSURL(string: upNext.spotifyURI) else { return }
-        spotifyPlayer.queueURI(spotifyURI, callback: { (error) in
+    static func addNextSongToQueue(upNext: Track, completion: () -> Void) {
+        spotifyPlayer.queueSpotifyURI(upNext.spotifyURI) { (error) in
             if error != nil {
                 print(error)
             }
-        })
+            completion()
+        }
     }
 }
 
