@@ -130,9 +130,7 @@
                         <outlet property="hostingContainerView" destination="Kvc-GT-Ivi" id="FEN-h6-zdF"/>
                         <outlet property="segmentedControl" destination="FNO-Ak-cSp" id="Fxy-DK-EiL"/>
                         <segue destination="wZE-Lu-ySy" kind="presentation" identifier="toFriendsListSegue" id="9Ff-sn-lsv"/>
-                        <segue destination="lCO-tp-cNY" kind="presentation" identifier="hostPlaylistSegue" id="hAi-lc-jHs"/>
                         <segue destination="JxT-15-A5g" kind="show" identifier="toTrackList" id="Kjr-vj-sQi"/>
-                        <segue destination="kbA-bE-dLe" kind="show" identifier="toStreamingController" id="eM8-G5-uEq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aas-5R-XTF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -273,34 +271,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZ2-S6-h4S" userLabel="Hosting View">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQH-a6-Ivq">
+                                <rect key="frame" x="194" y="221" width="172" height="30"/>
+                                <state key="normal" title="Add songs to your queue"/>
+                                <connections>
+                                    <action selector="startQueue:" destination="Ugq-eP-3Pv" eventType="touchUpInside" id="wgk-UA-Io0"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You aren't streaming anything yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p63-VB-kfL">
+                                <rect key="frame" x="152" y="180" width="256" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZ2-S6-h4S" userLabel="Streaming View">
                                 <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                                 <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gc6-9y-J40" userLabel="Playlist TV Container">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="384"/>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gc6-9y-J40" userLabel="StreamingVC Container">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                                         <connections>
-                                            <segue destination="L9M-Gq-vfw" kind="embed" identifier="playlistTVEmbedSegue" id="4uN-4y-MnF"/>
+                                            <segue destination="kbA-bE-dLe" kind="embed" identifier="embedStreamingController" id="gBH-BI-Vdr"/>
                                         </connections>
                                     </containerView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zan-cq-cuX">
-                                        <rect key="frame" x="216" y="434" width="129" height="30"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Host a new playlist">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="hostNewPlaylistTapped:" destination="Ugq-eP-3Pv" eventType="touchUpInside" id="lDj-Ov-ACx"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.56277316430000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Gc6-9y-J40" secondAttribute="trailing" id="0TC-YF-xsa"/>
-                                    <constraint firstItem="zan-cq-cuX" firstAttribute="centerX" secondItem="KZ2-S6-h4S" secondAttribute="centerX" id="2I2-Dw-una"/>
-                                    <constraint firstItem="zan-cq-cuX" firstAttribute="top" secondItem="Gc6-9y-J40" secondAttribute="bottom" constant="50" id="gS0-Ri-y5x"/>
-                                    <constraint firstAttribute="bottom" secondItem="zan-cq-cuX" secondAttribute="bottom" constant="8" id="hhy-ya-wOS"/>
-                                    <constraint firstItem="Gc6-9y-J40" firstAttribute="leading" secondItem="KZ2-S6-h4S" secondAttribute="leading" id="opK-0O-OcH"/>
-                                    <constraint firstItem="Gc6-9y-J40" firstAttribute="top" secondItem="KZ2-S6-h4S" secondAttribute="top" id="xUw-nx-Sa1"/>
+                                    <constraint firstAttribute="trailing" secondItem="Gc6-9y-J40" secondAttribute="trailing" id="0NH-eR-Y32"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gc6-9y-J40" secondAttribute="bottom" id="H6X-af-Y3p"/>
+                                    <constraint firstItem="Gc6-9y-J40" firstAttribute="leading" secondItem="KZ2-S6-h4S" secondAttribute="leading" id="r7y-ft-wVL"/>
+                                    <constraint firstItem="Gc6-9y-J40" firstAttribute="top" secondItem="KZ2-S6-h4S" secondAttribute="top" id="zjH-IE-ZiN"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t7a-rf-7Ld" userLabel="Login to Spotify View">
@@ -322,28 +321,33 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerX" secondItem="t7a-rf-7Ld" secondAttribute="centerX" id="DNC-YD-emo"/>
-                                    <constraint firstItem="8b6-ez-bhj" firstAttribute="trailing" secondItem="t7a-rf-7Ld" secondAttribute="trailingMargin" id="OeK-kT-haO"/>
-                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerY" secondItem="t7a-rf-7Ld" secondAttribute="centerY" id="Oes-I3-xAZ"/>
-                                    <constraint firstItem="8b6-ez-bhj" firstAttribute="leading" secondItem="t7a-rf-7Ld" secondAttribute="leadingMargin" id="fBt-b0-jPS"/>
-                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="top" secondItem="8b6-ez-bhj" secondAttribute="bottom" constant="28" id="pzB-LE-RPj"/>
+                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="top" secondItem="8b6-ez-bhj" secondAttribute="bottom" constant="28" id="fug-sN-JEe"/>
+                                    <constraint firstItem="8b6-ez-bhj" firstAttribute="leading" secondItem="t7a-rf-7Ld" secondAttribute="leading" constant="8" id="hWB-3C-K1g"/>
+                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerY" secondItem="t7a-rf-7Ld" secondAttribute="centerY" id="kkJ-u9-aAx"/>
+                                    <constraint firstItem="LwU-v7-sbQ" firstAttribute="centerX" secondItem="t7a-rf-7Ld" secondAttribute="centerX" id="mwJ-AH-1nK"/>
+                                    <constraint firstAttribute="trailing" secondItem="8b6-ez-bhj" secondAttribute="trailing" constant="8" id="vih-9A-lP0"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="KZ2-S6-h4S" firstAttribute="leading" secondItem="kkb-7T-Z4q" secondAttribute="leading" id="7QE-wa-2V4"/>
+                            <constraint firstItem="DQH-a6-Ivq" firstAttribute="top" secondItem="p63-VB-kfL" secondAttribute="bottom" constant="20" id="DWg-zj-yYm"/>
                             <constraint firstAttribute="trailing" secondItem="t7a-rf-7Ld" secondAttribute="trailing" id="Dj8-k4-LQi"/>
                             <constraint firstItem="t7a-rf-7Ld" firstAttribute="leading" secondItem="kkb-7T-Z4q" secondAttribute="leading" id="Leq-WW-Ci3"/>
                             <constraint firstItem="KZ2-S6-h4S" firstAttribute="top" secondItem="kkb-7T-Z4q" secondAttribute="top" id="Mdi-rW-Xjz"/>
+                            <constraint firstItem="p63-VB-kfL" firstAttribute="centerX" secondItem="kkb-7T-Z4q" secondAttribute="centerX" id="Oi9-sq-fRI"/>
+                            <constraint firstItem="DQH-a6-Ivq" firstAttribute="centerY" secondItem="kkb-7T-Z4q" secondAttribute="centerY" id="VQK-wt-iMR"/>
                             <constraint firstAttribute="bottom" secondItem="KZ2-S6-h4S" secondAttribute="bottom" id="aQ2-ce-ViQ"/>
                             <constraint firstAttribute="bottom" secondItem="t7a-rf-7Ld" secondAttribute="bottom" id="sWf-tp-2Kx"/>
                             <constraint firstAttribute="trailing" secondItem="KZ2-S6-h4S" secondAttribute="trailing" id="ssg-qo-Hcj"/>
                             <constraint firstItem="t7a-rf-7Ld" firstAttribute="top" secondItem="kkb-7T-Z4q" secondAttribute="top" id="tbK-Tt-EqQ"/>
+                            <constraint firstItem="DQH-a6-Ivq" firstAttribute="centerX" secondItem="kkb-7T-Z4q" secondAttribute="centerX" id="uQ2-Vd-3kG"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="spotifyLoginView" destination="t7a-rf-7Ld" id="uzg-wz-6FD"/>
+                        <outlet property="streamingContainerView" destination="KZ2-S6-h4S" id="sn3-by-ZrZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="80K-UE-Bve" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -359,25 +363,25 @@
                         <viewControllerLayoutGuide type="bottom" id="LTd-Yx-l5q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iYK-89-T8Y">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tI9-kz-XUu">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="LSm-eL-tfw">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="550"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="422"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="dataSource" destination="kbA-bE-dLe" id="T5w-l6-Oov"/>
                                             <outlet property="delegate" destination="kbA-bE-dLe" id="fqQ-xE-ke3"/>
                                         </connections>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPL-nz-gli">
-                                        <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="422" width="560" height="50"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6lT-ut-7Kb">
-                                                <rect key="frame" x="248" y="10" width="105" height="30"/>
+                                                <rect key="frame" x="228" y="10" width="105" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcZ-wa-C10">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -439,7 +443,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Ze-m5-ev4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3725" y="481"/>
+            <point key="canvasLocation" x="3823" y="437"/>
         </scene>
         <!--Host a New Playlist-->
         <scene sceneID="4iu-su-mvd">
@@ -565,7 +569,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchedTrackCell" textLabel="o7j-f0-IbR" detailTextLabel="1az-ye-8v7" style="IBUITableViewCellStyleSubtitle" id="cyM-Nb-TQa">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cyM-Nb-TQa" id="D1z-IL-B24">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -575,14 +579,14 @@
                                             <rect key="frame" x="15" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1az-ye-8v7">
                                             <rect key="frame" x="15" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -681,17 +685,17 @@
                         <viewControllerLayoutGuide type="bottom" id="Vjz-LX-lFl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wXw-yP-xxL">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="384"/>
+                        <rect key="frame" x="0.0" y="0.0" width="560" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You aren't contributing to any playlists yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg9-74-riC">
-                                <rect key="frame" x="20" y="182" width="520" height="21"/>
+                                <rect key="frame" x="20" y="176" width="520" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KuZ-5Z-j7q">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="384"/>
+                                <rect key="frame" x="0.0" y="0.0" width="560" height="372"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" id="Lw7-ZZ-TnH">
@@ -754,6 +758,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8d0-9S-XdE"/>
-        <segue reference="4uN-4y-MnF"/>
+        <segue reference="Xc4-mX-DVK"/>
     </inferredMetricsTieBreakers>
 </document>

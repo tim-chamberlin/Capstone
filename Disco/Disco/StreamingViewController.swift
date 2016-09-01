@@ -14,6 +14,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     var session: SPTSession!
     var player: SPTAudioStreamingController = spotifyPlayer
+    var hostedPlaylist: Playlist? = PlaylistController.sharedController.hostedPlaylist
     
     var isPlaying: Bool = false
     
@@ -21,7 +22,8 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBOutlet weak var playbackControlsView: UIView!
     
     override func viewDidLoad() {
-        title = playlist.name
+        
+        title = hostedPlaylist?.name
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         
         spotifyPlayer.delegate = self
@@ -33,20 +35,21 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         addTrackObservers(forPlaylistType: .Hosting)
         
         let session = SPTAuth.defaultInstance().session
-        UserController.sharedController.loginToSpotifyUsingSession(session)
+//        UserController.sharedController.loginToSpotifyUsingSession(session)
     }
     
     deinit {
         // TODO: Add modal view segue to streaming vc and alert user that they will stop playing music
         spotifyPlayer.logout()
-        PlaylistController.sharedController.removeTrackObserverForPlaylist(playlist) { (success) in
+        PlaylistController.sharedController.removeTrackObserverForPlaylist(hostedPlaylist!) { (success) in
             //
         }
     }
     
     override func updateNextUpList() {
+        guard let playlist = playlist else { return }
         if !playlist.tracks.isEmpty {
-            self.playlist.tracks = self.playlist.tracks.filter { $0.firebaseUID != self.nowPlaying?.firebaseUID }
+//            self.playlist.tracks = self.playlist.tracks.filter { $0.firebaseUID != self.nowPlaying?.firebaseUID }
             playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
             tableView.reloadData()
         }
@@ -74,6 +77,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     override func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
         guard let currentUser = UserController.sharedController.currentUser, track = sender.track else { return }
+        guard let playlist = playlist else { return }
         
         TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist, ofPlaylistType: .Hosting) { (success) in
             //
@@ -118,13 +122,15 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     // Delete track from playlist in Firebase, set playing to false, set next playing track, popQueue, set player with new nowPlaying
     func moveToNextSong() {
+        guard let playlist = playlist else { return }
         guard let nowPlaying = nowPlaying else { return }
-        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: self.playlist) { (error) in
+        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: playlist) { (error) in
             spotifyPlayer.setIsPlaying(false, callback: { (error) in
                 if error == nil {
-                    if !self.playlist.tracks.isEmpty {
+                    guard let playlist = self.playlist else { return }
+                    if !playlist.tracks.isEmpty {
                         self.nowPlaying = nil
-                        self.nowPlaying = self.playlist.tracks[0]
+                        self.nowPlaying = playlist.tracks[0]
                         self.popQueue()
                         spotifyPlayer.playSpotifyURI(self.nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
                             if error == nil {
@@ -142,6 +148,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     // Remove last nowPlaying, replace it with the playlist.tracks[0], update playlist.tracks
     func popQueue() {
+        guard let playlist = playlist else { return }
         if !playlist.tracks.isEmpty {
             playlist.tracks = playlist.tracks.filter({ (track) -> Bool in
                 return track != nowPlaying

@@ -25,7 +25,6 @@ class HomeViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
         
         contributingVC.updatePlaylistTableView()
-        hostingVC.updatePlaylistTableView()
     }
 
     func setupSegmentedCcontroller() {
@@ -81,19 +80,12 @@ class HomeViewController: UIViewController {
             if let indexPath = contributingVC.contributingPlaylistsTableView.tableView.indexPathForSelectedRow {
                 destinationVC.playlist = contributingVC.contributingPlaylistsTableView.playlists[indexPath.row]
             }
-        } else if segue.identifier == "toStreamingController" {
-            guard let destinationVC = segue.destinationViewController as? StreamingViewController else { return }
-            if let indexPath = hostingVC.playlistsTableView.tableView.indexPathForSelectedRow {
-                destinationVC.playlist = hostingVC.playlistsTableView.playlists[indexPath.row]
-            }
         }
     }
     
     @IBAction func unwindToHomeViewController(segue: UIStoryboardSegue) {
         if let _ = segue.sourceViewController as? FriendPlaylistsViewController {
             contributingVC.updatePlaylistTableView()
-        } else if let _ = segue.sourceViewController as? NewPlaylistViewController {
-            hostingVC.updatePlaylistTableView()
         }
     }
     
@@ -110,4 +102,5 @@ class HomeViewController: UIViewController {
             self.performSegueWithIdentifier("toFriendsListSegue", sender: self)
         }
     }
+    
 }

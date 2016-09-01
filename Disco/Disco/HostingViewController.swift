@@ -11,20 +11,20 @@ import UIKit
 public let spotifyLoginNotificationKey = "spotifyLoginSuccessful"
 public let spotifyLogoutNotificationKey = "spotifyLogoutSuccessful"
 
-class HostingViewController: UIViewController, PlaylistTableViewDataSource, PlaylistTableViewDelegate, SPTAuthViewDelegate {
+class HostingViewController: UIViewController, SPTAuthViewDelegate {
     
-    var playlistsTableView: PlaylistListViewController!
+    var streamingVC: StreamingViewController!
     
-//    var session: SPTSession?
-    
+    @IBOutlet weak var streamingContainerView: UIView!
     @IBOutlet weak var spotifyLoginView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        playlistsTableView.delegate = self
         // Provides SPTAuth information for SPTAuthViewController
         UserController.sharedController.setupSPTAuth()
         checkSpotifyAuth()
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -37,25 +37,11 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
         let session = SPTAuth.defaultInstance().session
         if session.isValid() {
             self.spotifyLoginView.hidden = true
-            self.updatePlaylistTableView()
         } else {
             self.spotifyLoginView.hidden = false
         }
     }
     
-    func updatePlaylistTableView() {
-        // Specify PlaylistTableView's user
-        guard let currentUser = UserController.sharedController.currentUser else { return }
-        playlistsTableView.updatePlaylistViewWithUser(currentUser, withPlaylistType: .Hosting, withNoPlaylistsText: "You aren't currently hosting any playlists.")
-    }
-    
-    func didSelectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
-        self.parentViewController?.performSegueWithIdentifier("toStreamingController", sender: self)
-    }
-    
-    func didDeselectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
-        //
-    }
     
     // MARK: - Spotify Authentication
     
@@ -105,8 +91,6 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
         }
     }
     
-    
-    
     func checkSpotifyAuth() {
         let auth = SPTAuth.defaultInstance()
         
@@ -129,18 +113,26 @@ class HostingViewController: UIViewController, PlaylistTableViewDataSource, Play
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "playlistTVEmbedSegue" {
-            playlistsTableView = segue.destinationViewController as? PlaylistListViewController
+        if segue.identifier == "embedStreamingController" {
+            streamingVC = segue.destinationViewController as? StreamingViewController
         }
     }
     
     // MARK: - IBActions
     
-    @IBAction func loginToSpotifyTapped(sender: AnyObject) {
-        presentSPTAuthViewController()
+    @IBAction func startQueue(sender: AnyObject) {
+        PlaylistController.sharedController.createPlaylist("test", completion: { (success, playlist) in
+            if success {
+                guard let playlist = playlist, currentUser = UserController.sharedController.currentUser else { return }
+                PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
+//                    self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
+                    print("New queue created")
+                })
+            }
+        })
     }
     
-    @IBAction func hostNewPlaylistTapped(sender: AnyObject) {
-        self.parentViewController?.performSegueWithIdentifier("hostPlaylistSegue", sender: self)
+    @IBAction func loginToSpotifyTapped(sender: AnyObject) {
+        presentSPTAuthViewController()
     }
 }
