@@ -53,9 +53,8 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         if self.nowPlaying == nil {
             print("Queue new song to player")
             nowPlaying = playlist.tracks[0]
-            spotifyPlayer.playSpotifyURI(nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
-                self.tableView.reloadData()
-            })
+            guard let nowPlayingURI = nowPlaying?.spotifyURI else { return }
+            SpotifyStreamingController.initializePlayerWithURI(nowPlayingURI)
         }
     }
     
@@ -109,21 +108,35 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         playbackControlsView.hidden = true
     }
     
-//    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePlaybackStatus isPlaying: Bool) {
-//        SpotifyStreamingController.toggleIsPlaying(isPlaying) { (isPlaying) in
-//            //
-//        }
-//    }
-    
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePosition position: NSTimeInterval) {
         if (((audioStreaming.metadata.currentTrack?.duration)! - position) < 0.75) {
             // Queue next song
             print("\(nowPlaying?.name) ended")
-            if !playlist.tracks.isEmpty {
-                moveToNextSong()
-            } else {
-                return
-            }
+            moveToNextSong()
+        }
+    }
+    
+    // Delete track from playlist in Firebase, set playing to false, set next playing track, popQueue, set player with new nowPlaying
+    func moveToNextSong() {
+        guard let nowPlaying = nowPlaying else { return }
+        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: self.playlist) { (error) in
+            spotifyPlayer.setIsPlaying(false, callback: { (error) in
+                if error == nil {
+                    if !self.playlist.tracks.isEmpty {
+                        self.nowPlaying = nil
+                        self.nowPlaying = self.playlist.tracks[0]
+                        self.popQueue()
+                        spotifyPlayer.playSpotifyURI(self.nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
+                            if error == nil {
+                                print("Started playing next track")
+                            }
+                        })
+                    } else {
+                        self.popQueue()
+                        self.playButton.setTitle("Play", forState: .Normal)
+                    }
+                }
+            })
         }
     }
     
@@ -162,43 +175,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
-    func moveToNextSong() {
-        guard let nowPlaying = nowPlaying else { return }
-        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: self.playlist) { (error) in
-            spotifyPlayer.setIsPlaying(false, callback: { (error) in
-                if error == nil {
-                    self.nowPlaying = nil
-                    self.nowPlaying = self.playlist.tracks[0]
-                    self.popQueue()
-                    spotifyPlayer.playSpotifyURI(self.nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
-                        if error == nil {
-                            print("Started playing next track")
-                        }
-                    })
-                }
-            })
-        }
-    }
-    
     @IBAction func nextButtonTapped(sender: AnyObject) {
-        if !playlist.tracks.isEmpty {
-            moveToNextSong()
-        } else { // Clear tableview when there are no songs
-            guard let nowPlaying = nowPlaying else { return }
-            self.nowPlaying = nil
-            PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: self.playlist, completion: { (error) in
-                spotifyPlayer.setIsPlaying(false, callback: { (error) in
-                    if error == nil {
-                        self.playButton.setTitle("Play", forState: .Normal)
-                        self.popQueue()
-                    }
-                })
-            })
-        }
+        moveToNextSong()
     }
-    
-    
-    
-    
-    
 }

@@ -45,41 +45,38 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     func addTrackObservers(forPlaylistType playlistType: PlaylistType) {
         // Initial load
         PlaylistController.sharedController.fetchTracksForPlaylist(playlist) { (tracks, success) in
-            if let tracks = tracks {
-                self.playlist.tracks = tracks
+                self.playlist.tracks = tracks ?? []
                 NSNotificationCenter.defaultCenter().postNotificationName(kTrackListDidLoad, object: nil)
-                
-                // Clear trackList before adding observers
-                self.playlist.tracks = []
-                
-                
-                // Execute when initial load is finished
-                PlaylistController.sharedController.addTrackObserverForPlaylist(self.playlist, completion: { [weak self] (track, didAdd) in
-                    if let track = track, this = self {
-                        if didAdd {
-                            
-                            this.playlist.tracks.append(track)
+            
+            // Clear trackList before adding observers
+            self.playlist.tracks = []
+            
+            // Execute when initial load is finished
+            PlaylistController.sharedController.addTrackObserverForPlaylist(self.playlist, completion: { [weak self] (track, didAdd) in
+                if let track = track, this = self {
+                    if didAdd {
+                        
+                        this.playlist.tracks.append(track)
+                        NSNotificationCenter.defaultCenter().postNotificationName(kUpNextListDidUpdate, object: nil)
+                        
+                        // Get current user's vote status for the track (always 0 for new tracks) and set the cell accordingly
+                        TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: this.playlist.uid, ofType: playlistType, user: this.currentUser, completion: { (voteStatus, success) in
+                            track.currentUserVoteStatus = voteStatus
+                        })
+                        
+                        // Listen for votes
+                        TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: this.playlist, completion: { (newVoteCount, success) in
+                            track.voteCount = newVoteCount
+                            // upNext did update
                             NSNotificationCenter.defaultCenter().postNotificationName(kUpNextListDidUpdate, object: nil)
-                            
-                            // Get current user's vote status for the track (always 0 for new tracks) and set the cell accordingly
-                            TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: this.playlist.uid, ofType: playlistType, user: this.currentUser, completion: { (voteStatus, success) in
-                                track.currentUserVoteStatus = voteStatus
-                            })
-                            
-                            // Listen for votes
-                            TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: this.playlist, completion: { (newVoteCount, success) in
-                                track.voteCount = newVoteCount
-                                // upNext did update
-                                NSNotificationCenter.defaultCenter().postNotificationName(kUpNextListDidUpdate, object: nil)
-                            })
-                            
-                        } else { // Track removed
-                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackListDidRemoveSong, object: nil)
-                            this.playlist.tracks = this.playlist.tracks.filter { $0 != track }
-                        }
+                        })
+                        
+                    } else { // Track removed
+                        NSNotificationCenter.defaultCenter().postNotificationName(kTrackListDidRemoveSong, object: nil)
+                        this.playlist.tracks = this.playlist.tracks.filter { $0 != track }
                     }
-                })
-            }
+                }
+            })
         }
     }
     
