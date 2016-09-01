@@ -33,14 +33,13 @@ class SpotifyStreamingController {
         }
     }
     
-    static func playSongWithURI(spotifyURI: String) {
+    static func initializePlayerWithURI(spotifyURI: String) {
         if let player = spotifyPlayer {
             player.playSpotifyURI(spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
                 if error != nil {
                     print("Error playing track")
                 } else {
                     print("Success")
-                    //                    self.addNextSongToQueue()
                     spotifyPlayer.setIsPlaying(false, callback: { (error) in
                         if error != nil {
                             print(error)
@@ -50,14 +49,18 @@ class SpotifyStreamingController {
             })
         }
     }
-    
-    static func addNextSongToQueue(upNext: Track, completion: () -> Void) {
-        spotifyPlayer.queueSpotifyURI(upNext.spotifyURI) { (error) in
-            if error != nil {
-                print(error)
+
+    static func manuallySwitchToNextSong(nowPlaying: Track?, upNext: Track?, completion: (nowPlaying: Track?) -> Void) {
+        spotifyPlayer.setIsPlaying(false, callback: { (error) in
+            if error == nil {
+                spotifyPlayer.playSpotifyURI(upNext?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
+                    if error == nil {
+                        print("Started playing next track")
+                        completion(nowPlaying: nowPlaying)
+                    }
+                })
             }
-            completion()
-        }
+        })
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-let kTrackInfoDidUpdate = "TrackInfoDidUpdate"
+
 
 class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
@@ -27,7 +27,10 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
         
-        addTrackObservers()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.loadTrackList), name: kTrackListDidLoad, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StreamingViewController.updateNextUpList), name: kUpNextListDidUpdate, object: nil)
+        
+        addTrackObservers(forPlaylistType: .Hosting)
         
         let session = SPTAuth.defaultInstance().session
         UserController.sharedController.loginToSpotifyUsingSession(session)
@@ -41,35 +44,33 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
-    override func addTrackObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TrackListViewController.updateTrackData), name: kTrackInfoDidUpdate, object: nil)
-        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { [weak self] (track, didAdd) in
-            dispatch_async(dispatch_get_main_queue(), {
-                if let track = track, this = self {
-                    if didAdd {
-                        this.playlist.tracks.append(track)
-                        
-                        NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                        
-                        // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
-                        TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: this.playlist.uid, ofType: .Hosting, user: this.currentUser, completion: { (voteStatus, success) in
-                            track.currentUserVoteStatus = voteStatus
-                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                        })
-                        
-                        // Listen for other votes
-                        TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: this.playlist, completion: { (newVoteCount, success) in
-                            track.voteCount = newVoteCount
-                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                        })
-                    } else { // track removed
-                        print("\(track.name) was removed from playlist \(this.playlist.uid)")
-                        this.playlist.tracks = this.playlist.tracks.filter { $0 != track }
-                        NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                    }
-                }
+    override func updateNextUpList() {
+        if !playlist.tracks.isEmpty {
+            self.playlist.tracks = self.playlist.tracks.filter { $0.firebaseUID != self.nowPlaying?.firebaseUID }
+            playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
+            tableView.reloadData()
+        }
+        if self.nowPlaying == nil {
+            print("Queue new song to player")
+            nowPlaying = playlist.tracks[0]
+            spotifyPlayer.playSpotifyURI(nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
+                self.tableView.reloadData()
             })
         }
+    }
+    
+    func presentWarningAlert() {
+        let alert = UIAlertController(title: "Stop playing?", message: "If you exit this view, the music will stop playing!", preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in
+            return
+        }
+        let okayAction = UIAlertAction(title: "OK", style: .Default) { (_) in
+            spotifyPlayer.logout()
+            print("Spotify player logged out")
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okayAction)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
@@ -92,10 +93,9 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     // MARK: - Spotify Streaming
     
     func audioStreamingDidLogin(audioStreaming: SPTAudioStreamingController!) {
-        if !playlist.tracks.isEmpty {
-            // Queue the first track
-            let nowPlaying = self.playlist.tracks[0]
-            SpotifyStreamingController.playSongWithURI(nowPlaying.spotifyURI)
+        // Queue the first track when audio streaming controller logs in
+        if let nowPlaying = nowPlaying {
+            SpotifyStreamingController.initializePlayerWithURI(nowPlaying.spotifyURI)
         }
     }
     
@@ -109,56 +109,96 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         playbackControlsView.hidden = true
     }
     
+//    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePlaybackStatus isPlaying: Bool) {
+//        SpotifyStreamingController.toggleIsPlaying(isPlaying) { (isPlaying) in
+//            //
+//        }
+//    }
     
-    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack trackUri: String!) {
-        if let upNext = upNext {
-            if !upNext.isEmpty {
-                SpotifyStreamingController.addNextSongToQueue(upNext[0]) {
-                    print("Added next song to queue")
-                }
+    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePosition position: NSTimeInterval) {
+        if (((audioStreaming.metadata.currentTrack?.duration)! - position) < 0.75) {
+            // Queue next song
+            print("\(nowPlaying?.name) ended")
+            if !playlist.tracks.isEmpty {
+                moveToNextSong()
             } else {
                 return
             }
         }
     }
     
-    func audioStreaming(audioStreaming: SPTAudioStreamingController!, didStopPlayingTrack trackUri: String!) {
-        
+    // Remove last nowPlaying, replace it with the playlist.tracks[0], update playlist.tracks
+    func popQueue() {
+        if !playlist.tracks.isEmpty {
+            playlist.tracks = playlist.tracks.filter({ (track) -> Bool in
+                return track != nowPlaying
+            })
+            playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
+        } else { // TODO: else remove now playing and display "no songs" label
+            self.nowPlaying = nil
+        }
+        tableView.reloadData()
     }
     
-    func audioStreamingDidSkipToNextTrack(audioStreaming: SPTAudioStreamingController!) {
-        popQueue { (success) in
-            print("Popped top song from queue")
-        }
-    }
-    
-    func popQueue(completion: (success: Bool) -> Void) {
-        guard let nowPlaying = nowPlaying else { return }
-        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: playlist) { (error) in
-            print("Removed song after it was played")
-        }
-    }
+    // MARK: - IBACtions
     
     @IBAction override func addSongButtonTapped(sender: AnyObject) {
         self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
     }
     
     @IBAction func playButtonTapped(sender: AnyObject) {
-        SpotifyStreamingController.toggleIsPlaying(isPlaying) { [weak self] (isPlaying) in
-            if isPlaying {
-                self?.playButton.setTitle("Pause", forState: .Normal)
-                self?.isPlaying = true
-            } else {
-                self?.playButton.setTitle("Play", forState: .Normal)
-                self?.isPlaying = false
+        if let _ = self.nowPlaying {
+            SpotifyStreamingController.toggleIsPlaying(isPlaying) { [weak self] (isPlaying) in
+                if isPlaying {
+                    self?.playButton.setTitle("Pause", forState: .Normal)
+                    self?.isPlaying = true
+                } else {
+                    self?.playButton.setTitle("Play", forState: .Normal)
+                    self?.isPlaying = false
+                }
             }
+        } else {
+            return
+        }
+    }
+    
+    func moveToNextSong() {
+        guard let nowPlaying = nowPlaying else { return }
+        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: self.playlist) { (error) in
+            spotifyPlayer.setIsPlaying(false, callback: { (error) in
+                if error == nil {
+                    self.nowPlaying = nil
+                    self.nowPlaying = self.playlist.tracks[0]
+                    self.popQueue()
+                    spotifyPlayer.playSpotifyURI(self.nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
+                        if error == nil {
+                            print("Started playing next track")
+                        }
+                    })
+                }
+            })
         }
     }
     
     @IBAction func nextButtonTapped(sender: AnyObject) {
-        spotifyPlayer.skipNext { (error) in
-            //
+        if !playlist.tracks.isEmpty {
+            moveToNextSong()
+        } else { // Clear tableview when there are no songs
+            guard let nowPlaying = nowPlaying else { return }
+            self.nowPlaying = nil
+            PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: self.playlist, completion: { (error) in
+                spotifyPlayer.setIsPlaying(false, callback: { (error) in
+                    if error == nil {
+                        self.playButton.setTitle("Play", forState: .Normal)
+                        self.popQueue()
+                    }
+                })
+            })
         }
     }
+    
+    
+    
+    
     
 }

@@ -8,15 +8,17 @@
 
 import UIKit
 
+
+let kTrackListDidLoad = "TrackListDidLoad"
+let kUpNextListDidUpdate = "UpNextListDidUpdate"
+let kTrackListDidRemoveSong = "TrackListDidUpdate"
+
 class TrackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddTrackToPlaylistDelegate, TrackTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var playlist: Playlist!
-    
     var nowPlaying: Track?
-    var upNext: [Track]?
-    
     var currentUser: User = UserController.sharedController.currentUser!
     
     override func viewDidLoad() {
@@ -24,56 +26,96 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         title = playlist.name
         self.playlist.tracks = []
-        // Add observer for new tracks
-        addTrackObservers()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.loadTrackList), name: kTrackListDidLoad, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateNextUpList), name: kUpNextListDidUpdate, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateTrackList), name: kTrackListDidRemoveSong, object: nil)
+        
+        // Add observer for new tracks
+        addTrackObservers(forPlaylistType: .Hosting)
     }
     
     deinit {
         PlaylistController.sharedController.removeTrackObserverForPlaylist(playlist) { (success) in
-            //
+            
         }
     }
     
-    func addTrackObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateTrackData), name: kTrackInfoDidUpdate, object: nil)
-        PlaylistController.sharedController.addTrackObserverForPlaylist(playlist) { (track, didAdd) in
-            dispatch_async(dispatch_get_main_queue(), {
-                if let track = track {
-                    if didAdd {
-                        self.playlist.tracks.append(track)
-                        NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                        // Get current user's vote status for the track (always 0 for new tracks) and attach a listener for user votes
-                        TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: self.playlist.uid, ofType: .Contributing, user: self.currentUser, completion: { (voteStatus, success) in
-                            track.currentUserVoteStatus = voteStatus
-                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                        })
-                        
-                        TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: self.playlist, completion: { (newVoteCount, success) in
-                            track.voteCount = newVoteCount
-                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
-                        })
-                    } else { // track removed
-                        print("\(track.name) was removed from playlist \(self.playlist.uid)")
-                        self.playlist.tracks = self.playlist.tracks.filter { $0 != track }
-                        NSNotificationCenter.defaultCenter().postNotificationName(kTrackInfoDidUpdate, object: nil)
+    // Adds Firebase and NSNotificationCenter observers to TrackList VC
+    func addTrackObservers(forPlaylistType playlistType: PlaylistType) {
+        // Initial load
+        PlaylistController.sharedController.fetchTracksForPlaylist(playlist) { (tracks, success) in
+            if let tracks = tracks {
+                self.playlist.tracks = tracks
+                NSNotificationCenter.defaultCenter().postNotificationName(kTrackListDidLoad, object: nil)
+                
+                // Clear trackList before adding observers
+                self.playlist.tracks = []
+                
+                
+                // Execute when initial load is finished
+                PlaylistController.sharedController.addTrackObserverForPlaylist(self.playlist, completion: { [weak self] (track, didAdd) in
+                    if let track = track, this = self {
+                        if didAdd {
+                            
+                            this.playlist.tracks.append(track)
+                            NSNotificationCenter.defaultCenter().postNotificationName(kUpNextListDidUpdate, object: nil)
+                            
+                            // Get current user's vote status for the track (always 0 for new tracks) and set the cell accordingly
+                            TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: this.playlist.uid, ofType: playlistType, user: this.currentUser, completion: { (voteStatus, success) in
+                                track.currentUserVoteStatus = voteStatus
+                            })
+                            
+                            // Listen for votes
+                            TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: this.playlist, completion: { (newVoteCount, success) in
+                                track.voteCount = newVoteCount
+                                // upNext did update
+                                NSNotificationCenter.defaultCenter().postNotificationName(kUpNextListDidUpdate, object: nil)
+                            })
+                            
+                        } else { // Track removed
+                            NSNotificationCenter.defaultCenter().postNotificationName(kTrackListDidRemoveSong, object: nil)
+                            this.playlist.tracks = this.playlist.tracks.filter { $0 != track }
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     }
     
-    func updateTrackData() {
-        playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
+    // Called when songs in upNext are voted on/added, make sure nowPlaying isn't included twice
+    func updateNextUpList() {
+        if !playlist.tracks.isEmpty {
+            self.playlist.tracks = self.playlist.tracks.filter { $0.firebaseUID != self.nowPlaying?.firebaseUID }
+            playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
+            tableView.reloadData()
+        } else if nowPlaying == nil {
+            nowPlaying = playlist.tracks[0]
+        }
+    }
+    
+    // Called whenever the streamer goes to the next song (when the top track is deleted)
+    func updateTrackList() {
+        if !playlist.tracks.isEmpty {
+            nowPlaying = playlist.tracks[0]
+            playlist.tracks = playlist.tracks.filter({ (track) -> Bool in
+                return track != nowPlaying
+            })
+            tableView.reloadData()
+        } else {
+            // TODO: Show no tracks label, hide tableView
+        }
+    }
+    
+    // Should only be called on initial load to get first nowPlaying track
+    func loadTrackList() {
         nowPlaying = playlist.tracks[0]
-        upNext = playlist.tracks.filter({ (track) -> Bool in
+        playlist.tracks = playlist.tracks.filter({ (track) -> Bool in
             return track != playlist.tracks[0]
         })
-        
-        guard var upNext = upNext else { return }
-        upNext = TrackController.sortTracklistByVoteCount(upNext)
-        tableView.reloadData()
     }
+    
+    // MARK: - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if let _ = nowPlaying {
@@ -88,10 +130,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             if section == 0 {
                 return 1
             } else if section == 1 {
-                guard let upNext = upNext else {
-                    return 0
-                }
-                return upNext.count
+                return playlist.tracks.count
             }
         }
         // No tracks
@@ -110,14 +149,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.votingStackView.hidden = true
                 cell.delegate = self
             } else {
-                guard let track = upNext?[indexPath.row] else { return UITableViewCell() }
+                let track = playlist.tracks[indexPath.row]
                 cell.track = track
                 cell.voteStatus = track.currentUserVoteStatus
                 cell.updateCellWithTrack(track)
                 cell.delegate = self
             }
         }
-        
         return cell
     }
     
