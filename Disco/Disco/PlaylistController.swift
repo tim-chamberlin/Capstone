@@ -145,8 +145,8 @@ class PlaylistController {
     }
     
     
-    func addTrack(track: Track, toPlaylist playlist: Playlist, completion: (success: Bool) -> Void) {
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).childByAutoId().setValue(track.jsonValue) { (error, _) in
+    func addTrack(track: Track, toQueue queue: Playlist, completion: (success: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).childByAutoId().setValue(track.jsonValue) { (error, _) in
             if error == nil {
                 completion(success: true)
             } else {
@@ -156,8 +156,8 @@ class PlaylistController {
         }
     }
     
-    func removeTrack(track: Track, fromPlaylist playlist: Playlist, completion: (error: NSError?) -> Void) {
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).child(track.firebaseUID).removeValueWithCompletionBlock { (error, _) in
+    func removeTrack(track: Track, fromUpNextInQueue queue: Playlist, completion: (error: NSError?) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).child(track.firebaseUID).removeValueWithCompletionBlock { (error, _) in
             if error == nil {
                 completion(error: nil)
             } else {
@@ -225,37 +225,6 @@ class PlaylistController {
         })
     }
     
-    
-    
-    
-    
-    // OLD
-    
-    func addTrackObserverForPlaylist(playlist: Playlist, completion: (track: Track?, didAdd: Bool) -> Void) {
-        
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).observeEventType(.ChildAdded, withBlock: { (snapshot) in
-            guard let trackDictionary = snapshot.value as? [String: AnyObject] else { return }
-            let track = Track(firebaseDictionary: trackDictionary, uid: snapshot.key)
-            completion(track: track, didAdd: true)
-        })
-        
-        // Observe deletions
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).observeEventType(.ChildRemoved, withBlock: { (snapshot) in
-            guard let trackDictionary = snapshot.value as? [String: AnyObject] else {
-                print("error")
-                return
-            }
-            let track = Track(firebaseDictionary: trackDictionary, uid: snapshot.key)
-            completion(track: track, didAdd: false)
-        })
-    }
-    
-    
-    
-    
-    
-    
-    
     func removeTrackObserverForPlaylist(playlist: Playlist, completion: (success: Bool) -> Void) {
         firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).removeAllObservers()
         completion(success: true)
@@ -271,14 +240,24 @@ class PlaylistController {
     
     // MARK: - Queue Managment Methods
     
-    func changeQueueInFirebase(queue: Playlist, oldNowPlaying: Track?, newNowPlaying: Track, completion: () -> Void) {
-        if let oldNowPlaying = oldNowPlaying { // Track is now playing
-            
+    func changeQueueInFirebase(queue: Playlist, oldNowPlaying: Track?, newNowPlaying: Track?, completion: (newNowPlaying: Track?) -> Void) {
+        if let _ = oldNowPlaying, newNowPlaying = newNowPlaying { // Track is now playing and queue has at least one song in it
+            // Remove track from nowPlaying, replace it with newNowPlaying, remove newNowPlaying from upNext array
+            removeTrack(newNowPlaying, fromUpNextInQueue: queue, completion: { (error) in
+                self.setNowPlaying(newNowPlaying, forQueue: queue, completion: { 
+                    completion(newNowPlaying: newNowPlaying)
+                })
+            })
+        } else if let _ = oldNowPlaying { // No tracks in upNext
+            setNowPlaying(nil, forQueue: queue, completion: { 
+                completion(newNowPlaying: nil)
+            })
+        } else if let newNowPlaying = newNowPlaying { // No tracks in nowPlaying
+            setNowPlaying(newNowPlaying, forQueue: queue, completion: { 
+                completion(newNowPlaying: newNowPlaying)
+            })
         }
     }
-    
-    
-    
     
     // MARK: - Manage Playlist Contributors
     

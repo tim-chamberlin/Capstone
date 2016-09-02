@@ -44,8 +44,43 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
+    func addTrackObservers(forPlaylistType playlistType: PlaylistType) {
+        guard let queue = playlist, currentUser = UserController.sharedController.currentUser else { return }
+        PlaylistController.sharedController.addUpNextObserverToQueue(queue) { (track, didAdd) in
+            if let track = track {
+                if didAdd {
+                    queue.upNext.append(track)
+                    self.updateTableViewWithQueueData()
+                    
+                    // Add vote observers
+                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: queue.uid, ofType: playlistType, user: currentUser, completion: { (voteStatus, success) in
+                        if success {
+                            track.currentUserVoteStatus = voteStatus
+                            self.updateTableViewWithQueueData()
+                        }
+                    })
+                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: queue, completion: { (newVoteCount, success) in
+                        track.voteCount = newVoteCount
+                        self.updateTableViewWithQueueData()
+                    })
+                } else { // Track removed
+                    queue.upNext = queue.upNext.filter { $0 != track }
+                    self.updateTableViewWithQueueData()
+                }
+            }
+        }
+    }
+    
+    func updateTableViewWithQueueData() {
+        guard let queue = playlist else { return }
+        queue.upNext = TrackController.sortTracklistByVoteCount(queue.upNext)
+        tableView.reloadData()
+    }
+    
+
     func didSetHostedPlaylist() {
         self.playlist = PlaylistController.sharedController.hostedPlaylist
+        addTrackObservers(forPlaylistType: .Hosting)
         tableView.reloadData()
     }
     
@@ -128,7 +163,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     func audioStreamingDidLogin(audioStreaming: SPTAudioStreamingController!) {
         // Queue the first track when audio streaming controller logs in
-        if let nowPlaying = nowPlaying {
+        if let nowPlaying = playlist?.nowPlaying {
             SpotifyStreamingController.initializePlayerWithURI(nowPlaying.spotifyURI)
         }
     }
@@ -146,31 +181,25 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePosition position: NSTimeInterval) {
         if (((audioStreaming.metadata.currentTrack?.duration)! - position) < 0.75) {
             // Queue next song
-            print("\(nowPlaying?.name) ended")
+            print("\(playlist?.nowPlaying?.name) ended")
             moveToNextSong()
         }
     }
     
     // Delete track from playlist in Firebase, set playing to false, set next playing track, popQueue, set player with new nowPlaying
     func moveToNextSong() {
-        guard let playlist = playlist else { return }
-        guard let nowPlaying = nowPlaying else { return }
-        PlaylistController.sharedController.removeTrack(nowPlaying, fromPlaylist: playlist) { (error) in
-            spotifyPlayer.setIsPlaying(false, callback: { (error) in
-                if error == nil {
-                    guard let playlist = self.playlist else { return }
-                    if !playlist.upNext.isEmpty {
-                        self.nowPlaying = nil
-                        self.nowPlaying = playlist.upNext[0]
-                        spotifyPlayer.playSpotifyURI(self.nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
-                            if error == nil {
-                                print("Started playing next track")
-                            }
-                        })
-                    } else {
-                        self.playButton.setTitle("Play", forState: .Normal)
+        guard let queue = playlist else { return }
+        if !queue.upNext.isEmpty {
+            PlaylistController.sharedController.changeQueueInFirebase(queue, oldNowPlaying: queue.nowPlaying, newNowPlaying: queue.upNext[0], completion: { (newNowPlaying) in
+                spotifyPlayer.playSpotifyURI(newNowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
+                    if error == nil {
+                        print("Started playing \(newNowPlaying?.name)")
                     }
-                }
+                })
+            })
+        } else { // there are no songs in the queue
+            PlaylistController.sharedController.changeQueueInFirebase(queue, oldNowPlaying: queue.nowPlaying, newNowPlaying: nil, completion: { (newNowPlaying) in
+                // stop playing
             })
         }
     }
@@ -192,7 +221,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
 
     
     @IBAction func playButtonTapped(sender: AnyObject) {
-        if let _ = self.nowPlaying {
+        if let _ = playlist?.nowPlaying {
             SpotifyStreamingController.toggleIsPlaying(isPlaying) { [weak self] (isPlaying) in
                 if isPlaying {
                     self?.playButton.setTitle("Pause", forState: .Normal)
@@ -210,6 +239,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBAction func nextButtonTapped(sender: AnyObject) {
         moveToNextSong()
     }
+    
     @IBAction func addTrackButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
     }

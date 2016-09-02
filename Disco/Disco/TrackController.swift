@@ -45,7 +45,7 @@ class TrackController {
     
     func attachVoteListener(forTrack track: Track, inPlaylist playlist: Playlist, completion: (newVoteCount: Int, success: Bool) -> Void) {
         // TODO: Will tracks have UIDs at this point?
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).child(track.firebaseUID).child(Track.kVoteCount).observeEventType(.Value, withBlock: { (snapshot) in
+        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).child(track.firebaseUID).child(Track.kVoteCount).observeEventType(.Value, withBlock: { (snapshot) in
             guard let voteCount = snapshot.value as? Int else { return }
             completion(newVoteCount: voteCount, success: true)
         }) { (error) in
@@ -77,7 +77,7 @@ class TrackController {
     
     func user(user: User, didVoteWithType voteType: VoteType, withVoteStatus voteStatus: VoteType, onTrack track: Track, inPlaylist playlist: Playlist, ofPlaylistType playlistType: PlaylistType, completion: (success: Bool) -> Void) {
         // get track's current votecount
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).child(track.firebaseUID).child(Track.kVoteCount).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).child(track.firebaseUID).child(Track.kVoteCount).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard var voteCount = snapshot.value as? Int else { return }
             
             switch voteStatus {
@@ -102,7 +102,7 @@ class TrackController {
             }
             
             // set track's votecount in playlist model
-            firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kTrackList).child(track.firebaseUID).child(Track.kVoteCount).setValue(voteCount, withCompletionBlock: { (error, _) in
+            firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).child(track.firebaseUID).child(Track.kVoteCount).setValue(voteCount, withCompletionBlock: { (error, _) in
                 if error != nil {
                     print(error?.localizedDescription)
                 } else {

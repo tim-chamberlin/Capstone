@@ -18,7 +18,6 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     
     var playlist: Playlist?
-    var nowPlaying: Track?
     var currentUser: User = UserController.sharedController.currentUser!
     
     override func viewDidLoad() {
@@ -36,41 +35,37 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if let _ = nowPlaying {
-            return 2
-        } else { // No tracks
-            return 0
-        }
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let _ = nowPlaying {
-            if section == 0 {
-                return 1
-            } else if section == 1 {
-                 return playlist != nil ? playlist!.upNext.count : 0
-            }
+        guard let playlist = playlist else { return 0 }
+        if section == 0 {
+            return playlist.nowPlaying != nil ? 1 : 0
+        } else if section == 1 {
+            return playlist.upNext.count
         }
-        // No tracks
         return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell, playlist = playlist else { return UITableViewCell() }
         
-        if let nowPlaying = nowPlaying {
-            if indexPath.section == 0 {
+        if indexPath.section == 0 {
+            if let nowPlaying = playlist.nowPlaying {
                 let track = nowPlaying
                 cell.track = track
                 cell.voteStatus = track.currentUserVoteStatus
                 cell.updateCellWithTrack(track)
                 cell.votingStackView.hidden = true
                 cell.delegate = self
-            } else {
-                let track = playlist?.upNext[indexPath.row]
+            }
+        } else if indexPath.section == 1 {
+            if !playlist.upNext.isEmpty {
+                let track = playlist.upNext[indexPath.row]
                 cell.track = track
-//                cell.voteStatus = track?.currentUserVoteStatus
-//                cell.updateCellWithTrack(track)
+                cell.voteStatus = track.currentUserVoteStatus
+                cell.updateCellWithTrack(track)
                 cell.delegate = self
             }
         }
@@ -104,7 +99,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     func willAddTrackToPlaylist(track: Track) {
         
         track.playlistID = self.playlist!.uid
-        PlaylistController.sharedController.addTrack(track, toPlaylist: self.playlist!) { (success) in
+        PlaylistController.sharedController.addTrack(track, toQueue: self.playlist!) { (success) in
             // Fetch playlist tracks and reload tableView
             print("Update playlist with track: \(track.name)")
         }

@@ -55,13 +55,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Disco/TrackListViewController.swift"
-            timestampString = "494542079.885557"
+            filePath = "Disco/PlaylistController.swift"
+            timestampString = "494544934.450154"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "prepareForSegue(_:sender:)"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "changeQueueInFirebase(_:oldNowPlaying:newNowPlaying:completion:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Disco/PlaylistController.swift"
+            timestampString = "494544934.450154"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "changeQueueInFirebase(_:oldNowPlaying:newNowPlaying:completion:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Disco/PlaylistController.swift"
+            timestampString = "494544934.450154"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "changeQueueInFirebase(_:oldNowPlaying:newNowPlaying:completion:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

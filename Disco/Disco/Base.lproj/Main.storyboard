@@ -614,7 +614,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchedTrackCell" textLabel="o7j-f0-IbR" detailTextLabel="1az-ye-8v7" style="IBUITableViewCellStyleSubtitle" id="cyM-Nb-TQa">
-                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cyM-Nb-TQa" id="D1z-IL-B24">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -802,7 +802,7 @@
         <image name="Login With Spotify Button" width="286" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8d0-9S-XdE"/>
         <segue reference="Xc4-mX-DVK"/>
+        <segue reference="eKd-1u-Ayq"/>
     </inferredMetricsTieBreakers>
 </document>
