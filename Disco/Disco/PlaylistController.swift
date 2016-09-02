@@ -117,6 +117,34 @@ class PlaylistController {
     }
         
     // MARK: - Add/Remove a track
+    
+    func setNowPlaying(track: Track?, forQueue queue: Playlist, completion: () -> Void) {
+        if let track = track {
+            firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).child(track.firebaseUID).setValue(track.jsonValue, withCompletionBlock: { (error, _) in
+                if error == nil {
+                    completion()
+                } else {
+                    print(error?.localizedDescription)
+                }
+            })
+        } else { // Clear nowPlaying
+            removeNowPlayingFromQueue(queue, completion: { 
+                //
+            })
+        }
+    }
+    
+    func removeNowPlayingFromQueue(queue: Playlist, completion: () -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).setValue(false, withCompletionBlock: { (error, _) in
+            if error == nil {
+                completion()
+            } else {
+                print(error?.localizedDescription)
+            }
+        })
+    }
+    
+    
     func addTrack(track: Track, toPlaylist playlist: Playlist, completion: (success: Bool) -> Void) {
         firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).childByAutoId().setValue(track.jsonValue) { (error, _) in
             if error == nil {
@@ -164,13 +192,44 @@ class PlaylistController {
     // MARK: - Track Observers
     
     
-    func addNowPlayingObserverToQueue(queue: Playlist, completion: () -> Void) {
+    func addNowPlayingObserverToQueue(queue: Playlist, completion: (track: Track?, didAdd: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            guard let trackDictionary = snapshot.value as? [String: AnyObject] else { return }
+            let track = Track(firebaseDictionary: trackDictionary, uid: snapshot.key)
+            completion(track: track, didAdd: true)
+            
+        })
         
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).observeEventType(.ChildRemoved, withBlock: { (snapshot) in
+            guard let trackDictionary = snapshot.value as? [String: AnyObject] else { return }
+            let track = Track(firebaseDictionary: trackDictionary, uid: snapshot.key)
+            completion(track: track, didAdd: false)
+        })
     }
     
-    func addUpNextObserverToQueue(queue: Playlist, completion: () -> Void) {
+    func addUpNextObserverToQueue(queue: Playlist, completion: (track: Track?, didAdd: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            guard let trackDictionary = snapshot.value as? [String: AnyObject] else { return }
+            let track = Track(firebaseDictionary: trackDictionary, uid: snapshot.key)
+            completion(track: track, didAdd: true)
+        })
         
+        // Observe deletions
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).observeEventType(.ChildRemoved, withBlock: { (snapshot) in
+            guard let trackDictionary = snapshot.value as? [String: AnyObject] else {
+                print("error")
+                return
+            }
+            let track = Track(firebaseDictionary: trackDictionary, uid: snapshot.key)
+            completion(track: track, didAdd: false)
+        })
     }
+    
+    
+    
+    
+    
+    // OLD
     
     func addTrackObserverForPlaylist(playlist: Playlist, completion: (track: Track?, didAdd: Bool) -> Void) {
         
@@ -191,6 +250,12 @@ class PlaylistController {
         })
     }
     
+    
+    
+    
+    
+    
+    
     func removeTrackObserverForPlaylist(playlist: Playlist, completion: (success: Bool) -> Void) {
         firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).removeAllObservers()
         completion(success: true)
@@ -200,6 +265,16 @@ class PlaylistController {
     
     func deletePlaylist() {
         
+    }
+    
+    
+    
+    // MARK: - Queue Managment Methods
+    
+    func changeQueueInFirebase(queue: Playlist, oldNowPlaying: Track?, newNowPlaying: Track, completion: () -> Void) {
+        if let oldNowPlaying = oldNowPlaying { // Track is now playing
+            
+        }
     }
     
     
