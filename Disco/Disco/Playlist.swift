@@ -23,8 +23,6 @@ class Playlist {
     let name: String
     let hostID: String
     var trackUids: [String]
-
-    var tracks: [Track] = []
     
     var upNext: [Track] = []
     var nowPlaying: Track?
@@ -40,8 +38,6 @@ class Playlist {
         }
         return dictionary
     }
-    
-    
     
     var jsonValue: [String: AnyObject] {
         return [Playlist.kPlaylistName:self.name, Playlist.kUpNext: self.upNext, Playlist.kHostID: self.hostID, Playlist.kContributorsList: self.contributorIDs]
@@ -72,7 +68,6 @@ class Playlist {
         }
         
         self.trackUids = []
-        self.tracks = []
         
         self.nowPlaying = nil
         self.upNext = []

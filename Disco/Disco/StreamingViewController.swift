@@ -12,6 +12,8 @@ import UIKit
 
 class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
+    var spotifyLoginVC: SpotifyLoginViewController!
+    
     var session: SPTSession!
     var player: SPTAudioStreamingController = spotifyPlayer
     var hostedPlaylist: Playlist? = PlaylistController.sharedController.hostedPlaylist
@@ -20,21 +22,19 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playbackControlsView: UIView!
+    @IBOutlet weak var spotifyLoginContainer: UIView!
     
     override func viewDidLoad() {
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.spotifyUserDidLogin(_:)), name: kSpotifyLoginNotificationKey, object: nil)
         title = hostedPlaylist?.name
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
+        
+        checkSpotifyAuth()
         
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.loadTrackList), name: kTrackListDidLoad, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StreamingViewController.updateNextUpList), name: kUpNextListDidUpdate, object: nil)
-        
-        addTrackObservers(forPlaylistType: .Hosting)
-        
-        let session = SPTAuth.defaultInstance().session
+    
 //        UserController.sharedController.loginToSpotifyUsingSession(session)
     }
     
@@ -44,35 +44,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         PlaylistController.sharedController.removeTrackObserverForPlaylist(hostedPlaylist!) { (success) in
             //
         }
-    }
-    
-    override func updateNextUpList() {
-        guard let playlist = playlist else { return }
-        if !playlist.tracks.isEmpty {
-//            self.playlist.tracks = self.playlist.tracks.filter { $0.firebaseUID != self.nowPlaying?.firebaseUID }
-            playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
-            tableView.reloadData()
-        }
-        if self.nowPlaying == nil {
-            print("Queue new song to player")
-            nowPlaying = playlist.tracks[0]
-            guard let nowPlayingURI = nowPlaying?.spotifyURI else { return }
-            SpotifyStreamingController.initializePlayerWithURI(nowPlayingURI)
-        }
-    }
-    
-    func presentWarningAlert() {
-        let alert = UIAlertController(title: "Stop playing?", message: "If you exit this view, the music will stop playing!", preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in
-            return
-        }
-        let okayAction = UIAlertAction(title: "OK", style: .Default) { (_) in
-            spotifyPlayer.logout()
-            print("Spotify player logged out")
-        }
-        alert.addAction(cancelAction)
-        alert.addAction(okayAction)
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
@@ -91,6 +62,63 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
         alert.addAction(okayAction)
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Spotify Check Auth
+    
+    func setupSpotifyLoginView() {
+        if let session = SPTAuth.defaultInstance().session {
+            if session.isValid() {
+                // Spotify session is valid
+                self.spotifyLoginContainer.hidden = true
+                return
+            } else {
+                self.spotifyLoginContainer.hidden = false
+                return
+            }
+        } else {
+            self.spotifyLoginContainer.hidden = false
+        }
+    }
+    
+    func checkSpotifyAuth() {
+        let auth = SPTAuth.defaultInstance()
+        
+        if auth.session == nil {
+            setupSpotifyLoginView()
+            return
+        }
+        if !auth.session.isValid() {
+            // Should hide login
+            setupSpotifyLoginView()
+            return
+        }
+        
+        if auth.hasTokenRefreshService {
+            renewSpotifyTokenAndShowPlayer()
+            setupSpotifyLoginView()
+        } else {
+            // Should show login
+            setupSpotifyLoginView()
+        }
+    }
+    
+    func spotifyUserDidLogin(notification: NSNotification) {
+        guard let userInfo = notification.userInfo as? [String: SPTSession], session = userInfo[kSpotifyLoginNotificationKey] else { return }
+        checkSpotifyAuth()
+        UserController.sharedController.loginToSpotifyUsingSession(session)
+    }
+    
+    func renewSpotifyTokenAndShowPlayer() {
+        let auth = SPTAuth.defaultInstance()
+        auth.renewSession(auth.session) { (error, session) in
+            auth.session = session
+            if (error != nil) {
+                print("Error renewing Spotify session")
+                return
+            }
+            // show player
+        }
     }
     
     // MARK: - Spotify Streaming
@@ -128,17 +156,15 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             spotifyPlayer.setIsPlaying(false, callback: { (error) in
                 if error == nil {
                     guard let playlist = self.playlist else { return }
-                    if !playlist.tracks.isEmpty {
+                    if !playlist.upNext.isEmpty {
                         self.nowPlaying = nil
-                        self.nowPlaying = playlist.tracks[0]
-                        self.popQueue()
+                        self.nowPlaying = playlist.upNext[0]
                         spotifyPlayer.playSpotifyURI(self.nowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
                             if error == nil {
                                 print("Started playing next track")
                             }
                         })
                     } else {
-                        self.popQueue()
                         self.playButton.setTitle("Play", forState: .Normal)
                     }
                 }
@@ -146,18 +172,13 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
-    // Remove last nowPlaying, replace it with the playlist.tracks[0], update playlist.tracks
-    func popQueue() {
-        guard let playlist = playlist else { return }
-        if !playlist.tracks.isEmpty {
-            playlist.tracks = playlist.tracks.filter({ (track) -> Bool in
-                return track != nowPlaying
-            })
-            playlist.tracks = TrackController.sortTracklistByVoteCount(playlist.tracks)
-        } else { // TODO: else remove now playing and display "no songs" label
-            self.nowPlaying = nil
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "embedSpotifyLoginSegue" {
+            spotifyLoginVC = segue.destinationViewController as! SpotifyLoginViewController
         }
-        tableView.reloadData()
     }
     
     // MARK: - IBACtions
