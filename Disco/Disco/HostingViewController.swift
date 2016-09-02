@@ -30,14 +30,6 @@ class HostingViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func startQueue(sender: AnyObject) {
-        PlaylistController.sharedController.createPlaylist("test", completion: { (success, playlist) in
-            if success {
-                guard let playlist = playlist, currentUser = UserController.sharedController.currentUser else { return }
-                PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
-//                    self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
-                    print("New queue created")
-                })
-            }
-        })
+        
     }
 }

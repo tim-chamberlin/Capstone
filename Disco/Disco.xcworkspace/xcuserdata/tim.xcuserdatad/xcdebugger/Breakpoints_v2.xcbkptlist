@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Disco/HomeViewController.swift"
-            timestampString = "494465358.746173"
+            timestampString = "494540749.139673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117">
+            startingLineNumber = "129"
+            endingLineNumber = "129">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -24,11 +24,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494539890.568607"
+            timestampString = "494540940.993342"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "deinit"
             landmarkType = "5">
          </BreakpointContent>
@@ -46,22 +46,6 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "authenticationViewController(_:didLoginWithSession:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494540526.54632"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "audioStreamingDidLogin(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

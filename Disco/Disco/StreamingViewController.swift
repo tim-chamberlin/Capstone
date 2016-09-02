@@ -26,16 +26,14 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     override func viewDidLoad() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.spotifyUserDidLogin(_:)), name: kSpotifyLoginNotificationKey, object: nil)
-        title = hostedPlaylist?.name
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSetHostedPlaylist), name: kDidSetHostedPlaylist, object: nil)
+        
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         
         checkSpotifyAuth()
         
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
-        
-    
-//        UserController.sharedController.loginToSpotifyUsingSession(session)
     }
     
     deinit {
@@ -44,6 +42,11 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         PlaylistController.sharedController.removeTrackObserverForPlaylist(hostedPlaylist!) { (success) in
             //
         }
+    }
+    
+    func didSetHostedPlaylist() {
+        self.playlist = PlaylistController.sharedController.hostedPlaylist
+        tableView.reloadData()
     }
     
     override func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {

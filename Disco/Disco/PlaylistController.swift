@@ -9,11 +9,16 @@
 import Foundation
 import FirebaseDatabase
 
+let kDidSetHostedPlaylist = "DidSetHostedPlaylist"
 
 class PlaylistController {
     
     static let sharedController = PlaylistController()
-    var hostedPlaylist: Playlist?
+    var hostedPlaylist: Playlist? {
+        didSet {
+            NSNotificationCenter.defaultCenter().postNotificationName(kDidSetHostedPlaylist, object: nil)
+        }
+    }
     
     init () {
         guard let currentUser = UserController.sharedController.currentUser else { return }
@@ -32,7 +37,7 @@ class PlaylistController {
     func createPlaylist(name: String, completion: (success: Bool, playlist: Playlist?) -> Void) {
         // Generate new uid in Playlists directory
         let key = firebaseRef.child(Playlist.parentDirectory).childByAutoId().key
-        let playlist = Playlist(uid: key, name: "test")
+        let playlist = Playlist(uid: key)
         firebaseRef.child(Playlist.parentDirectory).child(key).setValue(playlist.jsonValue) { (error, _) in
             if error == nil {
                 print("Created new playlist")

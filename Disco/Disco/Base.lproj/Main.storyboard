@@ -124,6 +124,11 @@
                                 <action selector="logoutButtonTapped:" destination="5aj-mc-2ib" id="DEI-2y-wWU"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="New Queue" id="yt8-Z3-5Zv">
+                            <connections>
+                                <action selector="newQueueTapped:" destination="5aj-mc-2ib" id="vSb-sT-6ab"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="contributingContainerView" destination="aBx-yo-cbn" id="ahJ-gj-V8B"/>

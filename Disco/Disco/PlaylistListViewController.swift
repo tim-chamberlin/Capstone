@@ -63,7 +63,7 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         
         let playlist = self.playlists[indexPath.row]
         
-        cell.textLabel?.text = playlist.name
+//        cell.textLabel?.text = playlist.name
         
         return cell
     }

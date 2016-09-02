@@ -10,7 +10,7 @@ import Foundation
 
 class Playlist {
     
-    static let parentDirectory = "playlists"
+    static let parentDirectory = "queues"
     
     static let kPlaylistName = "name"
     static let kTrackList = "tracks"
@@ -20,7 +20,7 @@ class Playlist {
     static let kContributorsList = "contributorIDs"
     
     let uid: String
-    let name: String
+//    let name: String
     let hostID: String
     var trackUids: [String]
     
@@ -40,24 +40,22 @@ class Playlist {
     }
     
     var jsonValue: [String: AnyObject] {
-        return [Playlist.kPlaylistName:self.name, Playlist.kUpNext: self.upNext, Playlist.kHostID: self.hostID, Playlist.kContributorsList: self.contributorIDs]
+        return [Playlist.kUpNext: self.upNext, Playlist.kHostID: self.hostID, Playlist.kContributorsList: self.contributorIDs]
     }
     
-    init(uid: String, name: String, trackIDs: [String] = [], contributorIDs: [String] = [], hostID: String = (UserController.sharedController.currentUser?.FBID)!) {
+    init(uid: String, trackIDs: [String] = [], contributorIDs: [String] = [], hostID: String = (UserController.sharedController.currentUser?.FBID)!) {
         self.uid = uid
-        self.name = name
         self.trackUids = trackIDs
         self.hostID = hostID
         self.contributorIDs = contributorIDs
     }
     
     init?(dictionary: [String: AnyObject], uid: String) {
-        guard let name = dictionary[Playlist.kPlaylistName] as? String, hostID = dictionary[Playlist.kHostID] as? String else {
+        guard let hostID = dictionary[Playlist.kHostID] as? String else {
             return nil
         }
         
         self.uid = uid
-        self.name = name
         self.hostID = hostID
         
         // There might not be any contributors
@@ -68,7 +66,6 @@ class Playlist {
         }
         
         self.trackUids = []
-        
         self.nowPlaying = nil
         self.upNext = []
     }    
