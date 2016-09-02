@@ -223,9 +223,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZ9-SF-Ypd">
-                                        <rect key="frame" x="175" y="422" width="210" height="30"/>
+                                        <rect key="frame" x="178" y="422" width="205" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Contribute to a friend's playlist">
+                                        <state key="normal" title="Contribute to a friend's queue">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -340,12 +340,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6yV-UH-1Px">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
-                                <connections>
-                                    <segue destination="NOE-V7-5ps" kind="embed" identifier="embedSpotifyLoginSegue" id="mNN-CX-ifT"/>
-                                </connections>
-                            </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tI9-kz-XUu">
                                 <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                                 <subviews>
@@ -410,6 +404,12 @@
                                     <constraint firstAttribute="trailing" secondItem="LSm-eL-tfw" secondAttribute="trailing" id="vge-Iz-JTc"/>
                                 </constraints>
                             </stackView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6yV-UH-1Px">
+                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <connections>
+                                    <segue destination="NOE-V7-5ps" kind="embed" identifier="embedSpotifyLoginSegue" id="mNN-CX-ifT"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -460,7 +460,7 @@
                                             <action selector="loginToSpotifyTapped:" destination="NOE-V7-5ps" eventType="touchUpInside" id="PN4-C7-dxo"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must have a Spotify Premium account to create a playlist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBD-Fe-QLn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must have a Spotify Premium account to host a queue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBD-Fe-QLn">
                                         <rect key="frame" x="8" y="162" width="544" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -489,75 +489,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Dm-VU-ZwP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4548" y="1049"/>
-        </scene>
-        <!--Host a New Playlist-->
-        <scene sceneID="4iu-su-mvd">
-            <objects>
-                <viewController id="1I7-Lm-3hJ" customClass="NewPlaylistViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="KCi-qN-7hp"/>
-                        <viewControllerLayoutGuide type="bottom" id="f0U-Oj-10p"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="AHG-bw-rRQ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name your playlist" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I6n-vE-rIg">
-                                <rect key="frame" x="20" y="114" width="560" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="vSt-rw-z7T"/>
-                                </constraints>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="25"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.78654938807622388" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="I6n-vE-rIg" firstAttribute="top" secondItem="KCi-qN-7hp" secondAttribute="bottom" constant="50" id="0TB-z1-nYc"/>
-                            <constraint firstItem="I6n-vE-rIg" firstAttribute="leading" secondItem="AHG-bw-rRQ" secondAttribute="leadingMargin" id="PXR-OL-SHe"/>
-                            <constraint firstItem="I6n-vE-rIg" firstAttribute="trailing" secondItem="AHG-bw-rRQ" secondAttribute="trailingMargin" id="kFU-a9-Gsk"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Host a New Playlist" id="HYx-WG-4jN">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="IjM-8Q-vYc">
-                            <connections>
-                                <action selector="cancelAction:" destination="1I7-Lm-3hJ" id="0Bx-mF-tPK"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="Jgg-ue-2FY">
-                            <connections>
-                                <action selector="createPlaylistAction:" destination="1I7-Lm-3hJ" id="GTe-f1-s8W"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="playlistNameTextField" destination="I6n-vE-rIg" id="X35-p3-Aot"/>
-                        <segue destination="MeL-MZ-Glx" kind="unwind" identifier="unwindToHomeSegue" unwindAction="unwindToHomeViewController:" id="KNY-cL-AZb"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="E6g-JZ-1qy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="MeL-MZ-Glx" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="4543" y="-1033"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="eqp-jo-vaa">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lCO-tp-cNY" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Okc-rM-Bkt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="1I7-Lm-3hJ" kind="relationship" relationship="rootViewController" id="mpE-pv-wQk"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AFA-wM-HxU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3731" y="-1033"/>
         </scene>
         <!--Track List View Controller-->
         <scene sceneID="cNC-ox-fNT">
@@ -614,7 +545,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchedTrackCell" textLabel="o7j-f0-IbR" detailTextLabel="1az-ye-8v7" style="IBUITableViewCellStyleSubtitle" id="cyM-Nb-TQa">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cyM-Nb-TQa" id="D1z-IL-B24">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -803,6 +734,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Xc4-mX-DVK"/>
-        <segue reference="eKd-1u-Ayq"/>
+        <segue reference="8d0-9S-XdE"/>
     </inferredMetricsTieBreakers>
 </document>

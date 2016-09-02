@@ -23,13 +23,64 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
-        
+        addTrackObservers(forPlaylistType: .Contributing)
     }
     
     deinit {
 //        PlaylistController.sharedController.removeTrackObserverForPlaylist(playlist) { (success) in
 //            
 //        }
+    }
+    
+    
+    func addTrackObservers(forPlaylistType playlistType: PlaylistType) {
+        guard let queue = playlist, currentUser = UserController.sharedController.currentUser else { return }
+        PlaylistController.sharedController.addUpNextObserverToQueue(queue) { (track, didAdd) in
+            if let track = track {
+                if didAdd {
+                    queue.upNext.append(track)
+                    self.updateTableViewWithQueueData()
+                    
+                    // Add vote observers
+                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: queue.uid, ofType: playlistType, user: currentUser, completion: { (voteStatus, success) in
+                        if success {
+                            track.currentUserVoteStatus = voteStatus
+                            self.updateTableViewWithQueueData()
+                        }
+                    })
+                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: queue, completion: { (newVoteCount, success) in
+                        track.voteCount = newVoteCount
+                        self.updateTableViewWithQueueData()
+                    })
+                    
+                    
+                    
+                } else { // Track removed
+                    queue.upNext = queue.upNext.filter { $0 != track }
+                    self.updateTableViewWithQueueData()
+                }
+            }
+        }
+        
+        
+        // Add nowPlaying observer
+        
+        PlaylistController.sharedController.addNowPlayingObserverToQueue(queue, completion: { (track, didAdd) in
+            guard let track = track else { return }
+            if didAdd {
+                queue.nowPlaying = track
+                self.updateTableViewWithQueueData()
+            } else {
+                queue.nowPlaying = nil
+                self.updateTableViewWithQueueData()
+            }
+        })
+    }
+    
+    func updateTableViewWithQueueData() {
+        guard let queue = playlist else { return }
+        queue.upNext = TrackController.sortTracklistByVoteCount(queue.upNext)
+        tableView.reloadData()
     }
     
     // MARK: - UITableViewDataSource

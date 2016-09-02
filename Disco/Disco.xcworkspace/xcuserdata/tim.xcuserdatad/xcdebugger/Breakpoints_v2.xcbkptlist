@@ -24,13 +24,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Disco/StreamingViewController.swift"
-            timestampString = "494541995.592329"
+            timestampString = "494548175.348523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "deinit"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Disco.StreamingViewController.__deallocating_deinit"
+                  moduleName = "Disco"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tim/Desktop/Coding/Swift/DevMountain/Capstone/Disco/Disco/StreamingViewController.swift"
+                  timestampString = "494551584.657999"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Disco.StreamingViewController.__ivar_destroyer"
+                  moduleName = "Disco"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tim/Desktop/Coding/Swift/DevMountain/Capstone/Disco/Disco/StreamingViewController.swift"
+                  timestampString = "494551584.658234"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -39,61 +71,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Disco/SpotifyLoginViewController.swift"
-            timestampString = "494540167.773094"
+            filePath = "Disco/StreamingViewController.swift"
+            timestampString = "494550957.435468"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "authenticationViewController(_:didLoginWithSession:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Disco/PlaylistController.swift"
-            timestampString = "494544934.450154"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "248"
-            endingLineNumber = "248"
-            landmarkName = "changeQueueInFirebase(_:oldNowPlaying:newNowPlaying:completion:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Disco/PlaylistController.swift"
-            timestampString = "494544934.450154"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
-            landmarkName = "changeQueueInFirebase(_:oldNowPlaying:newNowPlaying:completion:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Disco/PlaylistController.swift"
-            timestampString = "494544934.450154"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
-            landmarkName = "changeQueueInFirebase(_:oldNowPlaying:newNowPlaying:completion:)"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "audioStreamingDidLogin(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

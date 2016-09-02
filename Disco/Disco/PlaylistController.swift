@@ -120,13 +120,16 @@ class PlaylistController {
     
     func setNowPlaying(track: Track?, forQueue queue: Playlist, completion: () -> Void) {
         if let track = track {
-            firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).child(track.firebaseUID).setValue(track.jsonValue, withCompletionBlock: { (error, _) in
-                if error == nil {
-                    completion()
-                } else {
-                    print(error?.localizedDescription)
-                }
+            removeNowPlayingFromQueue(queue, completion: { 
+                firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).child(track.firebaseUID).setValue(track.jsonValue, withCompletionBlock: { (error, _) in
+                    if error == nil {
+                        completion()
+                    } else {
+                        print(error?.localizedDescription)
+                    }
+                })
             })
+            
         } else { // Clear nowPlaying
             removeNowPlayingFromQueue(queue, completion: { 
                 //
@@ -253,8 +256,12 @@ class PlaylistController {
                 completion(newNowPlaying: nil)
             })
         } else if let newNowPlaying = newNowPlaying { // No tracks in nowPlaying
-            setNowPlaying(newNowPlaying, forQueue: queue, completion: { 
-                completion(newNowPlaying: newNowPlaying)
+            setNowPlaying(newNowPlaying, forQueue: queue, completion: {
+                self.removeTrack(newNowPlaying, fromUpNextInQueue: queue, completion: { (error) in
+                    if error == nil {
+                        completion(newNowPlaying: newNowPlaying)
+                    }
+                })
             })
         }
     }
