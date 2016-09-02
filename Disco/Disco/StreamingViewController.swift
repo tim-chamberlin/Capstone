@@ -178,6 +178,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             PlaylistController.sharedController.changeQueueInFirebase(queue, oldNowPlaying: queue.nowPlaying, newNowPlaying: queue.upNext[0], completion: { (newNowPlaying) in
                 spotifyPlayer.playSpotifyURI(newNowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
                     if error == nil {
+                        self.playButton.setTitle("Pause", forState: .Normal)
                         print("Started playing \(newNowPlaying?.name)")
                     }
                 })
@@ -185,6 +186,12 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         } else { // there are no songs in the queue
             PlaylistController.sharedController.changeQueueInFirebase(queue, oldNowPlaying: queue.nowPlaying, newNowPlaying: nil, completion: { (newNowPlaying) in
                 // stop playing
+                do {
+                    try spotifyPlayer.stop()
+                    self.playButton.setTitle("Play", forState: .Normal)
+                } catch {
+                    print("Can't stop, won't stop: \(error)")
+                }
             })
         }
     }
@@ -222,13 +229,15 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                 print("Started playing \(queue.upNext[0].name)")
             })
         } else if queue.upNext.isEmpty {
-            return
+            SpotifyStreamingController.toggleIsPlaying(isPlaying, completion: { (isPlaying) in
+                return
+            })
         }
     }
     
     @IBAction func nextButtonTapped(sender: AnyObject) {
-        moveToNextSong { 
-            //
+        moveToNextSong {
+            
         }
     }
     

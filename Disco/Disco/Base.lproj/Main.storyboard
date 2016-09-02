@@ -87,17 +87,17 @@
                                 <rect key="frame" x="210" y="72" width="181" height="29"/>
                                 <segments>
                                     <segment title="Contributing"/>
-                                    <segment title="Hosting"/>
+                                    <segment title="My Queue"/>
                                 </segments>
                             </segmentedControl>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kvc-GT-Ivi" userLabel="Hosting ContainerView">
-                                <rect key="frame" x="20" y="108" width="560" height="472"/>
+                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <connections>
                                     <segue destination="Ugq-eP-3Pv" kind="embed" identifier="hostingEmbedSegue" id="dYs-Ap-adN"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aBx-yo-cbn" userLabel="Contributing ContainerView">
-                                <rect key="frame" x="20" y="108" width="560" height="472"/>
+                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <connections>
                                     <segue destination="y1v-EL-T6f" kind="embed" identifier="contributingEmbedSegue" id="19A-SQ-jek"/>
                                 </connections>
@@ -109,12 +109,12 @@
                             <constraint firstItem="aBx-yo-cbn" firstAttribute="top" secondItem="FNO-Ak-cSp" secondAttribute="bottom" constant="8" id="ETR-fP-mqP"/>
                             <constraint firstItem="Kvc-GT-Ivi" firstAttribute="top" secondItem="FNO-Ak-cSp" secondAttribute="bottom" constant="8" id="Fji-4G-qnF"/>
                             <constraint firstItem="FNO-Ak-cSp" firstAttribute="top" secondItem="Die-VB-37m" secondAttribute="bottom" constant="8" id="Ghe-Eh-5SB"/>
-                            <constraint firstItem="aBx-yo-cbn" firstAttribute="leading" secondItem="9KR-Ck-BdC" secondAttribute="leadingMargin" id="H4j-DH-Pn4"/>
-                            <constraint firstItem="Kvc-GT-Ivi" firstAttribute="trailing" secondItem="9KR-Ck-BdC" secondAttribute="trailingMargin" id="QS7-kF-Q8J"/>
-                            <constraint firstItem="a41-yp-eVe" firstAttribute="top" secondItem="aBx-yo-cbn" secondAttribute="bottom" constant="20" id="d3e-TN-tEI"/>
-                            <constraint firstItem="Kvc-GT-Ivi" firstAttribute="leading" secondItem="9KR-Ck-BdC" secondAttribute="leadingMargin" id="lXN-NI-qwP"/>
-                            <constraint firstItem="a41-yp-eVe" firstAttribute="top" secondItem="Kvc-GT-Ivi" secondAttribute="bottom" constant="20" id="snk-pX-GmY"/>
-                            <constraint firstItem="aBx-yo-cbn" firstAttribute="trailing" secondItem="9KR-Ck-BdC" secondAttribute="trailingMargin" id="uAK-Dz-zRq"/>
+                            <constraint firstItem="aBx-yo-cbn" firstAttribute="leading" secondItem="9KR-Ck-BdC" secondAttribute="leadingMargin" constant="-20" id="H4j-DH-Pn4"/>
+                            <constraint firstItem="Kvc-GT-Ivi" firstAttribute="trailing" secondItem="9KR-Ck-BdC" secondAttribute="trailingMargin" constant="20" id="QS7-kF-Q8J"/>
+                            <constraint firstItem="a41-yp-eVe" firstAttribute="top" secondItem="aBx-yo-cbn" secondAttribute="bottom" id="d3e-TN-tEI"/>
+                            <constraint firstItem="Kvc-GT-Ivi" firstAttribute="leading" secondItem="9KR-Ck-BdC" secondAttribute="leadingMargin" constant="-20" id="lXN-NI-qwP"/>
+                            <constraint firstItem="a41-yp-eVe" firstAttribute="top" secondItem="Kvc-GT-Ivi" secondAttribute="bottom" id="snk-pX-GmY"/>
+                            <constraint firstItem="aBx-yo-cbn" firstAttribute="trailing" secondItem="9KR-Ck-BdC" secondAttribute="trailingMargin" constant="20" id="uAK-Dz-zRq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3TJ-ya-iSf">
@@ -216,14 +216,14 @@
                         <viewControllerLayoutGuide type="bottom" id="fYo-Ol-Bmi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="N6S-Xj-igd">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y20-04-h96" userLabel="Contributing View">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZ9-SF-Ypd">
-                                        <rect key="frame" x="178" y="422" width="205" height="30"/>
+                                        <rect key="frame" x="198" y="442" width="205" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="Contribute to a friend's queue">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -234,7 +234,7 @@
                                         </connections>
                                     </button>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3K-dz-CfI">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="372"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="392"/>
                                         <connections>
                                             <segue destination="L9M-Gq-vfw" kind="embed" identifier="playlistTVEmbedSegue" id="Xc4-mX-DVK"/>
                                         </connections>
@@ -262,7 +262,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Us-1D-lqM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2572" y="1253"/>
+            <point key="canvasLocation" x="2513" y="1253"/>
         </scene>
         <!--Hosting View Controller-->
         <scene sceneID="lfu-fb-J9O">
@@ -273,27 +273,27 @@
                         <viewControllerLayoutGuide type="bottom" id="in1-Qg-mhi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kkb-7T-Z4q">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQH-a6-Ivq">
-                                <rect key="frame" x="194" y="221" width="172" height="30"/>
+                                <rect key="frame" x="214" y="231" width="172" height="30"/>
                                 <state key="normal" title="Add songs to your queue"/>
                                 <connections>
                                     <action selector="startQueue:" destination="Ugq-eP-3Pv" eventType="touchUpInside" id="wgk-UA-Io0"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You aren't streaming anything yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p63-VB-kfL">
-                                <rect key="frame" x="152" y="180" width="256" height="21"/>
+                                <rect key="frame" x="172" y="190" width="256" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZ2-S6-h4S" userLabel="Streaming View">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gc6-9y-J40" userLabel="StreamingVC Container">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                         <connections>
                                             <segue destination="kbA-bE-dLe" kind="embed" identifier="embedStreamingController" id="gBH-BI-Vdr"/>
                                         </connections>
@@ -337,14 +337,14 @@
                         <viewControllerLayoutGuide type="bottom" id="LTd-Yx-l5q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iYK-89-T8Y">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tI9-kz-XUu">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="LSm-eL-tfw">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="422"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="442"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="dataSource" destination="kbA-bE-dLe" id="T5w-l6-Oov"/>
@@ -352,10 +352,10 @@
                                         </connections>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPL-nz-gli">
-                                        <rect key="frame" x="0.0" y="422" width="560" height="50"/>
+                                        <rect key="frame" x="0.0" y="442" width="600" height="50"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6lT-ut-7Kb">
-                                                <rect key="frame" x="228" y="10" width="105" height="30"/>
+                                                <rect key="frame" x="248" y="10" width="105" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcZ-wa-C10">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -378,7 +378,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qgh-th-irF">
-                                                <rect key="frame" x="482" y="10" width="70" height="30"/>
+                                                <rect key="frame" x="522" y="10" width="70" height="30"/>
                                                 <state key="normal" title="Add Track">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -405,7 +405,7 @@
                                 </constraints>
                             </stackView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6yV-UH-1Px">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <connections>
                                     <segue destination="NOE-V7-5ps" kind="embed" identifier="embedSpotifyLoginSegue" id="mNN-CX-ifT"/>
                                 </connections>
@@ -447,21 +447,21 @@
                         <viewControllerLayoutGuide type="bottom" id="EKI-FH-6GN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nel-GH-UKT">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ti7-3W-Auo" userLabel="Login to Spotify View">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZJA-DQ-Tqi" userLabel="Login to Spotify button">
-                                        <rect key="frame" x="137" y="211" width="286" height="50"/>
+                                        <rect key="frame" x="157" y="221" width="286" height="50"/>
                                         <state key="normal" backgroundImage="Login With Spotify Button"/>
                                         <connections>
                                             <action selector="loginToSpotifyTapped:" destination="NOE-V7-5ps" eventType="touchUpInside" id="PN4-C7-dxo"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You must have a Spotify Premium account to host a queue" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBD-Fe-QLn">
-                                        <rect key="frame" x="8" y="162" width="544" height="21"/>
+                                        <rect key="frame" x="8" y="172" width="584" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -661,24 +661,24 @@
                         <viewControllerLayoutGuide type="bottom" id="Vjz-LX-lFl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wXw-yP-xxL">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="372"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="392"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You aren't contributing to any playlists yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg9-74-riC">
-                                <rect key="frame" x="20" y="176" width="520" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You aren't contributing to any queues yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg9-74-riC">
+                                <rect key="frame" x="20" y="186" width="560" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KuZ-5Z-j7q">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="372"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="392"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" id="Lw7-ZZ-TnH">
-                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lw7-ZZ-TnH" id="RiN-OA-o59">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
