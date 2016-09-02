@@ -181,14 +181,15 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "embedSpotifyLoginSegue" {
             spotifyLoginVC = segue.destinationViewController as! SpotifyLoginViewController
+        } else if segue.identifier == "addTrackToPlaylistSegue" {
+            let navVC = segue.destinationViewController as? UINavigationController
+            guard let searchVC = navVC?.viewControllers.first as? SpotifySearchTableViewController else { return }
+            searchVC.delegate = self
         }
     }
     
     // MARK: - IBACtions
-    
-    @IBAction override func addSongButtonTapped(sender: AnyObject) {
-        self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
-    }
+
     
     @IBAction func playButtonTapped(sender: AnyObject) {
         if let _ = self.nowPlaying {
@@ -208,5 +209,8 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     @IBAction func nextButtonTapped(sender: AnyObject) {
         moveToNextSong()
+    }
+    @IBAction func addTrackButtonPressed(sender: AnyObject) {
+        self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
     }
 }

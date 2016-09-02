@@ -340,6 +340,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6yV-UH-1Px">
+                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
+                                <connections>
+                                    <segue destination="NOE-V7-5ps" kind="embed" identifier="embedSpotifyLoginSegue" id="mNN-CX-ifT"/>
+                                </connections>
+                            </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tI9-kz-XUu">
                                 <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
                                 <subviews>
@@ -377,11 +383,23 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qgh-th-irF">
+                                                <rect key="frame" x="482" y="10" width="70" height="30"/>
+                                                <state key="normal" title="Add Track">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addTrackButtonPressed:" destination="kbA-bE-dLe" eventType="touchUpInside" id="gga-z5-jRJ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Qgh-th-irF" secondAttribute="trailing" constant="8" id="B37-j1-AXR"/>
                                             <constraint firstItem="6lT-ut-7Kb" firstAttribute="centerX" secondItem="OPL-nz-gli" secondAttribute="centerX" id="EoT-Cb-J6E"/>
                                             <constraint firstAttribute="height" constant="50" id="Jng-9b-cBV"/>
+                                            <constraint firstAttribute="bottom" secondItem="Qgh-th-irF" secondAttribute="bottom" constant="10" id="cUl-Lw-7f3"/>
+                                            <constraint firstItem="Qgh-th-irF" firstAttribute="top" secondItem="OPL-nz-gli" secondAttribute="top" constant="10" id="pKs-8O-NwY"/>
                                             <constraint firstItem="6lT-ut-7Kb" firstAttribute="centerY" secondItem="OPL-nz-gli" secondAttribute="centerY" id="pVa-Cs-yxa"/>
                                         </constraints>
                                     </view>
@@ -392,12 +410,6 @@
                                     <constraint firstAttribute="trailing" secondItem="LSm-eL-tfw" secondAttribute="trailing" id="vge-Iz-JTc"/>
                                 </constraints>
                             </stackView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6yV-UH-1Px">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="472"/>
-                                <connections>
-                                    <segue destination="NOE-V7-5ps" kind="embed" identifier="embedSpotifyLoginSegue" id="mNN-CX-ifT"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -412,11 +424,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="P7g-Ds-vUZ">
-                        <barButtonItem key="rightBarButtonItem" title="Add Song" id="Y5B-xz-Jbo">
-                            <connections>
-                                <action selector="addSongButtonTapped:" destination="kbA-bE-dLe" id="yNo-oi-SR0"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add Song" id="Y5B-xz-Jbo"/>
                     </navigationItem>
                     <connections>
                         <outlet property="playButton" destination="TcZ-wa-C10" id="EEp-5T-BUG"/>
