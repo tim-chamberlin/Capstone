@@ -69,4 +69,7 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
             self.performSegueWithIdentifier("unwindToHomeVC", sender: self)
         })
     }
+    @IBAction func cancelTapped(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

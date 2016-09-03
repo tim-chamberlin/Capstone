@@ -120,11 +120,11 @@ class PlaylistController {
     
     func fetchAllPlaylists(completion:(playlists: [Playlist]?, success: Bool) -> Void) {
         firebaseRef.child(Playlist.parentDirectory).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            guard let playlistDictionaries = snapshot.value as? [[String:AnyObject]] else {
+            guard let playlistDictionaries = snapshot.value as? [String:[String:AnyObject]] else {
                 completion(playlists: nil, success: false)
                 return
             }
-            let playlists = playlistDictionaries.flatMap { Playlist(dictionary: $0, uid: snapshot.key) }
+            let playlists = playlistDictionaries.flatMap { Playlist(dictionary: $0.1, uid: $0.0) }
             completion(playlists: playlists, success: true)
         })
     }

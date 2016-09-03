@@ -633,7 +633,7 @@
             </objects>
             <point key="canvasLocation" x="3731" y="-1086"/>
         </scene>
-        <!--Friend Playlists View Controller-->
+        <!--All Playlists-->
         <scene sceneID="rrD-qF-32j">
             <objects>
                 <viewController id="tRr-mm-ZK2" customClass="FriendPlaylistsViewController" customModule="Disco" customModuleProvider="target" sceneMemberID="viewController">
@@ -660,7 +660,12 @@
                             <constraint firstAttribute="trailing" secondItem="vDT-cl-BzM" secondAttribute="trailing" id="jAE-fJ-8P0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="XoY-Lb-27W">
+                    <navigationItem key="navigationItem" title="All Playlists" id="XoY-Lb-27W">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="4KH-13-r6x">
+                            <connections>
+                                <action selector="cancelTapped:" destination="tRr-mm-ZK2" id="inZ-J5-Wmb"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="w0H-mh-0gU">
                             <connections>
                                 <action selector="doneAction:" destination="tRr-mm-ZK2" id="piO-W2-sOI"/>
