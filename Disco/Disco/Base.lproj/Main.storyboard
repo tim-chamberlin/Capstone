@@ -147,7 +147,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="friendCell" textLabel="7Eg-Fk-CPQ" style="IBUITableViewCellStyleDefault" id="CwG-ug-SRn">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CwG-ug-SRn" id="2AS-8E-hf5">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -182,7 +182,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1jf-KS-b07" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4508" y="-1086"/>
+            <point key="canvasLocation" x="4466" y="-1946"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XRY-UU-hB1">
@@ -626,7 +626,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="GMP-T9-Aga" kind="relationship" relationship="rootViewController" id="aWa-VH-qDo"/>
+                        <segue destination="tRr-mm-ZK2" kind="relationship" relationship="rootViewController" id="N41-oN-FFV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0O-pB-LVq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -774,6 +774,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8d0-9S-XdE"/>
+        <segue reference="N41-oN-FFV"/>
         <segue reference="0GN-RK-MvO"/>
     </inferredMetricsTieBreakers>
 </document>

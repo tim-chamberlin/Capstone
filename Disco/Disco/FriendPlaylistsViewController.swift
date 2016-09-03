@@ -23,6 +23,16 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
             updatePlaylistTableView()
             self.title = "Contribute to playlist"
         }
+        
+        fetchAllPlaylists()
+    }
+    
+    func fetchAllPlaylists() {
+        PlaylistController.sharedController.fetchAllPlaylists { (playlists, success) in
+            guard let playlists = playlists else { return }
+            self.playlistView.playlists = playlists
+            self.playlistView.tableView.reloadData()
+        }
     }
 
     // MARK: - PlaylistTableViewDataSource Methods

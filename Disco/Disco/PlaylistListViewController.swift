@@ -48,12 +48,6 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    
-    
-    func removeIsLiveObserver() {
-        
-    }
-    
     func updatePlaylistViewWithUser(user: User, withPlaylistType: PlaylistType, withNoPlaylistsText: String) {
         
         PlaylistController.sharedController.fetchPlaylistsForUser(user.FBID, ofType: withPlaylistType) { (playlists, success) in
@@ -95,7 +89,7 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         
         let playlist = self.playlists[indexPath.row]
         
-        cell.textLabel?.text = playlist.hostID
+        cell.textLabel?.text = playlist.name
         if playlist.isLive {
             cell.detailTextLabel?.text = "Now Playing"
         } else {

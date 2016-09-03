@@ -142,7 +142,6 @@ class PlaylistController {
                     }
                 })
             })
-            
         } else { // Clear nowPlaying
             removeNowPlayingFromQueue(queue, completion: { 
                 //
