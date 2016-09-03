@@ -11,13 +11,16 @@ import Foundation
 
 class SpotifyStreamingController {
     
-    static func toggleIsPlaying(isPlaying: Bool, completion: (isPlaying: Bool) -> Void) {
+    static func toggleIsPlaying(isPlaying: Bool, forQueue queue: Playlist, completion: (isPlaying: Bool) -> Void) {
         if isPlaying {
             spotifyPlayer.setIsPlaying(false, callback: { (error) in
                 if error != nil {
                     print(error)
                     completion(isPlaying: true)
                 } else {
+                    PlaylistController.sharedController.setIsLive(false, forQueue: queue, completion: { 
+                        //
+                    })
                     completion(isPlaying: false)
                 }
             })
@@ -27,6 +30,9 @@ class SpotifyStreamingController {
                     print(error)
                     completion(isPlaying: false)
                 } else {
+                    PlaylistController.sharedController.setIsLive(true, forQueue: queue, completion: {
+                        //
+                    })
                     completion(isPlaying: true)
                 }
             })

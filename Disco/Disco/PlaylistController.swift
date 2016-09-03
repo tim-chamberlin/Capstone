@@ -233,13 +233,38 @@ class PlaylistController {
         completion(success: true)
     }
     
+    // MARK: - Other Observers
     
-    
-    func deletePlaylist() {
-        
+    func addIsLiveObserver(forQueue queue: Playlist, completion: (isLive: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kIsLive).observeEventType(.Value, withBlock: { (snapshot) in
+            guard let isLive = snapshot.value as? Bool else { return }
+            completion(isLive: isLive)
+            return
+        })
     }
     
     
+    func removeIsLiveObserver(forQueue queue: Playlist) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kIsLive).removeAllObservers()
+    }
+    
+    // MARK: - Set isLive Property
+    
+    func setIsLive(isLive: Bool, forQueue queue: Playlist, completion: () -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kIsLive).setValue(isLive) { (error, _) in
+            if error == nil {
+                completion()
+            } else {
+                print(error)
+            }
+        }
+    }
+    
+    // MARK: - Delete Queue
+    
+    func deleteQueue() {
+        
+    }
     
     // MARK: - Queue Managment Methods
     

@@ -11,7 +11,7 @@ import Foundation
 class Track: Equatable {
     
     static let kSpotifyURI = "spotifyURI"
-    static let kSpotifyURL = "spotifyURL"
+    static let kArtworkURL = "artworkURL"
     static let kPlaylistID = "playlistID"
     static let kVoteCount = "voteCount"
     static let kName = "name"
@@ -19,7 +19,7 @@ class Track: Equatable {
     
     let firebaseUID: String
     let spotifyURI: String
-    let spotifyURL: String
+    var artworkURL: String = ""
     var playlistID: String
     var voteCount: Int
     
@@ -29,13 +29,13 @@ class Track: Equatable {
     let artist: String
     
     var jsonValue: [String: AnyObject] {
-        return [Track.kSpotifyURI: self.spotifyURI, Track.kPlaylistID: self.playlistID, Track.kSpotifyURL: self.spotifyURL, Track.kVoteCount: self.voteCount, Track.kName: self.name, Track.kArtist: self.artist]
+        return [Track.kSpotifyURI: self.spotifyURI, Track.kPlaylistID: self.playlistID, Track.kArtworkURL: self.artworkURL, Track.kVoteCount: self.voteCount, Track.kName: self.name, Track.kArtist: self.artist]
     }
     
     init(firebaseUID: String, spotifyUID: String, spotifyURL: String, playlistID: String, voteCount: Int = 0, name: String = "", artist: String = "") {
         self.firebaseUID = firebaseUID
         self.spotifyURI = spotifyUID
-        self.spotifyURL = spotifyURL
+        self.artworkURL = spotifyURL
         self.playlistID = playlistID
         self.voteCount = voteCount
         self.name = name
@@ -44,9 +44,9 @@ class Track: Equatable {
     
     // Init from Firebase
     init?(firebaseDictionary: [String: AnyObject], uid: String) {
-        guard let spotifyUID = firebaseDictionary[Track.kSpotifyURI] as? String, spotifyURL = firebaseDictionary[Track.kSpotifyURL] as? String, playlistID = firebaseDictionary[Track.kPlaylistID] as? String, voteCount = firebaseDictionary[Track.kVoteCount] as? Int else { return nil }
+        guard let spotifyUID = firebaseDictionary[Track.kSpotifyURI] as? String, artworkURL = firebaseDictionary[Track.kArtworkURL] as? String, playlistID = firebaseDictionary[Track.kPlaylistID] as? String, voteCount = firebaseDictionary[Track.kVoteCount] as? Int else { return nil }
         self.firebaseUID = uid
-        self.spotifyURL = spotifyURL
+        self.artworkURL = artworkURL
         self.spotifyURI = spotifyUID
         self.playlistID = playlistID
         self.voteCount = voteCount
@@ -63,16 +63,24 @@ class Track: Equatable {
     
     // Init from Spotify API
     init?(spotifyDictionary: [String:AnyObject]) {
-        guard let spotifyURI = spotifyDictionary["uri"] as? String, spotifyURL = spotifyDictionary["href"] as? String, trackName = spotifyDictionary["name"] as? String else { return nil }
+        guard let spotifyURI = spotifyDictionary["uri"] as? String, trackName = spotifyDictionary["name"] as? String else { return nil }
         
         guard let artistsInfo = spotifyDictionary["artists"] as? [[String: AnyObject]] else { return nil }
-        let artistNames = artistsInfo.flatMap({ $0["name"] as? String })
-        let test = artistNames.joinWithSeparator(", ")
+        let artistNamesArray = artistsInfo.flatMap({ $0["name"] as? String })
+        let artistNames = artistNamesArray.joinWithSeparator(", ")
+        
+        
+        // get album artwork url
+        if let albumDictionary = spotifyDictionary["album"] as? [String: AnyObject], imageDictionaryArrays = albumDictionary["images"] as? [[String: AnyObject]] {
+            let imageDictionary = imageDictionaryArrays[1]
+            if let imageURL = imageDictionary["url"] as? String {
+                self.artworkURL = imageURL
+            }
+        }
         
         self.spotifyURI = spotifyURI
-        self.spotifyURL = spotifyURL
         self.name = trackName
-        self.artist = test
+        self.artist = artistNames
         
         self.firebaseUID = ""
         self.playlistID = ""

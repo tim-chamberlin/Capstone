@@ -13,6 +13,9 @@ let kTrackListDidLoad = "TrackListDidLoad"
 let kUpNextListDidUpdate = "UpNextListDidUpdate"
 let kTrackListDidRemoveSong = "TrackListDidUpdate"
 
+let trackCellReuseIdentifier = "trackCell"
+let nowPlayingCellReuseIdentifier = "nowPlayingCell"
+
 class TrackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddTrackToPlaylistDelegate, TrackTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
@@ -22,7 +25,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
+        
         addTrackObservers(forPlaylistType: .Contributing)
     }
     
@@ -30,6 +33,11 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
 //        PlaylistController.sharedController.removeTrackObserverForPlaylist(playlist) { (success) in
 //            
 //        }
+    }
+    
+    func registerCutomCells() {
+        tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: trackCellReuseIdentifier)
+        tableView.registerNib(UINib(nibName: "NowPlayingTableViewCell", bundle: nil), forCellReuseIdentifier: nowPlayingCellReuseIdentifier)
     }
     
     
@@ -100,27 +108,25 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("trackCell", forIndexPath: indexPath) as? TrackTableViewCell, playlist = playlist else { return UITableViewCell() }
-        
         if indexPath.section == 0 {
-            if let nowPlaying = playlist.nowPlaying {
+            if let cell = tableView.dequeueReusableCellWithIdentifier(nowPlayingCellReuseIdentifier, forIndexPath: indexPath) as? NowPlayingTableViewCell, playlist = playlist, nowPlaying = playlist.nowPlaying {
                 let track = nowPlaying
-                cell.track = track
-                cell.voteStatus = track.currentUserVoteStatus
                 cell.updateCellWithTrack(track)
-                cell.votingStackView.hidden = true
-                cell.delegate = self
+                return cell
             }
         } else if indexPath.section == 1 {
-            if !playlist.upNext.isEmpty {
-                let track = playlist.upNext[indexPath.row]
-                cell.track = track
-                cell.voteStatus = track.currentUserVoteStatus
-                cell.updateCellWithTrack(track)
-                cell.delegate = self
+            if let cell = tableView.dequeueReusableCellWithIdentifier(trackCellReuseIdentifier, forIndexPath: indexPath) as? TrackTableViewCell, playlist = playlist {
+                if !playlist.upNext.isEmpty {
+                    let track = playlist.upNext[indexPath.row]
+                    cell.track = track
+                    cell.voteStatus = track.currentUserVoteStatus
+                    cell.updateCellWithTrack(track)
+                    cell.delegate = self
+                    return cell
+                }
             }
         }
-        return cell
+        return UITableViewCell()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

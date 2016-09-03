@@ -12,7 +12,7 @@ class Playlist {
     
     static let parentDirectory = "queues"
     
-    static let kPlaylistName = "name"
+    static let kIsLive = "isLive"
     static let kTrackList = "tracks"
     static let kNowPlaying = "nowPlaying"
     static let kUpNext = "upNext"
@@ -40,7 +40,7 @@ class Playlist {
     }
     
     var jsonValue: [String: AnyObject] {
-        return [Playlist.kUpNext: self.upNext, Playlist.kHostID: self.hostID, Playlist.kContributorsList: self.contributorIDs]
+        return [Playlist.kUpNext: self.upNext, Playlist.kHostID: self.hostID, Playlist.kContributorsList: self.contributorIDs, Playlist.kIsLive: self.isLive]
     }
     
     init(uid: String, trackIDs: [String] = [], contributorIDs: [String] = [], hostID: String = (UserController.sharedController.currentUser?.FBID)!) {

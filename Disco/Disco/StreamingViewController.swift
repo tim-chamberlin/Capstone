@@ -28,8 +28,8 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         checkSpotifyAuth()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.spotifyUserDidLogin(_:)), name: kSpotifyLoginNotificationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSetHostedPlaylist), name: kDidSetHostedPlaylist, object: nil)
-        
-        tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
+        registerCutomCells()
+//        tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         
         
         
@@ -214,7 +214,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBAction func playButtonTapped(sender: AnyObject) {
         guard let queue = playlist else { return }
         if let _ = queue.nowPlaying {
-            SpotifyStreamingController.toggleIsPlaying(isPlaying) { [weak self] (isPlaying) in
+            SpotifyStreamingController.toggleIsPlaying(isPlaying, forQueue: queue) { [weak self] (isPlaying) in
                 if isPlaying {
                     self?.playButton.setTitle("Pause", forState: .Normal)
                     self?.isPlaying = true
@@ -229,7 +229,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                 print("Started playing \(queue.upNext[0].name)")
             })
         } else if queue.upNext.isEmpty {
-            SpotifyStreamingController.toggleIsPlaying(isPlaying, completion: { (isPlaying) in
+            SpotifyStreamingController.toggleIsPlaying(isPlaying, forQueue: queue, completion: { (isPlaying) in
                 return
             })
         }

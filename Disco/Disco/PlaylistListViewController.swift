@@ -11,7 +11,11 @@ import UIKit
 class PlaylistListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var user: User?
-    var playlists: [Playlist] = []
+    var playlists: [Playlist] = [] {
+        didSet {
+            addIsLiveObserver()
+        }
+    }
     
     weak var delegate: PlaylistTableViewDelegate?
     
@@ -20,6 +24,34 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        addIsLiveObserver()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        for playlist in playlists {
+            PlaylistController.sharedController.removeIsLiveObserver(forQueue: playlist)
+        }
+    }
+    
+    func addIsLiveObserver() {
+        for playlist in playlists {
+            PlaylistController.sharedController.addIsLiveObserver(forQueue: playlist, completion: { (isLive) in
+                playlist.isLive = isLive
+                self.tableView.reloadData()
+            })
+        }
+    }
+    
+    
+    
+    func removeIsLiveObserver() {
+        
     }
     
     func updatePlaylistViewWithUser(user: User, withPlaylistType: PlaylistType, withNoPlaylistsText: String) {
@@ -64,6 +96,11 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         let playlist = self.playlists[indexPath.row]
         
         cell.textLabel?.text = playlist.hostID
+        if playlist.isLive {
+            cell.detailTextLabel?.text = "Now Playing"
+        } else {
+            cell.detailTextLabel?.text = ""
+        }
         
         return cell
     }
