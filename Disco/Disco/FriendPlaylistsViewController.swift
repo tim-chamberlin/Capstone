@@ -23,14 +23,17 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
             updatePlaylistTableView()
             self.title = "Contribute to playlist"
         }
-        
         fetchAllPlaylists()
     }
     
     func fetchAllPlaylists() {
         PlaylistController.sharedController.fetchAllPlaylists { (playlists, success) in
             guard let playlists = playlists else { return }
-            self.playlistView.playlists = playlists
+            if let currentUserHostedPlaylist = PlaylistController.sharedController.hostedPlaylist {
+                self.playlistView.playlists = playlists.filter { $0.uid != currentUserHostedPlaylist.uid }
+            } else {
+                self.playlistView.playlists = playlists
+            }
             self.playlistView.tableView.reloadData()
         }
     }
