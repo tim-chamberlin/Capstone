@@ -22,7 +22,7 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
     func updatePlaylistTableView() {
         // Specify PlaylistTableView's user
         guard let currentUser = UserController.sharedController.currentUser else { return }
-        contributingPlaylistsTableView.updatePlaylistViewWithUser(currentUser, withPlaylistType: .Contributing, withNoPlaylistsText: "You aren't currently contributing to any playlists.")
+        contributingPlaylistsTableView.updatePlaylistViewWithUser(currentUser, withPlaylistType: .Contributing, withNoPlaylistsText: "You aren't currently contributing to any queues.")
     }
     
     // MARK: -  PlaylistTableViewDelegate Methods

@@ -29,7 +29,7 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
     
     func updatePlaylistTableView() {
         guard let selectedUser = selectedUser else { return }
-        playlistView.updatePlaylistViewWithUser(selectedUser, withPlaylistType: .Hosting, withNoPlaylistsText: "\(selectedUser.name) isn't currently hosting any playlist.")   
+        playlistView.updatePlaylistViewWithUser(selectedUser, withPlaylistType: .Hosting, withNoPlaylistsText: "\(selectedUser.name) isn't currently hosting a queue.")
     }
     
     // MARK: - PlaylistTableViewDelegate

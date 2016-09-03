@@ -49,6 +49,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         self.playlist = PlaylistController.sharedController.hostedPlaylist
         addTrackObservers(forPlaylistType: .Hosting)
         tableView.reloadData()
+        setupViewForEmptyQueue()
     }
     
     override func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
@@ -244,4 +245,9 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBAction func addTrackButtonPressed(sender: AnyObject) {
         self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
     }
+    
+    @IBAction override func addFirstSongToQueueTapped(sender: AnyObject) {
+        self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
+    }
+    
 }

@@ -25,8 +25,12 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         addTrackObservers(forPlaylistType: .Contributing)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        setupViewForEmptyQueue()
     }
     
     deinit {
@@ -89,6 +93,16 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let queue = playlist else { return }
         queue.upNext = TrackController.sortTracklistByVoteCount(queue.upNext)
         tableView.reloadData()
+        setupViewForEmptyQueue()
+    }
+    
+    func setupViewForEmptyQueue() {
+        guard let queue = playlist else { return }
+        if queue.upNext.isEmpty && queue.nowPlaying == nil { // If no songs
+            tableView.hidden = true
+        } else {
+            tableView.hidden = false
+        }
     }
     
     // MARK: - UITableViewDataSource
@@ -168,6 +182,10 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             guard let searchVC = navVC?.viewControllers.first as? SpotifySearchTableViewController else { return }
             searchVC.delegate = self
         }
+    }
+    
+    @IBAction func addFirstSongToQueueTapped(sender: AnyObject) {
+        self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
     }
     
     @IBAction func addSongButtonTapped(sender: AnyObject) {
