@@ -84,6 +84,10 @@ class PlaylistController {
         })
     }
     
+    func removeHostedPlaylistObserverForUser(user: User) {
+        firebaseRef.child(User.parentDirectory).child(user.FBID).child(PlaylistType.Hosting.rawValue).removeAllObservers()
+    }
+    
     
     func fetchPlaylistsForUser(FBID: String, ofType: PlaylistType, completion:(playlists: [Playlist]?, success: Bool) -> Void) {
         firebaseRef.child(User.parentDirectory).child(FBID).child(ofType.rawValue).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
@@ -222,6 +226,10 @@ class PlaylistController {
         })
     }
     
+    func removeNowPlayingObserverFromQueue(queue: Playlist) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).removeAllObservers()
+    }
+    
     func addUpNextObserverToQueue(queue: Playlist, completion: (track: Track?, didAdd: Bool) -> Void) {
         firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).observeEventType(.ChildAdded, withBlock: { (snapshot) in
             guard let trackDictionary = snapshot.value as? [String: AnyObject] else { return }
@@ -240,9 +248,20 @@ class PlaylistController {
         })
     }
     
-    func removeTrackObserverForPlaylist(playlist: Playlist, completion: (success: Bool) -> Void) {
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).removeAllObservers()
-        completion(success: true)
+    func removeUpNextObserverFromQueue(queue: Playlist) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).removeAllObservers()
+    }
+    
+    // MARK: - Remove All Playlist Observers
+    
+    func removeAllPlaylistObservers() {
+//        firebaseRef.child(Playlist.parentDirectory).remove
+    }
+    
+    // MARK: - Remove All Observers From Firebase (called when app will terminate)
+    
+    func removeAllObserversFromFirebaseRef() {
+//        firebaseRef.removeAllObservers()
     }
     
     // MARK: - Other Observers
@@ -254,7 +273,6 @@ class PlaylistController {
             return
         })
     }
-    
     
     func removeIsLiveObserver(forQueue queue: Playlist) {
         firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kIsLive).removeAllObservers()

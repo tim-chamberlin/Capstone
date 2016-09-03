@@ -59,7 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-
+    
+    func applicationWillTerminate(application: UIApplication) {
+        PlaylistController.sharedController.removeAllObserversFromFirebaseRef()
+    }
 
 }
 

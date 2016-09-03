@@ -42,6 +42,7 @@ class TrackController {
         }
     }
     
+    // MARK: - Vote Listener Methods
     
     func attachVoteListener(forTrack track: Track, inPlaylist playlist: Playlist, completion: (newVoteCount: Int, success: Bool) -> Void) {
         // TODO: Will tracks have UIDs at this point?
@@ -52,6 +53,12 @@ class TrackController {
             //
         }
     }
+    
+    func removeVoteListenerFromTrack(track: Track, inQueue queue: Playlist, completion: (() -> Void)? = nil) {
+        firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).child(track.firebaseUID).child(Track.kVoteCount).removeAllObservers()
+    }
+    
+    // MARK: - Get Vote Status for User
     
     func getVoteStatusForTrackWithID(trackID: String, inPlaylistWithID playlistID: String, ofType playlistType: PlaylistType, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
         firebaseRef.child(User.parentDirectory).child(user.FBID).child(playlistType.rawValue).child(playlistID).child(trackID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in

@@ -32,10 +32,9 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         addIsLiveObserver()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(true)
-        for playlist in playlists {
-            PlaylistController.sharedController.removeIsLiveObserver(forQueue: playlist)
+    deinit {
+        for queue in playlists {
+            PlaylistController.sharedController.removeIsLiveObserver(forQueue: queue)
         }
     }
     

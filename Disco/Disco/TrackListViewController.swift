@@ -37,12 +37,21 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         setupViewForEmptyQueue()
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
     }
     
     deinit {
-//        PlaylistController.sharedController.removeTrackObserverForPlaylist(playlist) { (success) in
-//            
-//        }
+        if let queue = playlist {
+            PlaylistController.sharedController.removeNowPlayingObserverFromQueue(playlist!)
+            PlaylistController.sharedController.removeUpNextObserverFromQueue(playlist!)
+            for track in queue.upNext {
+                TrackController.sharedController.removeVoteListenerFromTrack(track, inQueue: queue)
+            }
+        }
     }
     
     func registerCustomCells() {
@@ -52,49 +61,46 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     func addTrackObservers(forPlaylistType playlistType: PlaylistType) {
+        // Observers added:
+        // addUpNextObserverToQueue
+        // attachVoteListener
+        // addNowPlayingObserver
+        
         guard let queue = playlist, currentUser = UserController.sharedController.currentUser else { return }
-        PlaylistController.sharedController.addUpNextObserverToQueue(queue) { (track, didAdd) in
+        PlaylistController.sharedController.addUpNextObserverToQueue(queue) { [weak self] (track, didAdd) in
             if let track = track {
                 if didAdd {
                     queue.upNext.append(track)
-                    self.updateTableViewWithQueueData()
+                    self?.updateTableViewWithQueueData()
                     
                     // Add vote observers
-                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: queue.uid, ofType: playlistType, user: currentUser, completion: { (voteStatus, success) in
+                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: queue.uid, ofType: playlistType, user: currentUser, completion: { [weak self] (voteStatus, success) in
                         if success {
                             track.currentUserVoteStatus = voteStatus
-                            self.updateTableViewWithQueueData()
+                            self?.updateTableViewWithQueueData()
                         }
                     })
-                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: queue, completion: { (newVoteCount, success) in
+                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: queue, completion: { [weak self] (newVoteCount, success) in
                         track.voteCount = newVoteCount
-                        self.updateTableViewWithQueueData()
+                        self?.updateTableViewWithQueueData()
                     })
                 } else { // Track removed
                     queue.upNext = queue.upNext.filter { $0 != track }
-                    self.updateTableViewWithQueueData()
+                    self?.updateTableViewWithQueueData()
                 }
             }
         }
-        
-        
         // Add nowPlaying observer
-        
-        PlaylistController.sharedController.addNowPlayingObserverToQueue(queue, completion: { (track, didAdd) in
+        PlaylistController.sharedController.addNowPlayingObserverToQueue(queue, completion: { [weak self] (track, didAdd) in
             guard let track = track else { return }
             if didAdd {
                 queue.nowPlaying = track
-                self.updateTableViewWithQueueData()
+                self?.updateTableViewWithQueueData()
             } else {
                 queue.nowPlaying = nil
-                self.updateTableViewWithQueueData()
+                self?.updateTableViewWithQueueData()
             }
         })
-    }
-    
-    
-    func animateRowSwitch(){
-        
     }
     
     func updateTableViewWithQueueData() {

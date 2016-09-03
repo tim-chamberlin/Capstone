@@ -20,11 +20,6 @@ class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
         UserController.sharedController.setupSPTAuth()
     }
     
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
     // MARK: - Spotify Authentication
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
