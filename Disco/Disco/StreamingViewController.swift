@@ -19,6 +19,13 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     var isPlaying: Bool = false
     
+    var nowPlayingPercentDone: Float = 0.0 {
+        didSet {
+//            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+//            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+        }
+    }
+    
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playbackControlsView: UIView!
     @IBOutlet weak var spotifyLoginContainer: UIView!
@@ -64,6 +71,31 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
         alert.addAction(okayAction)
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - TableViewDelegate
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            if let cell = tableView.dequeueReusableCellWithIdentifier(nowPlayingCellReuseIdentifier, forIndexPath: indexPath) as? NowPlayingTableViewCell, playlist = playlist, nowPlaying = playlist.nowPlaying {
+                let track = nowPlaying
+                cell.updateCellWithTrack(track)
+                cell.songProgressView.setProgress(nowPlayingPercentDone, animated: true)
+                return cell
+            }
+        } else if indexPath.section == 1 {
+            if let cell = tableView.dequeueReusableCellWithIdentifier(trackCellReuseIdentifier, forIndexPath: indexPath) as? TrackTableViewCell, playlist = playlist {
+                if !playlist.upNext.isEmpty {
+                    let track = playlist.upNext[indexPath.row]
+                    cell.track = track
+                    cell.voteStatus = track.currentUserVoteStatus
+                    cell.updateCellWithTrack(track)
+                    cell.delegate = self
+                    return cell
+                }
+            }
+        }
+        return UITableViewCell()
     }
     
     // MARK: - Spotify Check Auth
@@ -159,6 +191,11 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePosition position: NSTimeInterval) {
+        
+        let percentDone = position/(audioStreaming.metadata.currentTrack?.duration)!
+        nowPlayingPercentDone = Float(percentDone)
+        
+        
         if (((audioStreaming.metadata.currentTrack?.duration)! - position) < 0.75) {
             // Queue next song
             print("\(playlist?.nowPlaying?.name) ended")
@@ -234,7 +271,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     @IBAction func nextButtonTapped(sender: AnyObject) {
         moveToNextSong {
-            
         }
     }
     

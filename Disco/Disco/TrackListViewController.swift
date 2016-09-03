@@ -70,9 +70,6 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                         track.voteCount = newVoteCount
                         self.updateTableViewWithQueueData()
                     })
-                    
-                    
-                    
                 } else { // Track removed
                     queue.upNext = queue.upNext.filter { $0 != track }
                     self.updateTableViewWithQueueData()
@@ -93,6 +90,11 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.updateTableViewWithQueueData()
             }
         })
+    }
+    
+    
+    func animateRowSwitch(){
+        
     }
     
     func updateTableViewWithQueueData() {
