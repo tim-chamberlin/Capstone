@@ -17,24 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qh-ZG-bia" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="20" y="530" width="560" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="K9A-kS-JjT"/>
-                                </constraints>
-                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1WN-yL-ypC">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disco" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1J-oV-2RK">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A-Side" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1J-oV-2RK">
                                 <rect key="frame" x="20" y="70" width="560" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ep8-Z7-RUi">
-                                <rect key="frame" x="20" y="480" width="560" height="30"/>
+                                <rect key="frame" x="20" y="550" width="560" height="30"/>
                                 <state key="normal" title="Login with fb">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -48,21 +41,16 @@
                             <constraint firstItem="1WN-yL-ypC" firstAttribute="centerY" secondItem="dWb-Fw-BlU" secondAttribute="centerY" id="2tK-Xs-gtq"/>
                             <constraint firstItem="i1J-oV-2RK" firstAttribute="trailing" secondItem="dWb-Fw-BlU" secondAttribute="trailingMargin" id="6WW-2z-fwP"/>
                             <constraint firstItem="i1J-oV-2RK" firstAttribute="top" secondItem="cfg-Yh-19p" secondAttribute="bottom" constant="50" id="Ahw-M6-SCb"/>
-                            <constraint firstAttribute="trailing" secondItem="3Qh-ZG-bia" secondAttribute="trailing" constant="20" id="L8N-rO-n8p"/>
                             <constraint firstItem="i1J-oV-2RK" firstAttribute="leading" secondItem="dWb-Fw-BlU" secondAttribute="leadingMargin" id="VNB-lR-iph"/>
-                            <constraint firstItem="sCv-Ww-O4K" firstAttribute="top" secondItem="3Qh-ZG-bia" secondAttribute="bottom" constant="20" id="W3f-2m-Sr0"/>
-                            <constraint firstItem="3Qh-ZG-bia" firstAttribute="leading" secondItem="dWb-Fw-BlU" secondAttribute="leading" constant="20" id="lPQ-Cy-aEc"/>
-                            <constraint firstItem="3Qh-ZG-bia" firstAttribute="top" secondItem="ep8-Z7-RUi" secondAttribute="bottom" constant="20" id="n65-rX-ZJ5"/>
-                            <constraint firstItem="ep8-Z7-RUi" firstAttribute="leading" secondItem="dWb-Fw-BlU" secondAttribute="leadingMargin" id="t9L-N0-13s"/>
-                            <constraint firstItem="ep8-Z7-RUi" firstAttribute="trailing" secondItem="dWb-Fw-BlU" secondAttribute="trailingMargin" id="wau-6m-23F"/>
-                            <constraint firstItem="ep8-Z7-RUi" firstAttribute="centerX" secondItem="dWb-Fw-BlU" secondAttribute="centerX" id="wnV-va-fDZ"/>
+                            <constraint firstItem="ep8-Z7-RUi" firstAttribute="trailing" secondItem="dWb-Fw-BlU" secondAttribute="trailingMargin" id="biD-Bo-DHb"/>
+                            <constraint firstItem="sCv-Ww-O4K" firstAttribute="top" secondItem="ep8-Z7-RUi" secondAttribute="bottom" constant="20" id="pUT-55-lMY"/>
+                            <constraint firstItem="ep8-Z7-RUi" firstAttribute="leading" secondItem="dWb-Fw-BlU" secondAttribute="leadingMargin" id="uUt-cv-dgq"/>
                             <constraint firstItem="1WN-yL-ypC" firstAttribute="centerX" secondItem="dWb-Fw-BlU" secondAttribute="centerX" id="z3X-Pr-CyK"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ijI-hn-TdA"/>
                     <connections>
                         <outlet property="loadingIndicator" destination="1WN-yL-ypC" id="pjK-iQ-1tI"/>
-                        <outlet property="loginWithFacebookButton" destination="3Qh-ZG-bia" id="HLy-gu-SYA"/>
                         <outlet property="testLoginWithFbButton" destination="ep8-Z7-RUi" id="bhG-K2-fWB"/>
                         <segue destination="Fge-ba-mAr" kind="show" identifier="loginSegue" id="Rfe-Iu-J9o"/>
                     </connections>

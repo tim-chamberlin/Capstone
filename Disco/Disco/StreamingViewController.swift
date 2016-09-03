@@ -14,7 +14,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     var spotifyLoginVC: SpotifyLoginViewController!
     
-    var session: SPTSession!
     var player: SPTAudioStreamingController = spotifyPlayer
     var hostedPlaylist: Playlist? = PlaylistController.sharedController.hostedPlaylist
     
@@ -25,7 +24,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBOutlet weak var spotifyLoginContainer: UIView!
     
     override func viewDidLoad() {
-        checkSpotifyAuth()
+//        checkSpotifyAuth()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.spotifyUserDidLogin(_:)), name: kSpotifyLoginNotificationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSetHostedPlaylist), name: kDidSetHostedPlaylist, object: nil)
         registerCustomCells()
@@ -40,9 +39,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     deinit {
         // TODO: Add modal view segue to streaming vc and alert user that they will stop playing music
         spotifyPlayer.logout()
-        PlaylistController.sharedController.removeTrackObserverForPlaylist(hostedPlaylist!) { (success) in
-            //
-        }
     }    
 
     func didSetHostedPlaylist() {
@@ -112,7 +108,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         guard let userInfo = notification.userInfo as? [String: SPTSession], session = userInfo[kSpotifyLoginNotificationKey] else { return }
         checkSpotifyAuth()
         setupViewForEmptyQueue()
-        UserController.sharedController.loginToSpotifyUsingSession(session)
     }
     
     func renewSpotifyTokenAndShowPlayer() {

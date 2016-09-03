@@ -9,9 +9,9 @@
 import UIKit
 import FBSDKLoginKit
 
-class AuthenticationViewController: UIViewController, FBSDKLoginButtonDelegate {
+class AuthenticationViewController: UIViewController/*, FBSDKLoginButtonDelegate */{
     
-    @IBOutlet weak var loginWithFacebookButton: FBSDKLoginButton!
+//    @IBOutlet weak var loginWithFacebookButton: FBSDKLoginButton!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var testLoginWithFbButton: UIButton!
@@ -19,7 +19,7 @@ class AuthenticationViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginWithFacebookButton.delegate = self
+//        loginWithFacebookButton.delegate = self
         
         loadingIndicator.hidden = false
     }
@@ -33,38 +33,38 @@ class AuthenticationViewController: UIViewController, FBSDKLoginButtonDelegate {
                     self.performSegueWithIdentifier(self.loginSegueString, sender: self)
                 } else {
                     self.loadingIndicator.hidden = true
-                    self.loginWithFacebookButton.hidden = false
+//                    self.loginWithFacebookButton.hidden = false
                 }
             })
         }
     }
     
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        self.loginWithFacebookButton.hidden = true
-        self.loadingIndicator.hidden = false
-        if error != nil {
-            print(error.localizedDescription)
-            return
-        }
-        
-        if result.isCancelled {
-            print("User cancelled login")
-            return
-        }
-        UserController.sharedController.loginFirebaseUser { (success) in
-            dispatch_async(dispatch_get_main_queue(), {
-                print("Firebase login called")
-                self.performSegueWithIdentifier(self.loginSegueString, sender: self)
-            })
-        }
-    }
-    
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        // logout Firebase user
-        UserController.sharedController.logoutCurrentUser { (success) in
-            print("User logged out")
-        }
-    }
+//    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+//        self.loginWithFacebookButton.hidden = true
+//        self.loadingIndicator.hidden = false
+//        if error != nil {
+//            print(error.localizedDescription)
+//            return
+//        }
+//        
+//        if result.isCancelled {
+//            print("User cancelled login")
+//            return
+//        }
+//        UserController.sharedController.loginFirebaseUser { (success) in
+//            dispatch_async(dispatch_get_main_queue(), {
+//                print("Firebase login called")
+//                self.performSegueWithIdentifier(self.loginSegueString, sender: self)
+//            })
+//        }
+//    }
+//    
+//    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+//        // logout Firebase user
+//        UserController.sharedController.logoutCurrentUser { (success) in
+//            print("User logged out")
+//        }
+//    }
     
     // MARK: - IBActions
     
