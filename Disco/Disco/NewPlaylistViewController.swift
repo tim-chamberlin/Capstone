@@ -29,23 +29,4 @@ class NewPlaylistViewController: UIViewController {
         playlistNameTextField.layer.addSublayer(border)
         playlistNameTextField.layer.masksToBounds = true
     }
-
-
-    
-    @IBAction func createPlaylistAction(sender: AnyObject) {
-        guard let currentUser = UserController.sharedController.currentUser, playlistName = playlistNameTextField.text where !playlistName.isEmpty else { return }
-        PlaylistController.sharedController.createPlaylist(playlistName, completion: { (success, playlist) in
-            if success {
-                guard let playlist = playlist else { return }
-                PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
-                    self.performSegueWithIdentifier("unwindToHomeSegue", sender: self)
-                })
-            }
-        })
-
-    }
-    
-    @IBAction func cancelAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
 }

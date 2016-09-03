@@ -25,7 +25,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.playlist?.upNext = []
+        self.playlist?.nowPlaying = nil
         addTrackObservers(forPlaylistType: .Contributing)
+        registerCustomCells()
+        if let playlist = playlist {
+            self.title = playlist.name
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -39,7 +45,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
 //        }
     }
     
-    func registerCutomCells() {
+    func registerCustomCells() {
         tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: trackCellReuseIdentifier)
         tableView.registerNib(UINib(nibName: "NowPlayingTableViewCell", bundle: nil), forCellReuseIdentifier: nowPlayingCellReuseIdentifier)
     }
@@ -97,7 +103,10 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func setupViewForEmptyQueue() {
-        guard let queue = playlist else { return }
+        guard let queue = playlist else {
+            tableView.hidden = true
+            return
+        }
         if queue.upNext.isEmpty && queue.nowPlaying == nil { // If no songs
             tableView.hidden = true
         } else {

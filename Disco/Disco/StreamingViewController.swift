@@ -28,7 +28,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         checkSpotifyAuth()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.spotifyUserDidLogin(_:)), name: kSpotifyLoginNotificationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSetHostedPlaylist), name: kDidSetHostedPlaylist, object: nil)
-        registerCutomCells()
+        registerCustomCells()
 //        tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         
         
@@ -111,6 +111,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     func spotifyUserDidLogin(notification: NSNotification) {
         guard let userInfo = notification.userInfo as? [String: SPTSession], session = userInfo[kSpotifyLoginNotificationKey] else { return }
         checkSpotifyAuth()
+        setupViewForEmptyQueue()
         UserController.sharedController.loginToSpotifyUsingSession(session)
     }
     
@@ -246,8 +247,34 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
     }
     
+    func presentNamingDialog() {
+        let alert = UIAlertController(title: "Give your queue a name", message: "", preferredStyle: .Alert)
+        alert.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "Name"
+        }
+        let okayAction = UIAlertAction(title: "OK", style: .Default) { (_) in
+            if let text = alert.textFields?[0].text where !text.isEmpty {
+                PlaylistController.sharedController.createPlaylist(forUser: self.currentUser, withName: text, completion: { (success, playlist) in
+                    if success {
+                        guard let playlist = playlist, currentUser = UserController.sharedController.currentUser else { return }
+                        PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
+                            print("New queue created")
+                            self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
+                        })
+                    }
+                })
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in
+            return
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okayAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     @IBAction override func addFirstSongToQueueTapped(sender: AnyObject) {
-        self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
+        presentNamingDialog()
     }
     
 }

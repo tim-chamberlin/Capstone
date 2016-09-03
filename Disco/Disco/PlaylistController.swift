@@ -22,7 +22,7 @@ class PlaylistController {
     
     init () {
         guard let currentUser = UserController.sharedController.currentUser else { return }
-        fetchHostedPlaylistForUser(currentUser.FBID) { (playlist, success) in
+        observeHostedPlaylistForUser(currentUser) { (playlist, success) in
             guard let playlist = playlist else { return }
             self.hostedPlaylist = playlist
         }
@@ -34,10 +34,11 @@ class PlaylistController {
     
     // MARK: - Create Playlist
     
-    func createPlaylist(name: String, completion: (success: Bool, playlist: Playlist?) -> Void) {
+    func createPlaylist(forUser user: User, withName name: String, completion: (success: Bool, playlist: Playlist?) -> Void) {
         // Generate new uid in Playlists directory
-        let key = firebaseRef.child(Playlist.parentDirectory).childByAutoId().key
-        let playlist = Playlist(uid: key)
+//        let key = firebaseRef.child(Playlist.parentDirectory).childByAutoId().key
+        let key = user.FBID
+        let playlist = Playlist(uid: key, name: name)
         firebaseRef.child(Playlist.parentDirectory).child(key).setValue(playlist.jsonValue) { (error, _) in
             if error == nil {
                 print("Created new playlist")
@@ -61,8 +62,8 @@ class PlaylistController {
     
     // MARK: - Fetch Playlist
     
-    func fetchHostedPlaylistForUser(FBID: String, completion:(playlist: Playlist?, success: Bool) -> Void) {
-        firebaseRef.child(User.parentDirectory).child(FBID).child(PlaylistType.Hosting.rawValue).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+    func observeHostedPlaylistForUser(user: User, completion:(playlist: Playlist?, success: Bool) -> Void) {
+        firebaseRef.child(User.parentDirectory).child(user.FBID).child(PlaylistType.Hosting.rawValue).observeEventType(.Value, withBlock: { (snapshot) in
             guard let playlistDictionary = snapshot.value as? [String: AnyObject] else {
                 completion(playlist: nil, success: true)
                 return
@@ -115,7 +116,16 @@ class PlaylistController {
             }
         })
     }
-        
+    
+    
+    func fetchAllPlaylists(completion:() -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            
+            }) { (error) in
+                //
+        }
+    }
+    
     // MARK: - Add/Remove a track
     
     func setNowPlaying(track: Track?, forQueue queue: Playlist, completion: () -> Void) {

@@ -12,6 +12,7 @@ class Playlist {
     
     static let parentDirectory = "queues"
     
+    static let kName = "name"
     static let kIsLive = "isLive"
     static let kTrackList = "tracks"
     static let kNowPlaying = "nowPlaying"
@@ -20,7 +21,7 @@ class Playlist {
     static let kContributorsList = "contributorIDs"
     
     let uid: String
-//    let name: String
+    var name: String = ""
     let hostID: String
     var trackUids: [String]
     
@@ -40,23 +41,26 @@ class Playlist {
     }
     
     var jsonValue: [String: AnyObject] {
-        return [Playlist.kUpNext: self.upNext, Playlist.kHostID: self.hostID, Playlist.kContributorsList: self.contributorIDs, Playlist.kIsLive: self.isLive]
+        return [Playlist.kName: self.name , Playlist.kUpNext: self.upNext, Playlist.kHostID: self.hostID, Playlist.kContributorsList: self.contributorIDs, Playlist.kIsLive: self.isLive]
     }
     
-    init(uid: String, trackIDs: [String] = [], contributorIDs: [String] = [], hostID: String = (UserController.sharedController.currentUser?.FBID)!) {
+    init(uid: String, name: String, trackIDs: [String] = [], contributorIDs: [String] = [], hostID: String = (UserController.sharedController.currentUser?.FBID)!) {
         self.uid = uid
+        self.name = name
         self.trackUids = trackIDs
         self.hostID = hostID
         self.contributorIDs = contributorIDs
     }
     
+    // Init from firebase
     init?(dictionary: [String: AnyObject], uid: String) {
-        guard let hostID = dictionary[Playlist.kHostID] as? String else {
+        guard let hostID = dictionary[Playlist.kHostID] as? String, name = dictionary[Playlist.kName] as? String else {
             return nil
         }
         
         self.uid = uid
         self.hostID = hostID
+        self.name = name
         
         // There might not be any contributors
         if let contributorsDictionary = dictionary[Playlist.kContributorsList] as? [String:AnyObject] {
