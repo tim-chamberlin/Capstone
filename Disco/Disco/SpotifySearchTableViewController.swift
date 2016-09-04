@@ -71,7 +71,9 @@ class SpotifySearchTableViewController: UITableViewController, UISearchResultsUp
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("searchedTrackCell", forIndexPath: indexPath)
-        
+        cell.selectionStyle = .None
+        cell.textLabel?.textColor = UIColor.offWhiteColor()
+        cell.detailTextLabel?.textColor = UIColor.offWhiteColor()
         if searchedTracks.count == 0 {
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = ""

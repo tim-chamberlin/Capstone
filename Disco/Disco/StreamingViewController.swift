@@ -112,7 +112,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func spotifyUserDidLogin(notification: NSNotification) {
-        guard let userInfo = notification.userInfo as? [String: SPTSession], session = userInfo[kSpotifyLoginNotificationKey] else { return }
+        guard let userInfo = notification.userInfo as? [String: SPTSession], _ = userInfo[kSpotifyLoginNotificationKey] else { return }
         checkSpotifyAuth()
         setupViewForEmptyQueue()
     }

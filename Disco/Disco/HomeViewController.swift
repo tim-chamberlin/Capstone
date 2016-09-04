@@ -11,11 +11,11 @@ import UIKit
 class HomeViewController: UIViewController {
 
     private var contributingVC: ContributingViewController!
-    private var hostingVC: HostingViewController!
+    private var streamingVC: StreamingViewController!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var contributingContainerView: UIView!
-    @IBOutlet weak var hostingContainerView: UIView!
+    @IBOutlet weak var streamingContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,21 +25,53 @@ class HomeViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
         
         contributingVC.updatePlaylistTableView()
+        
+
+    }
+    
+    func setupNavigationBar() {
+        self.navigationController?.navigationBar.frame.origin.y = 200
+        
+        // Get facebook prof pic
+        if let currentUser = UserController.sharedController.currentUser {
+            UserController.sharedController.getCurrentUserProfilePicture(forUser: currentUser, completion: { (profilePicture) in
+                guard let image = profilePicture else { return }
+                self.navigationItem.titleView = UIImageView(image: image)
+                
+                let titleView = UIView(frame: CGRectMake(0,0, UIScreen.mainScreen().bounds.width/2, 30))
+//                titleView.backgroundColor = .blueColor()
+                let imageView = UIImageView(frame: CGRectMake(0, 0, 30, 30))
+                imageView.image = image
+                imageView.center = titleView.center
+                imageView.contentMode = .ScaleAspectFit
+                imageView.layer.cornerRadius = 20
+                titleView.addSubview(imageView)
+                
+                let titleLabel = UILabel(frame: CGRectMake(40, 0, 1000, 30))
+                titleLabel.text = "Tim Chamberlin"
+                titleLabel.font = UIFont.navigationBarFont()
+                titleLabel.textColor = UIColor.offWhiteColor()
+                titleView.addSubview(titleLabel)
+                
+                
+                self.navigationItem.titleView = titleView
+            })
+        }
     }
 
     func setupSegmentedCcontroller() {
         segmentedControl.selectedSegmentIndex == 0
         contributingContainerView.hidden = false
-        hostingContainerView.hidden = true
+        streamingContainerView.hidden = true
     }
     
     func segmentedControlChanged(segmentedControl: UISegmentedControl) {
         if segmentedControl.selectedSegmentIndex == 0 {
             contributingContainerView.hidden = false
-            hostingContainerView.hidden = true
+            streamingContainerView.hidden = true
         } else if segmentedControl.selectedSegmentIndex == 1 {
             contributingContainerView.hidden = true
-            hostingContainerView.hidden = false
+            streamingContainerView.hidden = false
         }
     }
     
@@ -70,8 +102,8 @@ class HomeViewController: UIViewController {
         // Embedded Views
         if segue.identifier == "contributingEmbedSegue" {
             contributingVC = segue.destinationViewController as? ContributingViewController
-        } else if segue.identifier == "hostingEmbedSegue" {
-            hostingVC = segue.destinationViewController as? HostingViewController
+        } else if segue.identifier == "embedStreamingVC" {
+            streamingVC = segue.destinationViewController as? StreamingViewController
         }
         
         // To playlist detail
@@ -93,14 +125,6 @@ class HomeViewController: UIViewController {
     
     @IBAction func logoutButtonTapped(sender: AnyObject) {
         presentLogoutActionSheet()
-    }
-    
-    @IBAction func friendsListButtonTapped(sender: AnyObject) {
-        UserController.sharedController.getFriends { (friends, success) in
-            guard let friends = friends else { return }
-            UserController.sharedController.currentUser?.friends = friends
-            self.performSegueWithIdentifier("toFriendsListSegue", sender: self)
-        }
     }
     
 }

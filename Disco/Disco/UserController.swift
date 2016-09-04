@@ -52,20 +52,6 @@ class UserController {
     
     // login
     
-    func loginWithFacebook(viewController: UIViewController, completion: (success: Bool) -> Void) {
-        let fbLoginManager = FBSDKLoginManager()
-        fbLoginManager.logInWithReadPermissions(facebookPermissions, fromViewController: viewController) { (result, error) in
-            if error == nil {
-                if result.isCancelled {
-                    completion(success: false)
-                    return
-                } else {
-                    completion(success: true)
-                }
-            }
-        }
-    }
-    
     func loginFirebaseUser(completion: (success: Bool) -> Void) {
         let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
         FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
@@ -95,6 +81,51 @@ class UserController {
         fbLoginManager.logOut()
         completion(success: true)
     }
+}
+
+// MARK: - Facebook
+
+extension UserController {
+    
+    // Login
+    
+    func loginWithFacebook(viewController: UIViewController, completion: (success: Bool) -> Void) {
+        let fbLoginManager = FBSDKLoginManager()
+        fbLoginManager.logInWithReadPermissions(facebookPermissions, fromViewController: viewController) { (result, error) in
+            if error == nil {
+                if result.isCancelled {
+                    completion(success: false)
+                    return
+                } else {
+                    completion(success: true)
+                }
+            }
+        }
+    }
+    
+    // Retrieve profile picture
+    
+    func getCurrentUserProfilePicture(forUser user: User, completion: (profilePicture: UIImage?) -> Void) {
+        guard let url = NSURL(string: "https://graph.facebook.com/\(user.FBID)/picture?type=small") else {
+            completion(profilePicture: nil)
+            return
+        }
+        ImageController.getImageFromURL(url) { (image, success) in
+            guard let image = image else {
+                completion(profilePicture: nil)
+                return
+            }
+            completion(profilePicture: image)
+        }
+    }
+    
+//    func getCurrentUserProfilePicture(forUser user: User, completion: () -> Void) {
+//        let facebookRequest = FBSDKGraphRequest(graphPath: "me/picture", parameters: [:], HTTPMethod: NetworkController.HTTPMethod.Get.rawValue)
+//        facebookRequest.startWithCompletionHandler { (connection, result, error) in
+//            print(result)
+//            completion()
+//        }
+//    }
     
     // Retrieve current Facebook User ID
     
@@ -112,7 +143,7 @@ class UserController {
     // Retrieve Friends List
     
     func getFriends(completion: (friends: [User]?, success: Bool) -> Void) {
-        let request = FBSDKGraphRequest(graphPath: "me/friends", parameters: nil, HTTPMethod: "GET")
+        let request = FBSDKGraphRequest(graphPath: "me/friends", parameters: [:], HTTPMethod: "GET")
         request.startWithCompletionHandler { (connection, result, error) in
             if let data = result["data"] as? [[String: AnyObject]] {
                 let friends = data.flatMap { User(dictionary: $0) }

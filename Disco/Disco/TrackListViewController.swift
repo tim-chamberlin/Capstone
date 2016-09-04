@@ -117,6 +117,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         if queue.upNext.isEmpty && queue.nowPlaying == nil { // If no songs
             tableView.hidden = true
+            
         } else {
             tableView.hidden = false
         }

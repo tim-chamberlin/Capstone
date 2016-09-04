@@ -87,7 +87,8 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
         let cell = self.tableView.dequeueReusableCellWithIdentifier("hostingPlaylistCell", forIndexPath: indexPath)
         
         let playlist = self.playlists[indexPath.row]
-        
+        cell.textLabel?.textColor = UIColor.offWhiteColor()
+        cell.textLabel?.font = UIFont.mediumLabelFont()
         cell.textLabel?.text = playlist.name
         if playlist.isLive {
             cell.detailTextLabel?.text = "Now Playing"

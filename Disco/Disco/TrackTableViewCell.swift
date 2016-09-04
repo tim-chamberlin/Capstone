@@ -24,6 +24,7 @@ class TrackTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupView()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -33,6 +34,12 @@ class TrackTableViewCell: UITableViewCell {
         if selected {
             self.selectionStyle = .None
         }
+    }
+    
+    func setupView() {
+        trackLabel.textColor = UIColor.offWhiteColor()
+        artistLabel.textColor = UIColor.offWhiteColor()
+        voteCountLabel.textColor = UIColor.goldColor()
     }
     
     func updateCellWithTrack(track: Track) {

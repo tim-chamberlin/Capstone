@@ -38,7 +38,6 @@
 		228381F71D6BDC0F00D78B53 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F61D6BDC0F00D78B53 /* AVFoundation.framework */; };
 		228381F91D6BDC1C00D78B53 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */; };
 		228382031D6BE11F00D78B53 /* ContributingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228382021D6BE11F00D78B53 /* ContributingViewController.swift */; };
-		228382051D6BE13500D78B53 /* HostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228382041D6BE13500D78B53 /* HostingViewController.swift */; };
 		228382071D6BEACD00D78B53 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228382061D6BEACD00D78B53 /* Bolts.framework */; };
 		229EA60E1D73BB8400DCC453 /* StreamingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EA60D1D73BB8400DCC453 /* StreamingViewController.swift */; };
 		229EA6101D73C73200DCC453 /* TrackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EA60F1D73C73200DCC453 /* TrackTableViewCell.xib */; };
@@ -46,6 +45,7 @@
 		22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */; };
 		22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */; };
 		22D2F1051D7B81BF009D9653 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22D2F1041D7B81BF009D9653 /* GoogleService-Info.plist */; };
+		22D2F1071D7BB094009D9653 /* AppearanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D2F1061D7BB094009D9653 /* AppearanceController.swift */; };
 		D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,7 +84,6 @@
 		228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		228381FC1D6BDCE300D78B53 /* Disco-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Disco-Bridging-Header.h"; sourceTree = "<group>"; };
 		228382021D6BE11F00D78B53 /* ContributingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributingViewController.swift; sourceTree = "<group>"; };
-		228382041D6BE13500D78B53 /* HostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostingViewController.swift; sourceTree = "<group>"; };
 		228382061D6BEACD00D78B53 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		229EA60D1D73BB8400DCC453 /* StreamingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingViewController.swift; sourceTree = "<group>"; };
 		229EA60F1D73C73200DCC453 /* TrackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackTableViewCell.xib; sourceTree = "<group>"; };
@@ -92,6 +91,7 @@
 		22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistController.swift; sourceTree = "<group>"; };
 		22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlaylistViewController.swift; sourceTree = "<group>"; };
 		22D2F1041D7B81BF009D9653 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		22D2F1061D7BB094009D9653 /* AppearanceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceController.swift; sourceTree = "<group>"; };
 		734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Disco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4DD003BFC04492F5C49F5 /* Pods-Disco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.release.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.release.xcconfig"; sourceTree = "<group>"; };
 		C701716C57C37BBB5005548A /* Pods-Disco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.debug.xcconfig"; sourceTree = "<group>"; };
@@ -147,7 +147,6 @@
 				228382021D6BE11F00D78B53 /* ContributingViewController.swift */,
 				223D01531D7A0E910037D76C /* SpotifyLoginViewController.swift */,
 				229EA60D1D73BB8400DCC453 /* StreamingViewController.swift */,
-				228382041D6BE13500D78B53 /* HostingViewController.swift */,
 			);
 			name = "Home VCs";
 			sourceTree = "<group>";
@@ -252,6 +251,7 @@
 		22456C781D6A7DCF001B7A9B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				22D2F1061D7BB094009D9653 /* AppearanceController.swift */,
 				224522861D6F7F1200F5F792 /* NetworkController.swift */,
 				223D01591D7A609C0037D76C /* ImageController.swift */,
 			);
@@ -402,11 +402,11 @@
 				224522871D6F7F1200F5F792 /* NetworkController.swift in Sources */,
 				224522801D6F70DB00F5F792 /* SpotifySearchTableViewController.swift in Sources */,
 				228382031D6BE11F00D78B53 /* ContributingViewController.swift in Sources */,
-				228382051D6BE13500D78B53 /* HostingViewController.swift in Sources */,
 				22AFF0A61D6CE44400121CC4 /* Playlist.swift in Sources */,
 				223D01571D7A5C580037D76C /* NowPlayingTableViewCell.swift in Sources */,
 				226F2E6C1D7B73190012F479 /* FriendTableViewCell.swift in Sources */,
 				22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */,
+				22D2F1071D7BB094009D9653 /* AppearanceController.swift in Sources */,
 				2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */,
 				22456C751D6A4D6E001B7A9B /* HomeViewController.swift in Sources */,
 				22456C701D6A462A001B7A9B /* User.swift in Sources */,

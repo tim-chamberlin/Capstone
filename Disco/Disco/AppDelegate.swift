@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        AppearanceController.initializeAppearance()
         
         // Init Firebase
         FIRApp.configure()
