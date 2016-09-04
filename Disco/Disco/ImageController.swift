@@ -20,4 +20,15 @@ class ImageController {
             })
         }
     }
+    
+    
+    static func getImageFromURLWithResponse(imageURL: NSURL, completion: (image: UIImage?, response: NSURLResponse?, error: NSError?) -> Void) {
+        NSURLSession.sharedSession().dataTaskWithURL(imageURL) { (data, response, error) in
+            dispatch_async(dispatch_get_main_queue(), {
+                guard let data = data, image = UIImage(data: data) else { return }
+                completion(image: image, response: response, error: error)
+            })
+        }.resume()
+    }
+    
 }

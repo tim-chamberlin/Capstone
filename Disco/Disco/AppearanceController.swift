@@ -19,7 +19,8 @@ struct AppearanceController {
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont.navigationBarFont(), NSForegroundColorAttributeName: UIColor.offWhiteColor()]
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.barButtonItemBold(), NSForegroundColorAttributeName: UIColor.offWhiteColor()], forState: .Normal)
         
-        UISegmentedControl.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.smallLabelFont(), NSForegroundColorAttributeName: UIColor.offWhiteColor()], forState: .Normal)
+        UISegmentedControl.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.smallLabelFont(), NSForegroundColorAttributeName: UIColor.goldColor()], forState: .Normal)
+        UISegmentedControl.appearance().tintColor = UIColor.goldColor()
         
         UITableView.appearance().backgroundColor = UIColor.darkCharcoalColor()
         UITableView.appearance().separatorColor = UIColor.lightCharcoalColor()
@@ -47,7 +48,7 @@ extension UIColor {
     }
     
     static func deepBlueColor() -> UIColor {
-        return UIColor(red: 0.098, green: 0.227, blue: 0.624, alpha: 1.00)
+        return UIColor(red: 0.000, green: 0.498, blue: 0.980, alpha: 1.00)
     }
     
     static func goldColor() -> UIColor {

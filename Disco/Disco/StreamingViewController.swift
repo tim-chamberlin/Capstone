@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
     var spotifyLoginVC: SpotifyLoginViewController!
@@ -26,6 +24,10 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         }
     }
     
+    
+    @IBOutlet weak var spotifyProfilePictureImageView: UIImageView!
+    @IBOutlet weak var spotifyUserName: UILabel!
+    
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playbackControlsView: UIView!
     @IBOutlet weak var spotifyLoginContainer: UIView!
@@ -39,12 +41,20 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
+        
+        setupProfilePictureImageView()
     }
     
     deinit {
         // TODO: Add modal view segue to streaming vc and alert user that they will stop playing music
         spotifyPlayer.logout()
-    }    
+    }
+    
+    func setupProfilePictureImageView() {
+        spotifyProfilePictureImageView.layer.cornerRadius = spotifyProfilePictureImageView.frame.width/2
+        spotifyProfilePictureImageView.contentMode = .ScaleAspectFill
+        spotifyProfilePictureImageView.layer.masksToBounds = true
+    }
 
     func didSetHostedPlaylist() {
         self.playlist = PlaylistController.sharedController.hostedPlaylist
@@ -112,9 +122,22 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func spotifyUserDidLogin(notification: NSNotification) {
-        guard let userInfo = notification.userInfo as? [String: SPTSession], _ = userInfo[kSpotifyLoginNotificationKey] else { return }
+        guard let userInfo = notification.userInfo as? [String: SPTSession], session = userInfo[kSpotifyLoginNotificationKey] else { return }
+        
         checkSpotifyAuth()
         setupViewForEmptyQueue()
+        
+        UserController.sharedController.getCurrentSpotifyUserData(session) { (spotifyUser, success) in
+            if success {
+                guard let spotifyUser = spotifyUser else { return }
+                self.spotifyUserName.text = spotifyUser.displayName
+                
+                ImageController.getImageFromURLWithResponse(spotifyUser.imageURL, completion: { (image, response, error) in
+                    guard let image = image else { return }
+                    self.spotifyProfilePictureImageView.image = image
+                })
+            }
+        }
     }
     
     func renewSpotifyTokenAndShowPlayer() {
@@ -207,7 +230,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             spotifyLoginVC = segue.destinationViewController as! SpotifyLoginViewController
         } else if segue.identifier == "addTrackToPlaylistSegue" {
             let navVC = segue.destinationViewController as? UINavigationController
-            guard let searchVC = navVC?.viewControllers.first as? SpotifySearchTableViewController else { return }
+            guard let searchVC = navVC?.viewControllers.first as? MusicSearchTableViewController else { return }
             searchVC.delegate = self
         }
     }

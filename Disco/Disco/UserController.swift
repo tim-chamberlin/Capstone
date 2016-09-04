@@ -159,6 +159,23 @@ extension UserController {
 
 extension UserController {
     
+    
+    func getCurrentSpotifyUserData(session: SPTSession, completion: (spotifyUser: SpotifyUser?, success: Bool) -> Void) {
+        SPTUser.requestCurrentUserWithAccessToken(session.accessToken) { (error, user) in
+            if error != nil {
+                print(error.localizedDescription)
+                completion(spotifyUser: nil, success: false)
+            } else {
+                guard let sptUser = user as? SPTUser else {
+                    completion(spotifyUser: nil, success: false)
+                    return
+                }
+                
+                completion(spotifyUser: SpotifyUser(displayName: sptUser.displayName, imageURL: sptUser.smallestImage.imageURL), success: true)
+            }
+        }
+    }
+    
     func setupSPTAuth() {
         guard let currentUser = UserController.sharedController.currentUser else { return }
         // Set properties for SPTAuth singleton

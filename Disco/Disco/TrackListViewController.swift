@@ -197,7 +197,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "addTrackToPlaylistSegue" {
             let navVC = segue.destinationViewController as? UINavigationController
-            guard let searchVC = navVC?.viewControllers.first as? SpotifySearchTableViewController else { return }
+            guard let searchVC = navVC?.viewControllers.first as? MusicSearchTableViewController else { return }
             searchVC.delegate = self
         }
     }

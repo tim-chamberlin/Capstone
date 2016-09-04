@@ -1,5 +1,5 @@
 //
-//  SpotifySearchTableViewController.swift
+//  MusicSearchTableViewController.swift
 //  Disco
 //
 //  Created by Tim on 8/25/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SpotifySearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
+class MusicSearchTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     var searchController: UISearchController?
     
