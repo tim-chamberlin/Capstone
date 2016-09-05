@@ -20,39 +20,23 @@ class AuthenticationViewController: UIViewController, FBSDKLoginButtonDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingIndicator.hidesWhenStopped = true
-        
         loginWithFacebookView.hidden = true
         loadingIndicator.startAnimating()
         
-        FIRAuth.auth()?.addAuthStateDidChangeListener({ (auth, user) in
-            if let user = user {
-                
-                // Set user of current session
-                guard let name = user.displayName else { return }
-                UserController.sharedController.getCurrentUserFBID({ (ID, success) in
-                    if let FBID = ID {
-                        let currentUser = User(FBID: FBID, name: name)
-                        UserController.sharedController.currentUser = currentUser
-                        
-                        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                        let homeVC = mainStoryboard.instantiateViewControllerWithIdentifier("HomeNavView")
-                        
-                        self.presentViewController(homeVC, animated: true, completion: nil)
-                    }
-                })
-                
+        // Check Firebase user authentication
+        UserController.sharedController.checkFirebaseUserAuth { (success) in
+            if success {
+                // Segue to homeVC
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let homeVC = mainStoryboard.instantiateViewControllerWithIdentifier("HomeNavView")
+                self.presentViewController(homeVC, animated: true, completion: nil)
             } else {
                 self.loginWithFacebookButton.delegate = self
                 self.loginWithFacebookButton.readPermissions = ["public_profile", "email", "user_friends"]
-                
                 self.loginWithFacebookView.hidden = false
                 self.loadingIndicator.stopAnimating()
             }
-        })
-        
-        
-        
-        loadingIndicator.hidden = false
+        }
     }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
@@ -82,7 +66,7 @@ class AuthenticationViewController: UIViewController, FBSDKLoginButtonDelegate{
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        
+        print("User logged out of Facebook")
     }
     
     // MARK: - IBActions

@@ -237,8 +237,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y20-04-h96" userLabel="Contributing View">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="478"/>
                                 <subviews>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3K-dz-CfI">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                                        <connections>
+                                            <segue destination="L9M-Gq-vfw" kind="embed" identifier="playlistTVEmbedSegue" id="Xc4-mX-DVK"/>
+                                        </connections>
+                                    </containerView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZ9-SF-Ypd">
-                                        <rect key="frame" x="157" y="414" width="286" height="44"/>
+                                        <rect key="frame" x="189" y="424" width="222" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="UMS-PE-Mfm"/>
+                                            <constraint firstAttribute="width" secondItem="WZ9-SF-Ypd" secondAttribute="height" multiplier="111:17" id="egF-uL-1f7"/>
+                                        </constraints>
                                         <state key="normal" image="ContributeToQueueButtonGold">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -246,22 +256,24 @@
                                             <action selector="contributeToPlaylistButtonTapped:" destination="y1v-EL-T6f" eventType="touchUpInside" id="3sc-s8-WG7"/>
                                         </connections>
                                     </button>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3K-dz-CfI">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
-                                        <connections>
-                                            <segue destination="L9M-Gq-vfw" kind="embed" identifier="playlistTVEmbedSegue" id="Xc4-mX-DVK"/>
-                                        </connections>
-                                    </containerView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.15294117647058825" green="0.15294117647058825" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="WZ9-SF-Ypd" firstAttribute="centerX" secondItem="y20-04-h96" secondAttribute="centerX" id="1fT-6f-AnT"/>
                                     <constraint firstItem="g3K-dz-CfI" firstAttribute="top" secondItem="y20-04-h96" secondAttribute="top" id="5bL-C9-fRt"/>
+                                    <constraint firstAttribute="bottom" secondItem="WZ9-SF-Ypd" secondAttribute="bottom" constant="20" id="EL8-gj-7Lz"/>
                                     <constraint firstItem="g3K-dz-CfI" firstAttribute="leading" secondItem="y20-04-h96" secondAttribute="leading" id="ReN-XJ-tJ0"/>
-                                    <constraint firstItem="WZ9-SF-Ypd" firstAttribute="centerX" secondItem="y20-04-h96" secondAttribute="centerX" id="btP-h7-rax"/>
-                                    <constraint firstItem="WZ9-SF-Ypd" firstAttribute="top" secondItem="g3K-dz-CfI" secondAttribute="bottom" constant="40" id="jQu-4r-mKc"/>
+                                    <constraint firstItem="WZ9-SF-Ypd" firstAttribute="top" secondItem="g3K-dz-CfI" secondAttribute="bottom" constant="50" id="iPB-V1-gIv"/>
                                     <constraint firstAttribute="trailing" secondItem="g3K-dz-CfI" secondAttribute="trailing" id="mPp-7W-jA8"/>
-                                    <constraint firstAttribute="bottom" secondItem="WZ9-SF-Ypd" secondAttribute="bottom" constant="20" id="pPF-kd-RYX"/>
+                                    <constraint firstAttribute="bottom" secondItem="WZ9-SF-Ypd" secondAttribute="bottom" constant="29" id="sDc-gu-ENH"/>
+                                    <constraint firstItem="WZ9-SF-Ypd" firstAttribute="centerX" secondItem="y20-04-h96" secondAttribute="centerX" id="tl7-wQ-eVB"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="sDc-gu-ENH"/>
+                                        <exclude reference="tl7-wQ-eVB"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -644,7 +656,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dN7-7E-HZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3814" y="539"/>
+            <point key="canvasLocation" x="3720" y="553"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WxJ-83-LAo">

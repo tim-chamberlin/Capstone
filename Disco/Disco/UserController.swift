@@ -26,7 +26,7 @@ class UserController {
     
     // Check authentication
     
-    func checkUserAuth(completion: (success: Bool) -> Void) {
+    func checkFirebaseUserAuth(completion: (success: Bool) -> Void) {
         FIRAuth.auth()?.addAuthStateDidChangeListener({ (auth, user) in
             if let user = user {
                 // Set user of current session
@@ -41,7 +41,7 @@ class UserController {
                         }
                     })
                 } else {
-                    print("No access token")
+                    print("No Facebook access token")
                     completion(success: false)
                 }
             } else {
