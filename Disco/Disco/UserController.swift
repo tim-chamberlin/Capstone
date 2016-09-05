@@ -8,7 +8,7 @@
 
 import Foundation
 import FirebaseAuth
-import FBSDKLoginKit
+import FBSDKCoreKit
 
 class UserController {
     
@@ -52,8 +52,7 @@ class UserController {
     
     // login
     
-    func loginFirebaseUser(completion: (success: Bool) -> Void) {
-        let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+    func loginFirebaseUserWithFacebookCredential(credential: FIRAuthCredential, completion: (success: Bool) -> Void) {
         FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
             let success = user != nil && error == nil
             if let user = user, name = user.displayName {
@@ -73,13 +72,11 @@ class UserController {
     
     // logout
     
-    func logoutCurrentUser(completion: (success: Bool) -> Void) {
+    func logoutCurrentUser() {
         // Logout Firebase
         try! FIRAuth.auth()!.signOut()
         // Logout Facebook
-        let fbLoginManager = FBSDKLoginManager()
-        fbLoginManager.logOut()
-        completion(success: true)
+        FBSDKAccessToken.setCurrentAccessToken(nil)
     }
 }
 
@@ -89,19 +86,19 @@ extension UserController {
     
     // Login
     
-    func loginWithFacebook(viewController: UIViewController, completion: (success: Bool) -> Void) {
-        let fbLoginManager = FBSDKLoginManager()
-        fbLoginManager.logInWithReadPermissions(facebookPermissions, fromViewController: viewController) { (result, error) in
-            if error == nil {
-                if result.isCancelled {
-                    completion(success: false)
-                    return
-                } else {
-                    completion(success: true)
-                }
-            }
-        }
-    }
+//    func loginWithFacebook(viewController: UIViewController, completion: (success: Bool) -> Void) {
+//        let fbLoginManager = FBSDKLoginManager()
+//        fbLoginManager.logInWithReadPermissions(facebookPermissions, fromViewController: viewController) { (result, error) in
+//            if error == nil {
+//                if result.isCancelled {
+//                    completion(success: false)
+//                    return
+//                } else {
+//                    completion(success: true)
+//                }
+//            }
+//        }
+//    }
     
     // Retrieve profile picture
     

@@ -53,11 +53,11 @@ class TrackTableViewCell: UITableViewCell {
     func updateCellWithVoteType(voteType: VoteType) {
         switch voteType {
         case .Up:
-            upVoteButton.setImage(UIImage(named: "UpVoteSelected"), forState: .Normal)
+            upVoteButton.setImage(UIImage(named: "UpVoteSelectedGold"), forState: .Normal)
             downVoteButton.setImage(UIImage(named: "DownVoteUnselected"), forState: .Normal)
         case .Down:
             upVoteButton.setImage(UIImage(named: "UpVoteUnselected"), forState: .Normal)
-            downVoteButton.setImage(UIImage(named: "DownVoteSelected"), forState: .Normal)
+            downVoteButton.setImage(UIImage(named: "DownVoteSelectedGold"), forState: .Normal)
         case .Neutral:
             upVoteButton.setImage(UIImage(named: "UpVoteUnselected"), forState: .Normal)
             downVoteButton.setImage(UIImage(named: "DownVoteUnselected"), forState: .Normal)

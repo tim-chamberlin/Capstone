@@ -81,13 +81,16 @@ class HomeViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in
             return
         }
+        
+        // Logout Current User
         let logoutAction = UIAlertAction(title: "Logout", style: .Destructive) { (_) in
-            UserController.sharedController.logoutCurrentUser { (success) in
-                if success {
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
-            }
+            UserController.sharedController.logoutCurrentUser()
+            
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let authVC = mainStoryboard.instantiateViewControllerWithIdentifier("AuthView")
+            self.presentViewController(authVC, animated: true, completion: nil)
         }
+        
         actionSheet.addAction(cancelAction)
         actionSheet.addAction(logoutAction)
         

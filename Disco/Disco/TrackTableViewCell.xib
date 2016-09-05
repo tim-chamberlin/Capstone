@@ -99,7 +99,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="DownVoteUnselected" width="125" height="124"/>
-        <image name="UpVoteUnselected" width="125" height="124"/>
+        <image name="DownVoteUnselected" width="140" height="140"/>
+        <image name="UpVoteUnselected" width="140" height="140"/>
     </resources>
 </document>

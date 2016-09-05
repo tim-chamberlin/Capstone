@@ -162,12 +162,12 @@
 			name = "Contribute to playlist VCs";
 			sourceTree = "<group>";
 		};
-		224522851D6F7A8700F5F792 /* Spotify Search */ = {
+		224522851D6F7A8700F5F792 /* Track Search */ = {
 			isa = PBXGroup;
 			children = (
 				2245227F1D6F70DB00F5F792 /* MusicSearchTableViewController.swift */,
 			);
-			name = "Spotify Search";
+			name = "Track Search";
 			sourceTree = "<group>";
 		};
 		22456C441D6A3C32001B7A9B = {
@@ -245,7 +245,7 @@
 				224522791D6F647800F5F792 /* TrackListViewController.swift */,
 				224522811D6F70F300F5F792 /* Home VCs */,
 				224522821D6F7A4600F5F792 /* Contribute to playlist VCs */,
-				224522851D6F7A8700F5F792 /* Spotify Search */,
+				224522851D6F7A8700F5F792 /* Track Search */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";

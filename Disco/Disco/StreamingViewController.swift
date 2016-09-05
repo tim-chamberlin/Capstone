@@ -25,6 +25,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     
+    @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var spotifyProfilePictureImageView: UIImageView!
     @IBOutlet weak var spotifyUserName: UILabel!
     
@@ -36,13 +37,34 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
 //        checkSpotifyAuth()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.spotifyUserDidLogin(_:)), name: kSpotifyLoginNotificationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSetHostedPlaylist), name: kDidSetHostedPlaylist, object: nil)
+        
         registerCustomCells()
-//        tableView.registerNib(UINib(nibName: "TrackTableViewCell", bundle: nil), forCellReuseIdentifier: "trackCell")
         
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
         
+        setupSearchController()
         setupProfilePictureImageView()
+    }
+    
+    // MARK: - UISearchController
+    
+    override func setupSearchController() {
+        
+        self.navigationController?.extendedLayoutIncludesOpaqueBars = true
+        self.navigationController?.navigationBar.translucent = false
+        
+        let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MusicSearchResultsTVC")
+        musicSearchController = UISearchController(searchResultsController: resultsController)
+        guard let searchController = musicSearchController else { return }
+        searchController.searchResultsUpdater = self
+        
+        searchController.searchBar.placeholder = "Search for a song on Spotify..."
+        searchController.definesPresentationContext = true
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.barTintColor = UIColor.lightCharcoalColor()
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     deinit {
