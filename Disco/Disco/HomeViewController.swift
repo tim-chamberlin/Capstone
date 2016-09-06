@@ -128,8 +128,4 @@ class HomeViewController: UIViewController {
     @IBAction func logoutButtonTapped(sender: AnyObject) {
         presentLogoutActionSheet()
     }
-    
-    @IBAction func addTrackAction(sender: AnyObject) {
-        self.performSegueWithIdentifier("addTrackSegue", sender: self)
-    }
 }

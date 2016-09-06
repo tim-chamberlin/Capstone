@@ -16,7 +16,7 @@ let kTrackListDidRemoveSong = "TrackListDidUpdate"
 let trackCellReuseIdentifier = "trackCell"
 let nowPlayingCellReuseIdentifier = "nowPlayingCell"
 
-class TrackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddTrackToPlaylistDelegate, TrackTableViewCellDelegate, UISearchResultsUpdating, UISearchControllerDelegate {
+class TrackListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddTrackToPlaylistDelegate, TrackTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,7 +34,6 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         if let playlist = playlist {
             self.title = playlist.name
         }
-        setupSearchController()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -45,37 +44,9 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - UISearchController
     
-    func setupSearchController() {
-        self.navigationController?.extendedLayoutIncludesOpaqueBars = true
-        self.navigationController?.navigationBar.translucent = false
-        
-        let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MusicSearchResultsTVC")
-        musicSearchController = UISearchController(searchResultsController: resultsController)
-        guard let searchController = musicSearchController else { return }
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search for a song on Spotify..."
-        searchController.definesPresentationContext = true
-        searchController.hidesNavigationBarDuringPresentation = true
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.barTintColor = UIColor.lightCharcoalColor()
-        tableView.tableHeaderView = searchController.searchBar
-    }
+
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-        if let text = searchController.searchBar.text, resultsController = searchController.searchResultsController as? MusicSearchTableViewController {
-            resultsController.delegate = self
-            if !text.isEmpty {
-                TrackController.searchSpotifyForTrackWithText(text, responseLimit: "20", filterByType: "track") { (tracks, success) in
-                    if !tracks.isEmpty {
-                        resultsController.searchedTracks = tracks
-                    }
-                }
-            } else {
-                resultsController.searchedTracks = []
-            }
-        }
-    }
+    
     
     deinit {
         if let queue = playlist {

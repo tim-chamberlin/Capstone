@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, UISearchBarDelegate {
+class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
     var spotifyLoginVC: SpotifyLoginViewController!
     
@@ -43,17 +43,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
         
-        setupSearchController()
         setupProfilePictureImageView()
-    }
-    
-    
-    override func setupSearchController() {
-        
-        let resultsController = MusicSearchTableViewController()
-        let searchController = UISearchController(searchResultsController: resultsController)
-        
-        tableView.tableHeaderView = searchController.searchBar
     }
     
     

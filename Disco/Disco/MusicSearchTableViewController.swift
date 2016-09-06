@@ -8,16 +8,15 @@
 
 import UIKit
 
-class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate {
-    
-    @IBOutlet weak var addTrackView: UIView!
-    @IBOutlet weak var addTrackButton: UIButton!
+class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating {
     
     var searchedTracks: [Track] = [] {
         didSet {
             tableView.reloadData()
         }
     }
+    
+    var musicSearchController: UISearchController?
     
     var selectedTrack: Track?
     var selectedTrackIndexPath: NSIndexPath?
@@ -26,14 +25,42 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addTrackButton.enabled = false
-        tableView.contentOffset = CGPointMake(0, 100)
+        setupSearchController()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
         selectedTrack = nil
         selectedTrackIndexPath = nil
+    }
+    
+    
+    func setupSearchController() {
+        musicSearchController = UISearchController(searchResultsController: nil)
+        guard let searchController = musicSearchController else { return }
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search for a track on Spotify..."
+        searchController.definesPresentationContext = true
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.barTintColor = UIColor.lightCharcoalColor()
+        tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        if let text = searchController.searchBar.text {
+            if !text.isEmpty {
+                TrackController.searchSpotifyForTrackWithText(text, responseLimit: "20", filterByType: "track") { (tracks, success) in
+                    if !tracks.isEmpty {
+                        self.searchedTracks = tracks
+                    }
+                }
+            } else {
+                self.searchedTracks = []
+            }
+        }
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -79,8 +106,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
         selectedTrack = searchedTracks[indexPath.row]
         selectedTrackIndexPath = indexPath
-        addTrackButton.enabled = true
-        addTrackButton.setImage(UIImage(named: "AddTrackGold"), forState: .Normal)
         cell.accessoryType = .Checkmark
     }
     
@@ -94,8 +119,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     // MARK: - IBActions
     
     @IBAction func addTrackButtonTapped(sender: AnyObject) {
-//        searchController?.active = false
-        
+        musicSearchController?.active = false
         if let selectedTrack = selectedTrack {
             delegate?.willAddTrackToPlaylist(selectedTrack)
             self.dismissViewControllerAnimated(true, completion: nil)
@@ -105,7 +129,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     }
     
     @IBAction func cancelAction(sender: AnyObject) {
-//        searchController?.active = false
+        musicSearchController?.active = false
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
