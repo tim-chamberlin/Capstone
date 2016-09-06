@@ -23,7 +23,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="149"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gFN-7m-UGY">
-                                <rect key="frame" x="8" y="0.0" width="149" height="149"/>
+                                <rect key="frame" x="0.0" y="0.0" width="149" height="149"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="83" id="IHh-gp-d61"/>
                                     <constraint firstAttribute="width" secondItem="gFN-7m-UGY" secondAttribute="height" multiplier="1:1" id="jZg-qD-ZJb"/>
@@ -35,7 +35,7 @@
                                 </variation>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RMZ-nX-LjL">
-                                <rect key="frame" x="169" y="30" width="423" height="89"/>
+                                <rect key="frame" x="161" y="30" width="431" height="89"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1be-wf-hQt" userLabel="Track Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="53" height="55"/>
@@ -75,7 +75,7 @@
                             <constraint firstItem="gFN-7m-UGY" firstAttribute="centerY" secondItem="8L1-yF-f8H" secondAttribute="centerY" id="FnW-9Q-ZSR"/>
                             <constraint firstAttribute="bottom" secondItem="gFN-7m-UGY" secondAttribute="bottom" id="ZmK-cr-Zpd"/>
                             <constraint firstItem="RMZ-nX-LjL" firstAttribute="leading" secondItem="gFN-7m-UGY" secondAttribute="trailing" constant="12" id="cLK-6d-L4b"/>
-                            <constraint firstItem="gFN-7m-UGY" firstAttribute="leading" secondItem="8L1-yF-f8H" secondAttribute="leading" constant="8" id="dGk-T1-3BK"/>
+                            <constraint firstItem="gFN-7m-UGY" firstAttribute="leading" secondItem="8L1-yF-f8H" secondAttribute="leading" id="dGk-T1-3BK"/>
                         </constraints>
                     </view>
                 </subviews>
