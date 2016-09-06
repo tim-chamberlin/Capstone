@@ -180,7 +180,7 @@ extension UserController {
         SPTAuth.defaultInstance().redirectURL = UserController.spotifyRedirectURL
         SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope]
         SPTAuth.defaultInstance().sessionUserDefaultsKey = currentUser.FBID
-        SPTAuth.defaultInstance().allowNativeLogin = true
+        SPTAuth.defaultInstance().allowNativeLogin = false
     }
     
     func checkSpotifyUserAuth(completion: (loggedIn: Bool, session: SPTSession?) -> Void) {

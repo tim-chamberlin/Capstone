@@ -413,9 +413,6 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="76H-of-cjV"/>
-                                                </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logged into Spotify as:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mtj-EP-es5">
                                                 <rect key="frame" x="465" y="6" width="127" height="17"/>
@@ -423,29 +420,29 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="by2-DW-HCa" userLabel="Logout of Spotify">
+                                                <rect key="frame" x="439" y="0.0" width="153" height="64"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="64" id="ofU-VL-nA4"/>
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="logoutOfSpotify:" destination="kbA-bE-dLe" eventType="touchUpInside" id="4rb-1e-H8P"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="Mtj-EP-es5" firstAttribute="top" secondItem="OPL-nz-gli" secondAttribute="top" constant="3" id="5nQ-Fk-9fo"/>
-                                            <constraint firstItem="Mtj-EP-es5" firstAttribute="width" secondItem="OR7-k8-gqq" secondAttribute="width" constant="-26" id="BDS-c8-2BF"/>
+                                            <constraint firstAttribute="trailing" secondItem="by2-DW-HCa" secondAttribute="trailing" constant="8" id="1ud-rW-WVc"/>
                                             <constraint firstAttribute="trailing" secondItem="Mtj-EP-es5" secondAttribute="trailing" constant="8" id="BvO-OC-Qmt"/>
-                                            <constraint firstItem="OR7-k8-gqq" firstAttribute="centerY" secondItem="OPL-nz-gli" secondAttribute="centerY" id="Dv2-fX-qf5"/>
                                             <constraint firstAttribute="height" constant="64" id="Jng-9b-cBV"/>
-                                            <constraint firstItem="Mtj-EP-es5" firstAttribute="width" secondItem="za2-xS-7dn" secondAttribute="width" id="Q6Q-9B-Kw3"/>
+                                            <constraint firstItem="by2-DW-HCa" firstAttribute="width" secondItem="OR7-k8-gqq" secondAttribute="width" id="SiI-yB-zch"/>
                                             <constraint firstAttribute="trailing" secondItem="OR7-k8-gqq" secondAttribute="trailing" constant="8" id="fem-Or-MGV"/>
                                             <constraint firstItem="Mtj-EP-es5" firstAttribute="top" secondItem="OPL-nz-gli" secondAttribute="top" constant="6" id="pPJ-Sl-sTj"/>
                                             <constraint firstItem="6lT-ut-7Kb" firstAttribute="centerY" secondItem="OPL-nz-gli" secondAttribute="centerY" id="pVa-Cs-yxa"/>
+                                            <constraint firstAttribute="bottom" secondItem="by2-DW-HCa" secondAttribute="bottom" id="t6j-UY-Fq0"/>
                                             <constraint firstItem="OR7-k8-gqq" firstAttribute="top" secondItem="Mtj-EP-es5" secondAttribute="bottom" id="uqJ-Ev-DRG"/>
                                             <constraint firstItem="6lT-ut-7Kb" firstAttribute="leading" secondItem="OPL-nz-gli" secondAttribute="leading" constant="8" id="wht-Hy-xtO"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Dv2-fX-qf5"/>
-                                                <exclude reference="5nQ-Fk-9fo"/>
-                                                <exclude reference="BDS-c8-2BF"/>
-                                                <exclude reference="Q6Q-9B-Kw3"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -485,8 +482,11 @@
                         <outlet property="playbackControlsView" destination="OPL-nz-gli" id="mcy-S1-Ptn"/>
                         <outlet property="spotifyLoginContainer" destination="6yV-UH-1Px" id="r5w-9u-zTU"/>
                         <outlet property="spotifyProfilePictureImageView" destination="hny-Hw-s47" id="T2w-T7-ANm"/>
-                        <outlet property="spotifyUserName" destination="za2-xS-7dn" id="dDw-Zm-isl"/>
+                        <outlet property="spotifyUserName" destination="za2-xS-7dn" id="tGR-Ah-qrJ"/>
                         <outlet property="tableView" destination="LSm-eL-tfw" id="2Sl-un-zte"/>
+                        <segue destination="6EG-UC-9mR" kind="popoverPresentation" identifier="showLogoutPopover" popoverAnchorView="by2-DW-HCa" id="wAw-HO-GdM">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Ze-m5-ev4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -822,6 +822,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SE8-nn-bQH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3893" y="528"/>
+        </scene>
+        <!--Popover-->
+        <scene sceneID="viB-by-cQW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Popover" id="6EG-UC-9mR" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="anu-qR-oFJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3696" y="1281"/>
         </scene>
     </scenes>
     <resources>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
+class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, UIPopoverPresentationControllerDelegate, SpotifyLogoutDelegate {
     
     var spotifyLoginVC: SpotifyLoginViewController!
     
@@ -28,7 +28,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var spotifyProfilePictureImageView: UIImageView!
     @IBOutlet weak var spotifyUserName: UILabel!
-    
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playbackControlsView: UIView!
     @IBOutlet weak var spotifyLoginContainer: UIView!
@@ -181,7 +180,11 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func audioStreamingDidLogout(audioStreaming: SPTAudioStreamingController!) {
-        //
+        dispatch_async(dispatch_get_main_queue(), {
+            print("Spotify user logged out")
+            self.spotifyLoginContainer.hidden = false
+        })
+        
     }
     
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didEncounterError error: NSError!) {
@@ -234,6 +237,16 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             let navVC = segue.destinationViewController as? UINavigationController
             guard let searchVC = navVC?.viewControllers.first as? MusicSearchTableViewController else { return }
             searchVC.delegate = self
+        } else if segue.identifier == "showLogoutPopover" {
+            let vc = segue.destinationViewController as? SpotifyPopoverViewController
+            vc?.delegate = self
+            let controller = vc?.popoverPresentationController
+            
+            if let controller = controller, sourceView = controller.sourceView {
+                controller.delegate = self
+                controller.backgroundColor = UIColor.lightCharcoalColor()
+                controller.sourceRect = CGRect(x: sourceView.frame.width * 0.25, y: 0, width: 0, height: 0)
+            }
         }
     }
     
@@ -303,4 +316,23 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         presentNamingDialog()
     }
     
+    @IBAction func logoutOfSpotify(sender: AnyObject) {
+        self.performSegueWithIdentifier("showLogoutPopover", sender: self)
+    }
+    
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
+    func popoverViewDidLogoutSpotifyUser() {
+        spotifyPlayer.logout()
+    }
 }
+
+
+
+
+
+
+

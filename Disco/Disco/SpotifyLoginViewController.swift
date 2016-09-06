@@ -14,6 +14,8 @@ public let spotifyLogoutNotificationKey = "spotifyLogoutSuccessful"
 
 class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
 
+    let spotifyAuthViewController = SPTAuthViewController.authenticationViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Provides SPTAuth information for SPTAuthViewController
@@ -55,7 +57,7 @@ class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
     func presentSPTAuthViewController() {
         
         // Authenticate with Spotify's authenticationViewController
-        let spotifyAuthViewController = SPTAuthViewController.authenticationViewController()
+        
         spotifyAuthViewController.delegate = self
         spotifyAuthViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         spotifyAuthViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve

@@ -47,6 +47,8 @@
 		22D2F1051D7B81BF009D9653 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22D2F1041D7B81BF009D9653 /* GoogleService-Info.plist */; };
 		22D2F1071D7BB094009D9653 /* AppearanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D2F1061D7BB094009D9653 /* AppearanceController.swift */; };
 		22D2F10B1D7CC7D3009D9653 /* SpotifyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D2F10A1D7CC7D3009D9653 /* SpotifyUser.swift */; };
+		22DE4C4E1D7E68D200019F22 /* SpotifyPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DE4C4D1D7E68D200019F22 /* SpotifyPopoverViewController.swift */; };
+		22DE4C511D7E68FF00019F22 /* Popover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22DE4C4F1D7E68FF00019F22 /* Popover.storyboard */; };
 		D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +96,8 @@
 		22D2F1041D7B81BF009D9653 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		22D2F1061D7BB094009D9653 /* AppearanceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceController.swift; sourceTree = "<group>"; };
 		22D2F10A1D7CC7D3009D9653 /* SpotifyUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyUser.swift; sourceTree = "<group>"; };
+		22DE4C4D1D7E68D200019F22 /* SpotifyPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyPopoverViewController.swift; sourceTree = "<group>"; };
+		22DE4C501D7E68FF00019F22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Popover.storyboard; sourceTree = "<group>"; };
 		734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Disco.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4DD003BFC04492F5C49F5 /* Pods-Disco.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.release.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.release.xcconfig"; sourceTree = "<group>"; };
 		C701716C57C37BBB5005548A /* Pods-Disco.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Disco.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Disco/Pods-Disco.debug.xcconfig"; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 			children = (
 				228381FC1D6BDCE300D78B53 /* Disco-Bridging-Header.h */,
 				22456C541D6A3C32001B7A9B /* Main.storyboard */,
+				22DE4C4F1D7E68FF00019F22 /* Popover.storyboard */,
 				22456C571D6A3C32001B7A9B /* Assets.xcassets */,
 				22456C591D6A3C32001B7A9B /* LaunchScreen.storyboard */,
 				22D2F1041D7B81BF009D9653 /* GoogleService-Info.plist */,
@@ -246,6 +251,7 @@
 				224522811D6F70F300F5F792 /* Home VCs */,
 				224522821D6F7A4600F5F792 /* Contribute to playlist VCs */,
 				224522851D6F7A8700F5F792 /* Track Search */,
+				22DE4C4D1D7E68D200019F22 /* SpotifyPopoverViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				22456C581D6A3C32001B7A9B /* Assets.xcassets in Resources */,
 				226F2E6D1D7B73190012F479 /* FriendTableViewCell.xib in Resources */,
 				223D01581D7A5C580037D76C /* NowPlayingTableViewCell.xib in Resources */,
+				22DE4C511D7E68FF00019F22 /* Popover.storyboard in Resources */,
 				229EA6101D73C73200DCC453 /* TrackTableViewCell.xib in Resources */,
 				22456C561D6A3C32001B7A9B /* Main.storyboard in Resources */,
 				22D2F1051D7B81BF009D9653 /* GoogleService-Info.plist in Resources */,
@@ -421,6 +428,7 @@
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,
 				2245227A1D6F647800F5F792 /* TrackListViewController.swift in Sources */,
 				229EA60E1D73BB8400DCC453 /* StreamingViewController.swift in Sources */,
+				22DE4C4E1D7E68D200019F22 /* SpotifyPopoverViewController.swift in Sources */,
 				2245227E1D6F66CE00F5F792 /* TrackController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
 				22D2F10B1D7CC7D3009D9653 /* SpotifyUser.swift in Sources */,
@@ -452,6 +460,14 @@
 				22456C5A1D6A3C32001B7A9B /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		22DE4C4F1D7E68FF00019F22 /* Popover.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				22DE4C501D7E68FF00019F22 /* Base */,
+			);
+			name = Popover.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
