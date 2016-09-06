@@ -27,20 +27,8 @@ class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
         print("Spotify user logged in")
         
-//        UserController.sharedController.loginToSpotifyUsingFirebase(withSession: session) { (user, error) in
-//            guard let firebaseUser = user else {
-//                print("Error logging in to Firebase using Spotify: \(error?.localizedDescription)")
-//                return
-//            }
-//            print(firebaseUser.displayName)
-//            print(firebaseUser.uid)
-//        }
-        
-        
         NSNotificationCenter.defaultCenter().postNotificationName(kSpotifyLoginNotificationKey, object: nil, userInfo: [kSpotifyLoginNotificationKey:session])
-        
-        //        self.session = session
-        //        authenticationViewController.clearCookies(nil)
+//        authenticationViewController.clearCookies(nil)
     }
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didFailToLogin error: NSError!) {

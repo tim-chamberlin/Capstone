@@ -37,9 +37,15 @@ class TrackTableViewCell: UITableViewCell {
     }
     
     func setupView() {
+        // Label colors
         trackLabel.textColor = UIColor.offWhiteColor()
         artistLabel.textColor = UIColor.offWhiteColor()
-        voteCountLabel.textColor = UIColor.goldColor()
+        voteCountLabel.textColor = UIColor.deepBlueColor()
+        
+        // Label fonts
+        trackLabel.font = UIFont.largeLabelFont()
+        artistLabel.font = UIFont.mediumLabelFont()
+        voteCountLabel.font = UIFont.largeLabelFont()
     }
     
     func updateCellWithTrack(track: Track) {
@@ -53,11 +59,11 @@ class TrackTableViewCell: UITableViewCell {
     func updateCellWithVoteType(voteType: VoteType) {
         switch voteType {
         case .Up:
-            upVoteButton.setImage(UIImage(named: "UpVoteSelectedGold"), forState: .Normal)
+            upVoteButton.setImage(UIImage(named: "UpVoteSelected"), forState: .Normal)
             downVoteButton.setImage(UIImage(named: "DownVoteUnselected"), forState: .Normal)
         case .Down:
             upVoteButton.setImage(UIImage(named: "UpVoteUnselected"), forState: .Normal)
-            downVoteButton.setImage(UIImage(named: "DownVoteSelectedGold"), forState: .Normal)
+            downVoteButton.setImage(UIImage(named: "DownVoteSelected"), forState: .Normal)
         case .Neutral:
             upVoteButton.setImage(UIImage(named: "UpVoteUnselected"), forState: .Normal)
             downVoteButton.setImage(UIImage(named: "DownVoteUnselected"), forState: .Normal)

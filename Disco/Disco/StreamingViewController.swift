@@ -25,11 +25,12 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     
-    @IBOutlet weak var trackSearchBar: UISearchBar!
     @IBOutlet weak var spotifyProfilePictureImageView: UIImageView!
     @IBOutlet weak var spotifyUserName: UILabel!
+    
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var playbackControlsView: UIView!
+    
     @IBOutlet weak var spotifyLoginContainer: UIView!
     
     override func viewDidLoad() {
@@ -210,7 +211,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             PlaylistController.sharedController.changeQueueInFirebase(queue, oldNowPlaying: queue.nowPlaying, newNowPlaying: queue.upNext[0], completion: { (newNowPlaying) in
                 spotifyPlayer.playSpotifyURI(newNowPlaying?.spotifyURI, startingWithIndex: 0, startingWithPosition: 0, callback: { (error) in
                     if error == nil {
-                        self.playButton.setTitle("Pause", forState: .Normal)
+                        self.playButton.setImage(UIImage(named: "Pause"), forState: .Normal)
                         print("Started playing \(newNowPlaying?.name)")
                     }
                 })
@@ -220,7 +221,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                 // stop playing
                 do {
                     try spotifyPlayer.stop()
-                    self.playButton.setTitle("Play", forState: .Normal)
+                    self.playButton.setImage(UIImage(named: "Play"), forState: .Normal)
                 } catch {
                     print("Can't stop, won't stop: \(error)")
                 }
@@ -258,16 +259,16 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         if let _ = queue.nowPlaying {
             SpotifyStreamingController.toggleIsPlaying(isPlaying, forQueue: queue) { [weak self] (isPlaying) in
                 if isPlaying {
-                    self?.playButton.setTitle("Pause", forState: .Normal)
+                    self?.playButton.setImage(UIImage(named: "Pause"), forState: .Normal)
                     self?.isPlaying = true
                 } else {
-                    self?.playButton.setTitle("Play", forState: .Normal)
+                    self?.playButton.setImage(UIImage(named: "Play"), forState: .Normal)
                     self?.isPlaying = false
                 }
             }
         } else if !queue.upNext.isEmpty {
             moveToNextSong({ 
-                self.playButton.setTitle("Pause", forState: .Normal)
+                self.playButton.setImage(UIImage(named: "Pause"), forState: .Normal)
                 print("Started playing \(queue.upNext[0].name)")
             })
         } else if queue.upNext.isEmpty {

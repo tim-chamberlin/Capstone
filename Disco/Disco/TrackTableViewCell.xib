@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trackCell" rowHeight="100" id="Evv-cf-PLL" customClass="TrackTableViewCell" customModule="A_Side" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trackCell" rowHeight="102" id="Evv-cf-PLL" customClass="TrackTableViewCell" customModule="A_Side" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Evv-cf-PLL" id="Inw-Ht-4FZ">
@@ -57,6 +57,7 @@
                             <constraint firstAttribute="bottom" secondItem="nji-bG-BSe" secondAttribute="bottom" id="P4B-LX-hSl"/>
                             <constraint firstAttribute="trailing" secondItem="nji-bG-BSe" secondAttribute="trailing" id="Yjy-fo-pr8"/>
                             <constraint firstAttribute="trailing" secondItem="Yau-ei-Chf" secondAttribute="trailing" id="a12-2i-c0b"/>
+                            <constraint firstItem="nji-bG-BSe" firstAttribute="top" secondItem="KvK-fG-wMR" secondAttribute="bottom" id="irU-dl-nBg"/>
                             <constraint firstItem="nji-bG-BSe" firstAttribute="top" secondItem="KvK-fG-wMR" secondAttribute="bottom" id="mmH-2k-pBL"/>
                         </constraints>
                     </stackView>
@@ -95,11 +96,11 @@
                 <outlet property="voteCountLabel" destination="KvK-fG-wMR" id="f5u-Zk-Hor"/>
                 <outlet property="votingStackView" destination="C2v-Bw-ZGH" id="HIf-5s-sIk"/>
             </connections>
-            <point key="canvasLocation" x="313" y="96"/>
+            <point key="canvasLocation" x="313" y="107"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="DownVoteUnselected" width="140" height="140"/>
-        <image name="UpVoteUnselected" width="140" height="140"/>
+        <image name="DownVoteUnselected" width="32" height="32"/>
+        <image name="UpVoteUnselected" width="32" height="32"/>
     </resources>
 </document>

@@ -19,9 +19,11 @@ class SpotifyPopoverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         cancelButton.setTitleColor(UIColor.goldColor(), forState: .Normal)
+        cancelButton.titleLabel?.font = UIFont.largeLabelFont()
         okButton.setTitleColor(UIColor.goldColor(), forState: .Normal)
+        okButton.titleLabel?.font = UIFont.largeLabelFont()
         label.textColor = .offWhiteColor()
-        self.preferredContentSize = CGSizeMake(170, 90)
+        self.preferredContentSize = CGSizeMake(182, 91)
 //        view.backgroundColor = .lightCharcoalColor()
     }
 
