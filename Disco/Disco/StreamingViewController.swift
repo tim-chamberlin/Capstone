@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
+class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, UISearchBarDelegate {
     
     var spotifyLoginVC: SpotifyLoginViewController!
     
@@ -47,25 +47,15 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         setupProfilePictureImageView()
     }
     
-    // MARK: - UISearchController
     
     override func setupSearchController() {
         
-        self.navigationController?.extendedLayoutIncludesOpaqueBars = true
-        self.navigationController?.navigationBar.translucent = false
+        let resultsController = MusicSearchTableViewController()
+        let searchController = UISearchController(searchResultsController: resultsController)
         
-        let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MusicSearchResultsTVC")
-        musicSearchController = UISearchController(searchResultsController: resultsController)
-        guard let searchController = musicSearchController else { return }
-        searchController.searchResultsUpdater = self
-        
-        searchController.searchBar.placeholder = "Search for a song on Spotify..."
-        searchController.definesPresentationContext = true
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = true
-        searchController.searchBar.barTintColor = UIColor.lightCharcoalColor()
         tableView.tableHeaderView = searchController.searchBar
     }
+    
     
     deinit {
         // TODO: Add modal view segue to streaming vc and alert user that they will stop playing music

@@ -46,9 +46,9 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - UISearchController
     
     func setupSearchController() {
-        
         self.navigationController?.extendedLayoutIncludesOpaqueBars = true
         self.navigationController?.navigationBar.translucent = false
+        
         let resultsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MusicSearchResultsTVC")
         musicSearchController = UISearchController(searchResultsController: resultsController)
         guard let searchController = musicSearchController else { return }
@@ -56,7 +56,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         searchController.searchBar.placeholder = "Search for a song on Spotify..."
         searchController.definesPresentationContext = true
         searchController.hidesNavigationBarDuringPresentation = true
-        searchController.dimsBackgroundDuringPresentation = true
+        searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.barTintColor = UIColor.lightCharcoalColor()
         tableView.tableHeaderView = searchController.searchBar
     }
@@ -208,7 +208,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    // MARK: - Delegate Methods
+    // MARK: - TrackTableViewCellDelegate Method
     
     func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
         guard let currentUser = UserController.sharedController.currentUser, playlist = playlist, track = sender.track else { return }
@@ -218,15 +218,20 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }    
     
+    // MARK: - AddTrackToPlaylistDelegate Method
     
     func willAddTrackToPlaylist(track: Track) {
-        
-        track.playlistID = self.playlist!.uid
+        musicSearchController?.active = false
+        musicSearchController?.searchBar.text = ""
+        guard let playlistID = playlist?.uid else { return }
+        track.playlistID = playlistID
         PlaylistController.sharedController.addTrack(track, toQueue: self.playlist!) { (success) in
             // Fetch playlist tracks and reload tableView
             print("Update playlist with track: \(track.name)")
         }
     }
+    
+    // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "addTrackToPlaylistSegue" {
@@ -235,6 +240,8 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             searchVC.delegate = self
         }
     }
+    
+    // MARK: - IBActions
     
     @IBAction func addFirstSongToQueueTapped(sender: AnyObject) {
         self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)

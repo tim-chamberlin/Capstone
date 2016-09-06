@@ -29,35 +29,34 @@ class HomeViewController: UIViewController {
 
     }
     
-    func setupNavigationBar() {
-        self.navigationController?.navigationBar.frame.origin.y = 200
-        
-        // Get facebook prof pic
-        if let currentUser = UserController.sharedController.currentUser {
-            UserController.sharedController.getCurrentUserProfilePicture(forUser: currentUser, completion: { (profilePicture) in
-                guard let image = profilePicture else { return }
-                self.navigationItem.titleView = UIImageView(image: image)
-                
-                let titleView = UIView(frame: CGRectMake(0,0, UIScreen.mainScreen().bounds.width/2, 30))
-//                titleView.backgroundColor = .blueColor()
-                let imageView = UIImageView(frame: CGRectMake(0, 0, 30, 30))
-                imageView.image = image
-                imageView.center = titleView.center
-                imageView.contentMode = .ScaleAspectFit
-                imageView.layer.cornerRadius = 20
-                titleView.addSubview(imageView)
-                
-                let titleLabel = UILabel(frame: CGRectMake(40, 0, 1000, 30))
-                titleLabel.text = "Tim Chamberlin"
-                titleLabel.font = UIFont.navigationBarFont()
-                titleLabel.textColor = UIColor.offWhiteColor()
-                titleView.addSubview(titleLabel)
-                
-                
-                self.navigationItem.titleView = titleView
-            })
-        }
-    }
+//    func setupNavigationBar() {
+//        
+//        // Get facebook prof pic
+//        if let currentUser = UserController.sharedController.currentUser {
+//            UserController.sharedController.getCurrentUserProfilePicture(forUser: currentUser, completion: { (profilePicture) in
+//                guard let image = profilePicture else { return }
+//                self.navigationItem.titleView = UIImageView(image: image)
+//                
+//                let titleView = UIView(frame: CGRectMake(0,0, UIScreen.mainScreen().bounds.width/2, 30))
+////                titleView.backgroundColor = .blueColor()
+//                let imageView = UIImageView(frame: CGRectMake(0, 0, 30, 30))
+//                imageView.image = image
+//                imageView.center = titleView.center
+//                imageView.contentMode = .ScaleAspectFit
+//                imageView.layer.cornerRadius = 20
+//                titleView.addSubview(imageView)
+//                
+//                let titleLabel = UILabel(frame: CGRectMake(40, 0, 1000, 30))
+//                titleLabel.text = "Tim Chamberlin"
+//                titleLabel.font = UIFont.navigationBarFont()
+//                titleLabel.textColor = UIColor.offWhiteColor()
+//                titleView.addSubview(titleLabel)
+//                
+//                
+//                self.navigationItem.titleView = titleView
+//            })
+//        }
+//    }
 
     func setupSegmentedCcontroller() {
         segmentedControl.selectedSegmentIndex == 0
@@ -130,4 +129,7 @@ class HomeViewController: UIViewController {
         presentLogoutActionSheet()
     }
     
+    @IBAction func addTrackAction(sender: AnyObject) {
+        self.performSegueWithIdentifier("addTrackSegue", sender: self)
+    }
 }

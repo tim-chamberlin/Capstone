@@ -11,6 +11,7 @@ import UIKit
 class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     @IBOutlet weak var addTrackView: UIView!
+    @IBOutlet weak var addTrackButton: UIButton!
     
     var searchedTracks: [Track] = [] {
         didSet {
@@ -25,6 +26,8 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addTrackButton.enabled = false
+        tableView.contentOffset = CGPointMake(0, 100)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -76,6 +79,8 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
         selectedTrack = searchedTracks[indexPath.row]
         selectedTrackIndexPath = indexPath
+        addTrackButton.enabled = true
+        addTrackButton.setImage(UIImage(named: "AddTrackGold"), forState: .Normal)
         cell.accessoryType = .Checkmark
     }
     

@@ -13,11 +13,11 @@ struct AppearanceController {
     
     static func initializeAppearance() {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
-        UIBarButtonItem.appearance().tintColor = UIColor.offWhiteColor()
         
 //        UINavigationBar.appearance().backgroundColor = UIColor.lightCharcoalColor()
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont.navigationBarFont(), NSForegroundColorAttributeName: UIColor.offWhiteColor()]
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.barButtonItemBold(), NSForegroundColorAttributeName: UIColor.offWhiteColor()], forState: .Normal)
+        UINavigationBar.appearance().tintColor = UIColor.goldColor()
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.barButtonItemBold(), NSForegroundColorAttributeName: UIColor.goldColor()], forState: .Normal)
         
         UISegmentedControl.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.smallLabelFont(), NSForegroundColorAttributeName: UIColor.goldColor()], forState: .Normal)
         UISegmentedControl.appearance().tintColor = UIColor.goldColor()
