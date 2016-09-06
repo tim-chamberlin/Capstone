@@ -238,7 +238,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="478"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3K-dz-CfI">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="404"/>
                                         <connections>
                                             <segue destination="L9M-Gq-vfw" kind="embed" identifier="playlistTVEmbedSegue" id="Xc4-mX-DVK"/>
                                         </connections>
@@ -263,7 +263,7 @@
                                     <constraint firstItem="g3K-dz-CfI" firstAttribute="top" secondItem="y20-04-h96" secondAttribute="top" id="5bL-C9-fRt"/>
                                     <constraint firstAttribute="bottom" secondItem="WZ9-SF-Ypd" secondAttribute="bottom" constant="20" id="EL8-gj-7Lz"/>
                                     <constraint firstItem="g3K-dz-CfI" firstAttribute="leading" secondItem="y20-04-h96" secondAttribute="leading" id="ReN-XJ-tJ0"/>
-                                    <constraint firstItem="WZ9-SF-Ypd" firstAttribute="top" secondItem="g3K-dz-CfI" secondAttribute="bottom" constant="50" id="iPB-V1-gIv"/>
+                                    <constraint firstItem="WZ9-SF-Ypd" firstAttribute="top" secondItem="g3K-dz-CfI" secondAttribute="bottom" constant="20" id="iPB-V1-gIv"/>
                                     <constraint firstAttribute="trailing" secondItem="g3K-dz-CfI" secondAttribute="trailing" id="mPp-7W-jA8"/>
                                     <constraint firstAttribute="bottom" secondItem="WZ9-SF-Ypd" secondAttribute="bottom" constant="29" id="sDc-gu-ENH"/>
                                     <constraint firstItem="WZ9-SF-Ypd" firstAttribute="centerX" secondItem="y20-04-h96" secondAttribute="centerX" id="tl7-wQ-eVB"/>
@@ -753,24 +753,24 @@
                         <viewControllerLayoutGuide type="bottom" id="Vjz-LX-lFl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wXw-yP-xxL">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="404"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You aren't contributing to any queues yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg9-74-riC" userLabel="Empty Queue Label">
-                                <rect key="frame" x="20" y="177" width="560" height="21"/>
+                                <rect key="frame" x="20" y="192" width="560" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KuZ-5Z-j7q">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="374"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="404"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" textLabel="U51-DH-3kP" detailTextLabel="kBQ-Ld-kTO" style="IBUITableViewCellStyleSubtitle" id="Lw7-ZZ-TnH">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" textLabel="U51-DH-3kP" detailTextLabel="kBQ-Ld-kTO" style="IBUITableViewCellStyleSubtitle" id="Lw7-ZZ-TnH">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lw7-ZZ-TnH" id="RiN-OA-o59">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U51-DH-3kP">

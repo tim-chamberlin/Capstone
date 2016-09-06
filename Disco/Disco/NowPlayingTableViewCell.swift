@@ -14,6 +14,7 @@ class NowPlayingTableViewCell: UITableViewCell {
     @IBOutlet weak var trackLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
     @IBOutlet weak var songProgressView: UIProgressView!
+    @IBOutlet weak var voteCountLabel: UILabel!
     
     weak var delegate: NowPlayingTableViewCellDelegate?
     
@@ -25,7 +26,7 @@ class NowPlayingTableViewCell: UITableViewCell {
         self.bringSubviewToFront(albumArtworkImage)
         self.bringSubviewToFront(trackLabel)
         self.bringSubviewToFront(artistLabel)
-        songProgressView.transform = CGAffineTransformScale(songProgressView.transform, 1, 50)
+        songProgressView.transform = CGAffineTransformScale(songProgressView.transform, 1, 75)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -39,6 +40,11 @@ class NowPlayingTableViewCell: UITableViewCell {
     func updateCellWithTrack(track: Track) {
         self.trackLabel.text = track.name
         self.artistLabel.text = track.artist
+        if track.voteCount == 1 {
+            voteCountLabel.text = "1 vote"
+        } else {
+            voteCountLabel.text = "\(track.voteCount) votes"
+        }
         getAlbumArtworkForTrack(track)
     }
     

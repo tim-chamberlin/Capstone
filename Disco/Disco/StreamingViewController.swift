@@ -181,8 +181,10 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func audioStreamingDidLogout(audioStreaming: SPTAudioStreamingController!) {
+        try! spotifyPlayer.stop()
         dispatch_async(dispatch_get_main_queue(), {
             print("Spotify user logged out")
+            
             self.spotifyLoginContainer.hidden = false
         })
         
@@ -327,7 +329,9 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func popoverViewDidLogoutSpotifyUser() {
-        spotifyPlayer.logout()
+        spotifyLoginVC.spotifyAuthViewController.clearCookies { 
+            spotifyPlayer.logout()
+        }
     }
 }
 

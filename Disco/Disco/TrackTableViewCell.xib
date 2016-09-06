@@ -9,14 +9,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trackCell" rowHeight="102" id="Evv-cf-PLL" customClass="TrackTableViewCell" customModule="A_Side" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Evv-cf-PLL" id="Inw-Ht-4FZ">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C2v-Bw-ZGH" userLabel="Voting Stack View">
-                        <rect key="frame" x="556" y="8" width="32" height="83"/>
+                        <rect key="frame" x="556" y="2" width="32" height="85"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yau-ei-Chf">
                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -30,13 +30,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KvK-fG-wMR">
-                                <rect key="frame" x="0.0" y="32" width="32" height="19"/>
+                                <rect key="frame" x="0.0" y="32" width="32" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nji-bG-BSe">
-                                <rect key="frame" x="0.0" y="51" width="32" height="32"/>
+                                <rect key="frame" x="0.0" y="53" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="nji-bG-BSe" secondAttribute="height" multiplier="1:1" id="PZh-bt-cmn"/>
                                     <constraint firstAttribute="height" constant="32" id="e1E-qP-9aW"/>
@@ -60,9 +60,14 @@
                             <constraint firstItem="nji-bG-BSe" firstAttribute="top" secondItem="KvK-fG-wMR" secondAttribute="bottom" id="irU-dl-nBg"/>
                             <constraint firstItem="nji-bG-BSe" firstAttribute="top" secondItem="KvK-fG-wMR" secondAttribute="bottom" id="mmH-2k-pBL"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="0t7-bI-Be4"/>
+                            </mask>
+                        </variation>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NlL-pq-LlM" userLabel="Track Info Stack View">
-                        <rect key="frame" x="8" y="27" width="528" height="46"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="NlL-pq-LlM" userLabel="Track Info Stack View">
+                        <rect key="frame" x="8" y="24" width="528" height="42"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgM-Bh-g3M">
                                 <rect key="frame" x="0.0" y="0.0" width="528" height="21"/>
@@ -71,7 +76,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJA-IB-wwM">
-                                <rect key="frame" x="0.0" y="29" width="528" height="17"/>
+                                <rect key="frame" x="0.0" y="25" width="528" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -81,9 +86,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="C2v-Bw-ZGH" firstAttribute="leading" secondItem="NlL-pq-LlM" secondAttribute="trailing" constant="20" id="8EV-Qa-QSd"/>
-                    <constraint firstItem="C2v-Bw-ZGH" firstAttribute="top" secondItem="Inw-Ht-4FZ" secondAttribute="top" constant="8" id="8Jr-Lx-8Km"/>
+                    <constraint firstItem="C2v-Bw-ZGH" firstAttribute="top" secondItem="Inw-Ht-4FZ" secondAttribute="top" constant="2" id="8Jr-Lx-8Km"/>
                     <constraint firstItem="NlL-pq-LlM" firstAttribute="leading" secondItem="Inw-Ht-4FZ" secondAttribute="leadingMargin" id="9zd-bF-Luo"/>
-                    <constraint firstAttribute="bottom" secondItem="C2v-Bw-ZGH" secondAttribute="bottom" constant="8" id="baM-bE-KJO"/>
+                    <constraint firstAttribute="bottom" secondItem="C2v-Bw-ZGH" secondAttribute="bottom" constant="2" id="baM-bE-KJO"/>
                     <constraint firstItem="NlL-pq-LlM" firstAttribute="centerY" secondItem="Inw-Ht-4FZ" secondAttribute="centerY" id="cut-Wn-rzm"/>
                     <constraint firstAttribute="trailing" secondItem="C2v-Bw-ZGH" secondAttribute="trailing" constant="12" id="hY0-3e-bAk"/>
                 </constraints>
