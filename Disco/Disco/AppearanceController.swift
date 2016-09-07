@@ -12,6 +12,7 @@ import UIKit
 struct AppearanceController {
     
     static func initializeAppearance() {
+        UIApplication.sharedApplication().statusBarHidden = false
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         

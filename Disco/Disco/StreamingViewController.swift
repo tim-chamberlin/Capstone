@@ -318,7 +318,17 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     @IBAction override func addFirstSongToQueueTapped(sender: AnyObject) {
-        presentNamingDialog()
+//        presentNamingDialog()
+        
+        PlaylistController.sharedController.createPlaylist(forUser: self.currentUser, withName: "\(currentUser.name)'s Queue", completion: { (success, playlist) in
+            if success {
+                guard let playlist = playlist, currentUser = UserController.sharedController.currentUser else { return }
+                PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
+                    print("New queue created")
+                    self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
+                })
+            }
+        })
     }
     
     @IBAction func logoutOfSpotify(sender: AnyObject) {
@@ -331,6 +341,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func popoverViewDidLogoutSpotifyUser() {
+        self.playButton.setImage(UIImage(named: "Play"), forState: .Normal)
         spotifyLoginVC.spotifyAuthViewController.clearCookies { 
             spotifyPlayer.logout()
         }

@@ -85,7 +85,7 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("hostingPlaylistCell", forIndexPath: indexPath)
-        
+        cell.selectionStyle = .None
         let playlist = self.playlists[indexPath.row]
         cell.textLabel?.textColor = UIColor.offWhiteColor()
         cell.detailTextLabel?.textColor = UIColor.offWhiteColor()

@@ -552,14 +552,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There aren't any tracks in this queue yet!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59V-2l-IqB">
-                                <rect key="frame" x="145" y="244" width="311" height="21"/>
+                                <rect key="frame" x="145" y="242" width="311" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Msc-CH-MEC">
-                                <rect key="frame" x="245" y="285" width="111" height="30"/>
-                                <state key="normal" title="Add a track now"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Msc-CH-MEC">
+                                <rect key="frame" x="190" y="283" width="221" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="H8l-OO-R5S"/>
+                                    <constraint firstAttribute="width" secondItem="Msc-CH-MEC" secondAttribute="height" multiplier="13:2" id="K2y-2j-sOH"/>
+                                </constraints>
+                                <state key="normal" image="AddTrackGold"/>
                                 <connections>
                                     <action selector="addFirstSongToQueueTapped:" destination="JxT-15-A5g" eventType="touchUpInside" id="Vav-rB-m1g"/>
                                 </connections>
@@ -573,7 +577,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="RBz-gj-mK9" firstAttribute="leading" secondItem="XbZ-oG-SzV" secondAttribute="leading" id="8Ra-bG-0uN"/>
                             <constraint firstItem="Msc-CH-MEC" firstAttribute="centerX" secondItem="XbZ-oG-SzV" secondAttribute="centerX" id="MRJ-G8-YQN"/>
