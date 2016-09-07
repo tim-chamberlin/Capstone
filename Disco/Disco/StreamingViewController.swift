@@ -13,7 +13,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     var spotifyLoginVC: SpotifyLoginViewController!
     
     var player: SPTAudioStreamingController = spotifyPlayer
-    var hostedPlaylist: Playlist? = PlaylistController.sharedController.hostedPlaylist
+    var hostedPlaylist: Playlist?
     
     var isPlaying: Bool = false
     
@@ -34,7 +34,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBOutlet weak var spotifyLoginContainer: UIView!
     
     override func viewDidLoad() {
-//        checkSpotifyAuth()
+        didSetHostedPlaylist()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.spotifyUserDidLogin(_:)), name: kSpotifyLoginNotificationKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSetHostedPlaylist), name: kDidSetHostedPlaylist, object: nil)
         
@@ -48,7 +48,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     
     deinit {
-        // TODO: Add modal view segue to streaming vc and alert user that they will stop playing music
+        try! spotifyPlayer.stop()
         spotifyPlayer.logout()
     }
     
@@ -59,10 +59,12 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
 
     func didSetHostedPlaylist() {
-        self.playlist = PlaylistController.sharedController.hostedPlaylist
-        addTrackObservers(forPlaylistType: .Hosting)
-        tableView.reloadData()
-        setupViewForEmptyQueue()
+        if let playlist = PlaylistController.sharedController.hostedPlaylist {
+            self.playlist = playlist
+            addTrackObservers(forPlaylistType: .Hosting)
+            tableView.reloadData()
+            setupViewForEmptyQueue()
+        }
     }
     
     // MARK: - TrackTableViewCell Delegate Method
@@ -125,10 +127,8 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     func spotifyUserDidLogin(notification: NSNotification) {
         guard let userInfo = notification.userInfo as? [String: SPTSession], session = userInfo[kSpotifyLoginNotificationKey] else { return }
-        
         checkSpotifyAuth()
         setupViewForEmptyQueue()
-        
         UserController.sharedController.getCurrentSpotifyUserData(session) { (spotifyUser, success) in
             if success {
                 guard let spotifyUser = spotifyUser else { return }
@@ -307,9 +307,11 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                 })
             }
         }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in
             return
         }
+        
         alert.addAction(cancelAction)
         alert.addAction(okayAction)
         self.presentViewController(alert, animated: true, completion: nil)

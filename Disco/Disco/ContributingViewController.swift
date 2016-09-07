@@ -15,6 +15,7 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         contributingPlaylistsTableView.delegate = self
+        updatePlaylistTableView()
     }
     
     // MARK: - PlaylistTableViewDataSource
@@ -28,7 +29,10 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
     // MARK: -  PlaylistTableViewDelegate Methods
     
     func didSelectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
-        self.parentViewController?.performSegueWithIdentifier("toTrackList", sender: self)
+        guard let cell = contributingPlaylistsTableView.tableView.cellForRowAtIndexPath(indexPath) else {
+            return
+        }
+        self.parentViewController?.performSegueWithIdentifier("toTrackList", sender: cell)
     }
     
     func didDeselectRowAtIndexPathInPlaylistTableView(indexPath indexPath: NSIndexPath) {
@@ -40,18 +44,18 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "playlistTVEmbedSegue" {
             contributingPlaylistsTableView = segue.destinationViewController as? PlaylistListViewController
+        } else if segue.identifier == "toFriendsListSegue" {
+            UserController.sharedController.getFriends { (friends, success) in
+                if let friends = friends {
+                    UserController.sharedController.currentUser?.friends = friends
+                }
+            }
         }
     }
     
     // MARK: - IBActions
 
     @IBAction func contributeToPlaylistButtonTapped(sender: AnyObject) {
-        // TODO: Setup delegate to pass info?
-        UserController.sharedController.getFriends { (friends, success) in
-            if let friends = friends {
-                UserController.sharedController.currentUser?.friends = friends
-                self.parentViewController?.performSegueWithIdentifier("toFriendsListSegue", sender: self)
-            }
-        }
+        self.performSegueWithIdentifier("toFriendsListSegue", sender: self)
     }
 }

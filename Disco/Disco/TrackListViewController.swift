@@ -42,12 +42,6 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-    // MARK: - UISearchController
-    
-
-    
-    
-    
     deinit {
         if let queue = playlist {
             PlaylistController.sharedController.removeNowPlayingObserverFromQueue(playlist!)

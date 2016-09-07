@@ -8,69 +8,50 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UIPageViewControllerDelegate {
 
-    private var contributingVC: ContributingViewController!
-    private var streamingVC: StreamingViewController!
+    var pageViewController: MainPageViewController!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var contributingContainerView: UIView!
-    @IBOutlet weak var streamingContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = UserController.sharedController.currentUser?.name
-        
-        setupSegmentedCcontroller()
-        segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
-        
-        contributingVC.updatePlaylistTableView()
-        
+        setupSegmentedController()
+        setupPageViewController()
+    }
 
+    func setupPageViewController() {
+        self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! MainPageViewController
+        self.pageViewController.view.frame = CGRectMake(0, 60, self.view.frame.width, self.view.frame.height - 60)
+        self.addChildViewController(self.pageViewController)
+        self.view.addSubview(self.pageViewController.view)
+        self.pageViewController.didMoveToParentViewController(self)
+        pageViewController.delegate = self
     }
     
-//    func setupNavigationBar() {
-//        
-//        // Get facebook prof pic
-//        if let currentUser = UserController.sharedController.currentUser {
-//            UserController.sharedController.getCurrentUserProfilePicture(forUser: currentUser, completion: { (profilePicture) in
-//                guard let image = profilePicture else { return }
-//                self.navigationItem.titleView = UIImageView(image: image)
-//                
-//                let titleView = UIView(frame: CGRectMake(0,0, UIScreen.mainScreen().bounds.width/2, 30))
-////                titleView.backgroundColor = .blueColor()
-//                let imageView = UIImageView(frame: CGRectMake(0, 0, 30, 30))
-//                imageView.image = image
-//                imageView.center = titleView.center
-//                imageView.contentMode = .ScaleAspectFit
-//                imageView.layer.cornerRadius = 20
-//                titleView.addSubview(imageView)
-//                
-//                let titleLabel = UILabel(frame: CGRectMake(40, 0, 1000, 30))
-//                titleLabel.text = "Tim Chamberlin"
-//                titleLabel.font = UIFont.navigationBarFont()
-//                titleLabel.textColor = UIColor.offWhiteColor()
-//                titleView.addSubview(titleLabel)
-//                
-//                
-//                self.navigationItem.titleView = titleView
-//            })
-//        }
-//    }
+    
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if !completed {
+            return
+        }
+        if let _ = previousViewControllers.first as? StreamingViewController {
+            segmentedControl.selectedSegmentIndex = 0
+        } else if let _ = previousViewControllers.first as? ContributingViewController {
+            segmentedControl.selectedSegmentIndex = 1
+        }
+    }
 
-    func setupSegmentedCcontroller() {
+    func setupSegmentedController() {
+        segmentedControl.addTarget(self, action: #selector(HomeViewController.segmentedControlChanged(_:)), forControlEvents: .ValueChanged)
         segmentedControl.selectedSegmentIndex == 0
-        contributingContainerView.hidden = false
-        streamingContainerView.hidden = true
     }
     
     func segmentedControlChanged(segmentedControl: UISegmentedControl) {
         if segmentedControl.selectedSegmentIndex == 0 {
-            contributingContainerView.hidden = false
-            streamingContainerView.hidden = true
+            pageViewController.setViewControllers([pageViewController.firstVC], direction: .Reverse, animated: true, completion: nil)
         } else if segmentedControl.selectedSegmentIndex == 1 {
-            contributingContainerView.hidden = true
-            streamingContainerView.hidden = false
+            pageViewController.setViewControllers([pageViewController.secondVC], direction: .Forward, animated: true, completion: nil)
         }
     }
     
@@ -89,41 +70,21 @@ class HomeViewController: UIViewController {
             let authVC = mainStoryboard.instantiateViewControllerWithIdentifier("AuthView")
             self.presentViewController(authVC, animated: true, completion: nil)
         }
-        
         actionSheet.addAction(cancelAction)
         actionSheet.addAction(logoutAction)
-        
         self.presentViewController(actionSheet, animated: true, completion: nil)
     }
     
-    
-    
-    // MARK: - Navigation
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Embedded Views
-        if segue.identifier == "contributingEmbedSegue" {
-            contributingVC = segue.destinationViewController as? ContributingViewController
-        } else if segue.identifier == "embedStreamingVC" {
-            streamingVC = segue.destinationViewController as? StreamingViewController
-        }
-        
-        // To playlist detail
-        if segue.identifier == "toTrackList" {
-            guard let destinationVC = segue.destinationViewController as? TrackListViewController else { return }
-            if let indexPath = contributingVC.contributingPlaylistsTableView.tableView.indexPathForSelectedRow {
-                destinationVC.playlist = contributingVC.contributingPlaylistsTableView.playlists[indexPath.row]
-            }
-        }
-    }
-    
+    // MARK: - IBActions
+
     @IBAction func unwindToHomeViewController(segue: UIStoryboardSegue) {
         if let _ = segue.sourceViewController as? FriendPlaylistsViewController {
-            contributingVC.updatePlaylistTableView()
+            if let contributingVC = pageViewController.firstVC as? ContributingViewController {
+                contributingVC.updatePlaylistTableView()
+            }
+            
         }
     }
-    
-    // MARK: - IBActions
     
     @IBAction func logoutButtonTapped(sender: AnyObject) {
         presentLogoutActionSheet()

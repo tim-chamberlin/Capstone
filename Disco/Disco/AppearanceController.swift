@@ -14,6 +14,7 @@ struct AppearanceController {
     static func initializeAppearance() {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
+        
 //        UINavigationBar.appearance().backgroundColor = UIColor.lightCharcoalColor()
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont.navigationBarFont(), NSForegroundColorAttributeName: UIColor.offWhiteColor()]
         UINavigationBar.appearance().tintColor = UIColor.goldColor()
