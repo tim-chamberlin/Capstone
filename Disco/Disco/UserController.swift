@@ -167,10 +167,9 @@ extension UserController {
                     return
                 }
                 
-                let spotifyUser = SpotifyUser(displayName: "", canonicalUserName: "", imageURL: nil)
+                let spotifyUser = SpotifyUser(displayName: nil, canonicalUserName: nil, imageURL: nil)
                 
-                
-                // Check for Spotify data. I'm pretty sure they have to at least have a canonical name
+                // Check for Spotify data. They have to at least have a canonical name
                 if let displayName = sptUser.displayName {
                     spotifyUser.displayName = displayName
                 }
@@ -179,7 +178,7 @@ extension UserController {
                     spotifyUser.canonicalUserName = canonicalName
                 }
                 
-                if let userImageURL = sptUser.smallestImage.imageURL {
+                if let userImageURL = sptUser.smallestImage?.imageURL {
                     spotifyUser.imageURL = userImageURL
                 }
                 
