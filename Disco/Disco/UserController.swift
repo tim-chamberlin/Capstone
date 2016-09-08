@@ -156,7 +156,6 @@ extension UserController {
 
 extension UserController {
     
-    
     func getCurrentSpotifyUserData(session: SPTSession, completion: (spotifyUser: SpotifyUser?, success: Bool) -> Void) {
         SPTUser.requestCurrentUserWithAccessToken(session.accessToken) { (error, user) in
             if error != nil {
@@ -168,7 +167,23 @@ extension UserController {
                     return
                 }
                 
-                completion(spotifyUser: SpotifyUser(displayName: sptUser.displayName, imageURL: sptUser.smallestImage.imageURL), success: true)
+                let spotifyUser = SpotifyUser(displayName: "", canonicalUserName: "", imageURL: nil)
+                
+                
+                // Check for Spotify data. I'm pretty sure they have to at least have a canonical name
+                if let displayName = sptUser.displayName {
+                    spotifyUser.displayName = displayName
+                }
+                
+                if let canonicalName = sptUser.canonicalUserName {
+                    spotifyUser.canonicalUserName = canonicalName
+                }
+                
+                if let userImageURL = sptUser.smallestImage.imageURL {
+                    spotifyUser.imageURL = userImageURL
+                }
+                
+                completion(spotifyUser: spotifyUser, success: true)
             }
         }
     }

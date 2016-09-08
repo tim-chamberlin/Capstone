@@ -10,6 +10,8 @@ import UIKit
 
 class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating {
     
+    var offset: Int = 0
+    
     var searchedTracks: [Track] = [] {
         didSet {
             tableView.reloadData()
@@ -49,14 +51,17 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
+        // Initial search
         if let text = searchController.searchBar.text {
             if !text.isEmpty {
-                TrackController.searchSpotifyForTrackWithText(text, responseLimit: "20", filterByType: "track") { (tracks, success) in
-                    if !tracks.isEmpty {
-                        self.searchedTracks = tracks
+                TrackController.searchSpotifyForTrackWithText(text, responseLimit: 40, filterByType: "track", withPagingOffset: 0, completion: { (tracks, success, offset) in
+                    if success {
+                        if !tracks.isEmpty {
+                            self.searchedTracks = tracks
+                            self.offset = 20
+                        }
                     }
-                }
+                })
             } else {
                 self.searchedTracks = []
             }
@@ -72,8 +77,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         }
     }
     
-    
-    // MARK: - Table view data source
+    // MARK: - Table view DataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchedTracks.count

@@ -17,14 +17,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     
     var isPlaying: Bool = false
     
-    var nowPlayingPercentDone: Float = 0.0 {
-        didSet {
-//            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-//            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
-        }
-    }
-    
-    
     @IBOutlet weak var spotifyProfilePictureImageView: UIImageView!
     @IBOutlet weak var spotifyUserName: UILabel!
     
@@ -132,12 +124,18 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         UserController.sharedController.getCurrentSpotifyUserData(session) { (spotifyUser, success) in
             if success {
                 guard let spotifyUser = spotifyUser else { return }
-                self.spotifyUserName.text = spotifyUser.displayName
+                let nameToDisplay = spotifyUser.displayName ?? spotifyUser.canonicalUserName
+                self.spotifyUserName.text = nameToDisplay
+                // Retrieve image if it exists
+                if let imageURL = spotifyUser.imageURL {
+                    ImageController.getImageFromURLWithResponse(imageURL, completion: { (image, response, error) in
+                        guard let image = image else { return }
+                        self.spotifyProfilePictureImageView.image = image
+                    })
+                } else {
+                    // TODO: Set Spotify profile picture default
                 
-                ImageController.getImageFromURLWithResponse(spotifyUser.imageURL, completion: { (image, response, error) in
-                    guard let image = image else { return }
-                    self.spotifyProfilePictureImageView.image = image
-                })
+                }
             }
         }
     }
@@ -197,6 +195,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePosition position: NSTimeInterval) {
+        
         if (((audioStreaming.metadata.currentTrack?.duration)! - position) < 0.75) {
             // Queue next song
             print("\(playlist?.nowPlaying?.name) ended")
@@ -221,12 +220,13 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         } else { // there are no songs in the queue
             PlaylistController.sharedController.changeQueueInFirebase(queue, oldNowPlaying: queue.nowPlaying, newNowPlaying: nil, completion: { (newNowPlaying) in
                 // stop playing
-                do {
-                    try spotifyPlayer.stop()
-                    self.playButton.setImage(UIImage(named: "Play"), forState: .Normal)
-                } catch {
-                    print("Can't stop, won't stop: \(error)")
-                }
+                self.isPlaying = false
+                self.playButton.setImage(UIImage(named: "Play"), forState: .Normal)
+                spotifyPlayer.skipNext({ (error) in
+                    if error != nil {
+                        print(error.localizedDescription)
+                    }
+                })
             })
         }
     }

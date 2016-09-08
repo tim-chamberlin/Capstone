@@ -13,25 +13,17 @@ class NowPlayingTableViewCell: UITableViewCell {
     @IBOutlet weak var albumArtworkImage: UIImageView!
     @IBOutlet weak var trackLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
-    @IBOutlet weak var songProgressView: UIProgressView!
     @IBOutlet weak var voteCountLabel: UILabel!
     
     weak var delegate: NowPlayingTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        // Make progress bar size of cell
-        self.sendSubviewToBack(songProgressView)
-        self.bringSubviewToFront(albumArtworkImage)
-        self.bringSubviewToFront(trackLabel)
-        self.bringSubviewToFront(artistLabel)
-        songProgressView.transform = CGAffineTransformScale(songProgressView.transform, 1, 75)
+        contentView.backgroundColor = .charcoalColor()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         if selected {
             self.selectionStyle = .None
         }

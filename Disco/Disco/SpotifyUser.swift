@@ -11,11 +11,13 @@ import Foundation
 
 class SpotifyUser {
     
-    let displayName: String
-    let imageURL: NSURL
+    var displayName: String?
+    var canonicalUserName: String?
+    var imageURL: NSURL?
     
-    init(displayName: String, imageURL: NSURL) {
+    init(displayName: String?, canonicalUserName: String?, imageURL: NSURL?) {
         self.displayName = displayName
+        self.canonicalUserName = canonicalUserName
         self.imageURL = imageURL
     }
     

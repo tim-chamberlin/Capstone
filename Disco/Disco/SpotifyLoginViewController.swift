@@ -56,10 +56,6 @@ class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
         //        let loginURL = SPTAuth.defaultInstance().loginURL
         //        UIApplication.sharedApplication().openURL(loginURL)
     }
-    
-    
-    
-    
 
     @IBAction func loginToSpotifyTapped(sender: AnyObject) {
         presentSPTAuthViewController()

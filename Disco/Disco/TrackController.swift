@@ -15,32 +15,56 @@ class TrackController {
     static let sharedController = TrackController()
     static let spotifySearchBaseURL = NSURL(string: "https://api.spotify.com/v1/search")
     
-    static func searchSpotifyForTrackWithText(text: String, responseLimit: String, filterByType type: String, completion: (tracks: [Track], success: Bool) -> Void) {
+    
+    
+    
+    
+    
+    static func searchSpotifyForTrackWithText(text: String, responseLimit: Int, filterByType type: String, withPagingOffset offset: Int, completion: (tracks: [Track], success: Bool, offset: Int) -> Void) {
         guard let spotifySearchBaseURL = spotifySearchBaseURL else {
             print("Optional URL return nil")
-            completion(tracks: [], success: false)
+            completion(tracks: [], success: false, offset: 0)
             return
         }
         
         // Spotify Web API search documentation: https://developer.spotify.com/web-api/search-item/
         let urlParameters = ["q":text,
-                             "limit":responseLimit,
+                             "offset":String(offset),
+                             "limit":String(responseLimit),
                              "type":type]
         
         NetworkController.performRequestForURL(spotifySearchBaseURL, httpMethod: .Get, urlParameters: urlParameters) { (data, error) in
             if let data = data, jsonDictionary = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
                 dispatch_async(dispatch_get_main_queue(), {
+                    
                     guard let tracksDictionary = jsonDictionary["tracks"] as? [String: AnyObject], itemsDictionary = tracksDictionary["items"] as? [[String : AnyObject]] else {
                         print("Error formatting data")
-                        completion(tracks: [], success: false)
+                        completion(tracks: [], success: false, offset: 0)
                         return
                     }
+                    
+                    // Check to see if at end of paging
+                    guard let _ = tracksDictionary["next"] as? String else {
+                        completion(tracks: [], success: true, offset: 0)
+                        return
+                    }
+
                     let tracks = itemsDictionary.flatMap { Track(spotifyDictionary: $0) }
-                    completion(tracks: tracks, success: true)
+                    completion(tracks: tracks, success: true, offset: responseLimit)
                 })
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // MARK: - Vote Listener Methods
     
