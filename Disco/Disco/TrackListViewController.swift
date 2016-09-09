@@ -39,7 +39,6 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         setupViewForEmptyQueue()
-        
     }
     
     deinit {
@@ -47,7 +46,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
             PlaylistController.sharedController.removeNowPlayingObserverFromQueue(playlist!)
             PlaylistController.sharedController.removeUpNextObserverFromQueue(playlist!)
             for track in queue.upNext {
-                TrackController.sharedController.removeVoteListenerFromTrack(track, inQueue: queue)
+                TrackController.removeVoteListenerFromTrack(track, inQueue: queue)
             }
         }
     }
@@ -72,13 +71,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                     self?.updateTableViewWithQueueData()
                     
                     // Add vote observers
-                    TrackController.sharedController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: queue.uid, ofType: playlistType, user: currentUser, completion: { [weak self] (voteStatus, success) in
+                    TrackController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: queue.uid, ofType: playlistType, user: currentUser, completion: { [weak self] (voteStatus, success) in
                         if success {
                             track.currentUserVoteStatus = voteStatus
                             self?.updateTableViewWithQueueData()
                         }
                     })
-                    TrackController.sharedController.attachVoteListener(forTrack: track, inPlaylist: queue, completion: { [weak self] (newVoteCount, success) in
+                    TrackController.attachVoteListener(forTrack: track, inPlaylist: queue, completion: { [weak self] (newVoteCount, success) in
                         track.voteCount = newVoteCount
                         self?.updateTableViewWithQueueData()
                     })
@@ -182,7 +181,7 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     func didPressVoteButton(sender: TrackTableViewCell, voteType: VoteType) {
         guard let currentUser = UserController.sharedController.currentUser, playlist = playlist, track = sender.track else { return }
         
-        TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist, ofPlaylistType: .Contributing) { (success) in
+        TrackController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist, ofPlaylistType: .Contributing) { (success) in
             //
         }
     }    

@@ -66,7 +66,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         guard let currentUser = UserController.sharedController.currentUser, track = sender.track else { return }
         guard let playlist = playlist else { return }
         
-        TrackController.sharedController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist, ofPlaylistType: .Hosting) { (success) in
+        TrackController.user(currentUser, didVoteWithType: voteType, withVoteStatus: (sender.track?.currentUserVoteStatus)!, onTrack: track, inPlaylist: playlist, ofPlaylistType: .Hosting) { (success) in
             //
         }
     }
@@ -92,6 +92,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
                     guard let spotifyUser = spotifyUser else { return }
                     let nameToDisplay = spotifyUser.displayName ?? spotifyUser.canonicalUserName
                     self.spotifyUserName.text = nameToDisplay
+
                     // Retrieve image if it exists
                     if let imageURL = spotifyUser.imageURL {
                         ImageController.getImageFromURLWithResponse(imageURL, completion: { (image, response, error) in

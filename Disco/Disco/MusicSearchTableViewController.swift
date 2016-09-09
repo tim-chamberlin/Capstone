@@ -10,17 +10,13 @@ import UIKit
 
 class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating {
     
-    var offset: Int = 0
-    
-    var searchedTracks: [Track] = [] {
+    var searchedTracks: (trackNames: [String], artists: [String], ids: [String]) = ([], [], []) {
         didSet {
             tableView.reloadData()
         }
     }
     
     var musicSearchController: UISearchController?
-    
-    var selectedTrack: Track?
     var selectedTrackIndexPath: NSIndexPath?
     
     weak var delegate: AddTrackToPlaylistDelegate?
@@ -32,7 +28,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
-        selectedTrack = nil
         selectedTrackIndexPath = nil
     }
     
@@ -46,6 +41,7 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.barTintColor = UIColor.lightCharcoalColor()
+        searchController.searchBar.delegate = self
         tableView.tableHeaderView = searchController.searchBar
     }
     
@@ -54,16 +50,14 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         // Initial search
         if let text = searchController.searchBar.text {
             if !text.isEmpty {
-                TrackController.searchSpotifyForTrackWithText(text, responseLimit: 40, filterByType: "track", withPagingOffset: 0, completion: { (tracks, success, offset) in
+                TrackController.searchSpotifyForItemWithText(text, responseLimit: 40, filterByType: "track", completion: { (items, success) in
                     if success {
-                        if !tracks.isEmpty {
-                            self.searchedTracks = tracks
-                            self.offset = 20
-                        }
+                        guard let items = items else { return }
+                        self.searchedTracks = items
                     }
                 })
             } else {
-                self.searchedTracks = []
+                self.searchedTracks = ([], [], [])
             }
         }
     }
@@ -73,14 +67,13 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         if let selectedCellIndexPath = tableView.indexPathForSelectedRow, cell = tableView.cellForRowAtIndexPath(selectedCellIndexPath) {
             cell.accessoryType = .None
             self.selectedTrackIndexPath = nil
-            self.selectedTrack = nil
         }
     }
     
     // MARK: - Table view DataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchedTracks.count
+        return searchedTracks.trackNames.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -88,13 +81,12 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
         cell.selectionStyle = .None
         cell.textLabel?.textColor = UIColor.offWhiteColor()
         cell.detailTextLabel?.textColor = UIColor.offWhiteColor()
-        if searchedTracks.count == 0 {
+        if searchedTracks.trackNames.count == 0 {
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = ""
         } else {
-            let track = searchedTracks[indexPath.row]
-            cell.textLabel?.text = track.name
-            cell.detailTextLabel?.text = track.artist
+            cell.textLabel?.text = searchedTracks.trackNames[indexPath.row]
+            cell.detailTextLabel?.text = searchedTracks.artists[indexPath.row]
         }
         
         if indexPath == selectedTrackIndexPath {
@@ -108,7 +100,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
-        selectedTrack = searchedTracks[indexPath.row]
         selectedTrackIndexPath = indexPath
         cell.accessoryType = .Checkmark
     }
@@ -123,13 +114,18 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
     // MARK: - IBActions
     
     @IBAction func addTrackButtonTapped(sender: AnyObject) {
-        musicSearchController?.active = false
-        if let selectedTrack = selectedTrack {
-            delegate?.willAddTrackToPlaylist(selectedTrack)
-            self.dismissViewControllerAnimated(true, completion: nil)
-        } else {
-            return
+        if let selectedTrackIndexPath = selectedTrackIndexPath {
+            TrackController.fetchTrackInfo(forTrackWithID: searchedTracks.ids[selectedTrackIndexPath.row]) { (track) in
+                if let track = track {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.musicSearchController?.active = false
+                        self.delegate?.willAddTrackToPlaylist(track)
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                }
+            }
         }
+        
     }
     
     @IBAction func cancelAction(sender: AnyObject) {

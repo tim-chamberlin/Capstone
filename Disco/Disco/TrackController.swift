@@ -12,24 +12,21 @@ import Foundation
 class TrackController {
     
     // TODO: Do I need a singleton for this?
-    static let sharedController = TrackController()
-    static let spotifySearchBaseURL = NSURL(string: "https://api.spotify.com/v1/search")
+//    static let sharedController = TrackController()
+    static let spotifyBaseURL = NSURL(string: "https://api.spotify.com/v1")
     
     
-    
-    
-    
-    
-    static func searchSpotifyForTrackWithText(text: String, responseLimit: Int, filterByType type: String, withPagingOffset offset: Int, completion: (tracks: [Track], success: Bool, offset: Int) -> Void) {
-        guard let spotifySearchBaseURL = spotifySearchBaseURL else {
+
+    static func searchSpotifyForItemWithText(text: String, responseLimit: Int, filterByType type: String, completion: (items: (trackNames: [String], artists: [String], ids: [String])?, success: Bool) -> Void) {
+        let searchBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("search")
+        guard let spotifySearchBaseURL = searchBaseURL else {
             print("Optional URL return nil")
-            completion(tracks: [], success: false, offset: 0)
+            completion(items: nil, success: false)
             return
         }
         
         // Spotify Web API search documentation: https://developer.spotify.com/web-api/search-item/
         let urlParameters = ["q":text,
-                             "offset":String(offset),
                              "limit":String(responseLimit),
                              "type":type]
         
@@ -39,19 +36,46 @@ class TrackController {
                     
                     guard let tracksDictionary = jsonDictionary["tracks"] as? [String: AnyObject], itemsDictionary = tracksDictionary["items"] as? [[String : AnyObject]] else {
                         print("Error formatting data")
-                        completion(tracks: [], success: false, offset: 0)
+                        completion(items: nil, success: false)
                         return
                     }
                     
-                    // Check to see if at end of paging
-                    guard let _ = tracksDictionary["next"] as? String else {
-                        completion(tracks: [], success: true, offset: 0)
-                        return
+                    let names = itemsDictionary.flatMap { $0["name"] as? String }
+                    let ids = itemsDictionary.flatMap { $0["id"] as? String }
+                    
+                    let artists = itemsDictionary.flatMap { $0["artists"] as? [[String: AnyObject]] }
+                    var artistsGroupedByTrack = [String]()
+                    for artistDictionaryArray in artists {
+                        var trackArtists = [String]()
+                        for artistDictionary in artistDictionaryArray {
+                            let artistName = artistDictionary["name"] as! String
+                            trackArtists.append(artistName)
+                        }
+                        let trackArtistsString = trackArtists.joinWithSeparator(", ")
+                        artistsGroupedByTrack.append(trackArtistsString)
                     }
-
-                    let tracks = itemsDictionary.flatMap { Track(spotifyDictionary: $0) }
-                    completion(tracks: tracks, success: true, offset: responseLimit)
+                    completion(items: (names, artistsGroupedByTrack, ids), success: true)
                 })
+            }
+        }
+    }
+
+    
+    static func fetchTrackInfo(forTrackWithID spotifyID: String, completion:(track: Track?) -> Void) {
+        let trackBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("tracks").URLByAppendingPathComponent(spotifyID)
+        guard let trackURL = trackBaseURL else {
+            print("Optional URL return nil")
+            completion(track: nil)
+            return
+        }
+        
+        NetworkController.performRequestForURL(trackURL, httpMethod: NetworkController.HTTPMethod.Get) { (data, error) in
+            if let data = data, jsonDictionary = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+                let track = Track(spotifyDictionary: jsonDictionary)
+                completion(track: track)
+            } else {
+                print("Error serializing JSON")
+                completion(track: nil)
             }
         }
     }
@@ -68,7 +92,7 @@ class TrackController {
     
     // MARK: - Vote Listener Methods
     
-    func attachVoteListener(forTrack track: Track, inPlaylist playlist: Playlist, completion: (newVoteCount: Int, success: Bool) -> Void) {
+    static func attachVoteListener(forTrack track: Track, inPlaylist playlist: Playlist, completion: (newVoteCount: Int, success: Bool) -> Void) {
         // TODO: Will tracks have UIDs at this point?
         firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).child(track.firebaseUID).child(Track.kVoteCount).observeEventType(.Value, withBlock: { (snapshot) in
             guard let voteCount = snapshot.value as? Int else { return }
@@ -78,13 +102,13 @@ class TrackController {
         }
     }
     
-    func removeVoteListenerFromTrack(track: Track, inQueue queue: Playlist, completion: (() -> Void)? = nil) {
+    static func removeVoteListenerFromTrack(track: Track, inQueue queue: Playlist, completion: (() -> Void)? = nil) {
         firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kUpNext).child(track.firebaseUID).child(Track.kVoteCount).removeAllObservers()
     }
     
     // MARK: - Get Vote Status for User
     
-    func getVoteStatusForTrackWithID(trackID: String, inPlaylistWithID playlistID: String, ofType playlistType: PlaylistType, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
+    static func getVoteStatusForTrackWithID(trackID: String, inPlaylistWithID playlistID: String, ofType playlistType: PlaylistType, user: User, completion:(voteStatus: VoteType, success: Bool) -> Void) {
         firebaseRef.child(User.parentDirectory).child(user.FBID).child(playlistType.rawValue).child(playlistID).child(trackID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard let voteStatus = snapshot.value as? Int else {
                 completion(voteStatus: .Neutral, success: true)
@@ -106,7 +130,7 @@ class TrackController {
     }
     
     
-    func user(user: User, didVoteWithType voteType: VoteType, withVoteStatus voteStatus: VoteType, onTrack track: Track, inPlaylist playlist: Playlist, ofPlaylistType playlistType: PlaylistType, completion: (success: Bool) -> Void) {
+    static func user(user: User, didVoteWithType voteType: VoteType, withVoteStatus voteStatus: VoteType, onTrack track: Track, inPlaylist playlist: Playlist, ofPlaylistType playlistType: PlaylistType, completion: (success: Bool) -> Void) {
         // get track's current votecount
         firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kUpNext).child(track.firebaseUID).child(Track.kVoteCount).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard var voteCount = snapshot.value as? Int else { return }

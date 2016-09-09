@@ -21,6 +21,9 @@ class UserController {
     // Spotify Constants
     static let spotifyClientID = "a0578e15af3a46baa2dbabf176f60952"
     static let spotifyRedirectURL = NSURL(string: "disco-login://callback")
+    static let spotifyRefreshServiceURL = NSURL(string: "https://aqueous-crag-42337.herokuapp.com/refresh")
+    static let spotifySwapServiceURL = NSURL(string: "https://aqueous-crag-42337.herokuapp.com/swap")
+    
     
     var currentUser: User?
     
@@ -192,6 +195,8 @@ extension UserController {
         // Set properties for SPTAuth singleton
         SPTAuth.defaultInstance().clientID = UserController.spotifyClientID
         SPTAuth.defaultInstance().redirectURL = UserController.spotifyRedirectURL
+//        SPTAuth.defaultInstance().tokenRefreshURL = UserController.spotifyRefreshServiceURL
+//        SPTAuth.defaultInstance().tokenSwapURL = UserController.spotifySwapServiceURL
         SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope]
         SPTAuth.defaultInstance().sessionUserDefaultsKey = currentUser.FBID
         SPTAuth.defaultInstance().allowNativeLogin = true
@@ -203,8 +208,25 @@ extension UserController {
             if let sessionDataObject = sessionObject as? NSData, session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObject) as? SPTSession {
                 // Check if session is valid
                 if !session.isValid() { // session isn't valid
-                    // TODO: If there's a valid token refresh service, renew the token
                     completion(loggedIn: false, session: nil)
+                    
+                    // TODO: If there's a valid token refresh service, renew the token
+//                    if SPTAuth.defaultInstance().hasTokenRefreshService {
+//                        renewToken({ (success, session) in
+//                            if success {
+//                                guard let session = session else {
+//                                    completion(loggedIn: false, session: nil)
+//                                    return
+//                                }
+//                                completion(loggedIn: true, session: session)
+//                                return
+//                            } else {
+//                                completion(loggedIn: false, session: nil)
+//                            }
+//                        })
+//                    } else { // No token refresh service specified
+//                        completion(loggedIn: false, session: nil)
+//                    }
                 } else { // Valid existing token
                     print("Spotify user already logged in")
                     completion(loggedIn: true, session: session)
@@ -215,6 +237,19 @@ extension UserController {
         } else { // Not logged in (token is nil)
             print("Spotify user not logged in")
             completion(loggedIn: false, session: nil)
+        }
+    }
+    
+    func renewToken(completion: (success: Bool, session: SPTSession?) -> Void) {
+        let auth = SPTAuth.defaultInstance()
+        auth.renewSession(auth.session) { (error, session) in
+            if error != nil {
+                print("Error while refreshing Spotify token: \(error)")
+                completion(success: false, session: nil)
+                return
+            } else {
+                completion(success: true, session: session)
+            }
         }
     }
     

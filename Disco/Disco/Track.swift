@@ -62,6 +62,23 @@ class Track: Equatable {
         }
     }
     
+    init?(withSimpleSpotifyDictionary: [String:AnyObject]) {
+        guard let spotifyURI = withSimpleSpotifyDictionary["uri"] as? String, trackName = withSimpleSpotifyDictionary["name"] as? String else { return nil }
+        
+        guard let artistsInfo = withSimpleSpotifyDictionary["artists"] as? [[String: AnyObject]] else { return nil }
+        let artistNamesArray = artistsInfo.flatMap({ $0["name"] as? String })
+        let artistNames = artistNamesArray.joinWithSeparator(", ")
+        
+        self.spotifyURI = spotifyURI
+        self.name = trackName
+        self.artist = artistNames
+        
+        self.firebaseUID = ""
+        self.playlistID = ""
+        self.voteCount = 0
+        self.currentUserVoteStatus = .Neutral
+    }
+    
     // Init from Spotify API
     init?(spotifyDictionary: [String:AnyObject]) {
         guard let spotifyURI = spotifyDictionary["uri"] as? String, trackName = spotifyDictionary["name"] as? String else { return nil }
