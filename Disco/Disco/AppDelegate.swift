@@ -40,24 +40,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        
         if SPTAuth.defaultInstance().canHandleURL(url) {
             SPTAuth.defaultInstance().handleAuthCallbackWithTriggeredAuthURL(url, callback: { (error, session) in
                 if error != nil {
-                    print("Error logging in Spotify user: \(error.localizedDescription)")
+                    print(error.localizedDescription)
+                    print(error)
                     return
                 }
                 
-                
-                print("Spotify user logged in")
-//                HostingViewController.session = session
-                //        // Post notification so HostViewController knows about successful login
-//                NSNotificationCenter.defaultCenter().postNotificationName(spotifyLoginNotificationKey, object: nil)
-                
-//                UserController.sharedController.loginToSpotifyUsingSession(session)
+                if session != nil {
+                    print(session)
+                    NSNotificationCenter.defaultCenter().postNotificationName(kSpotifyLoginNotificationKey, object: nil, userInfo: [kSpotifyLoginNotificationKey:session])
+                    print("Spotify user logged in natively")
+                }
             })
+            return true
         }
-
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     

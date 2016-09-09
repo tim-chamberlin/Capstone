@@ -20,6 +20,7 @@ class Track: Equatable {
     let firebaseUID: String
     let spotifyURI: String
     var artworkURL: String = ""
+    var artwork: UIImage?
     var playlistID: String
     var voteCount: Int
     

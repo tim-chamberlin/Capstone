@@ -10,7 +10,7 @@ import UIKit
 
 
 public let kSpotifyLoginNotificationKey = "spotifyLoginSuccessful"
-public let spotifyLogoutNotificationKey = "spotifyLogoutSuccessful"
+public let kSpotifyLogoutNotificationKey = "spotifyLogoutSuccessful"
 
 class SpotifyLoginViewController: UIViewController, SPTAuthViewDelegate {
 

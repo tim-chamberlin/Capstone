@@ -194,26 +194,23 @@ extension UserController {
         SPTAuth.defaultInstance().redirectURL = UserController.spotifyRedirectURL
         SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope]
         SPTAuth.defaultInstance().sessionUserDefaultsKey = currentUser.FBID
-        SPTAuth.defaultInstance().allowNativeLogin = false
+        SPTAuth.defaultInstance().allowNativeLogin = true
     }
     
     func checkSpotifyUserAuth(completion: (loggedIn: Bool, session: SPTSession?) -> Void) {
         // Check for valid session in NSUserDefaults
         if let sessionObject: AnyObject = userDefaults.objectForKey(SPTAuth.defaultInstance().sessionUserDefaultsKey) {
-            guard let sessionDataObject = sessionObject as? NSData, session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObject) as? SPTSession else { return }
-            // Check if session is valid
-            if !session.isValid() { // session isn't valid
-                SPTAuth.defaultInstance().renewSession(session, callback: { (error, session) in
-                    if error == nil {
-//                        self.saveSessionToUserDefaults(session)
-                    } else {
-                        print("Error renewing Spotify session")
-                        completion(loggedIn: false, session: nil)
-                    }
-                })
+            if let sessionDataObject = sessionObject as? NSData, session = NSKeyedUnarchiver.unarchiveObjectWithData(sessionDataObject) as? SPTSession {
+                // Check if session is valid
+                if !session.isValid() { // session isn't valid
+                    // TODO: If there's a valid token refresh service, renew the token
+                    completion(loggedIn: false, session: nil)
+                } else { // Valid existing token
+                    print("Spotify user already logged in")
+                    completion(loggedIn: true, session: session)
+                }
             } else {
-                print("Spotify user already logged in")
-                completion(loggedIn: true, session: session)
+                completion(loggedIn: false, session: nil)
             }
         } else { // Not logged in (token is nil)
             print("Spotify user not logged in")
@@ -226,17 +223,17 @@ extension UserController {
         do {
             try spotifyPlayer.startWithClientId(UserController.spotifyClientID)
             spotifyPlayer.loginWithAccessToken(session.accessToken)
+            saveSessionToUserDefaults(session)
         } catch {
             print(error)
         }
     }
     
-    func logoutOfSpotify(session: SPTSession, completion:() -> Void) {
+    func logoutOfSpotify(completion:() -> Void) {
         spotifyPlayer.logout()
-        deleteSessionFromUserDefaults(session)
+        deleteSessionFromUserDefaults()
         completion()
     }
-    
     
     // MARK: Spotify - NSUserDefaults
     
@@ -247,7 +244,7 @@ extension UserController {
         userDefaults.synchronize()
     }
     
-    func deleteSessionFromUserDefaults(session: SPTSession) {
+    func deleteSessionFromUserDefaults() {
         userDefaults.removeObjectForKey(SPTAuth.defaultInstance().sessionUserDefaultsKey)
         userDefaults.synchronize()
     }

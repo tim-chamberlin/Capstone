@@ -280,10 +280,12 @@ class PlaylistController {
     
     // MARK: - Set isLive Property
     
-    func setIsLive(isLive: Bool, forQueue queue: Playlist, completion: () -> Void) {
+    func setIsLive(isLive: Bool, forQueue queue: Playlist, completion: (() -> Void)? = nil) {
         firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kIsLive).setValue(isLive) { (error, _) in
             if error == nil {
-                completion()
+                if let completion = completion {
+                    completion()
+                }
             } else {
                 print(error)
             }

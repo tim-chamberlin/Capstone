@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		220305D21D760D0E00A72C35 /* SpotifyStreamingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220305D11D760D0E00A72C35 /* SpotifyStreamingController.swift */; };
+		220305D21D760D0E00A72C35 /* MusicStreamingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220305D11D760D0E00A72C35 /* MusicStreamingController.swift */; };
 		220305F61D763A8200A72C35 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220305F51D763A8200A72C35 /* Spotify.framework */; };
 		222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675151D6DFBB30052D475 /* PlaylistListViewController.swift */; };
 		2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */; };
@@ -41,6 +41,7 @@
 		228382071D6BEACD00D78B53 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228382061D6BEACD00D78B53 /* Bolts.framework */; };
 		229EA60E1D73BB8400DCC453 /* StreamingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EA60D1D73BB8400DCC453 /* StreamingViewController.swift */; };
 		229EA6101D73C73200DCC453 /* TrackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EA60F1D73C73200DCC453 /* TrackTableViewCell.xib */; };
+		22A6F9AA1D81FE1F006D2C94 /* A_SideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A6F9A91D81FE1F006D2C94 /* A_SideTests.swift */; };
 		22AFF0A61D6CE44400121CC4 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A51D6CE44400121CC4 /* Playlist.swift */; };
 		22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */; };
 		22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */; };
@@ -53,8 +54,18 @@
 		D0D9E44A13364A79A151BFF8 /* Pods_Disco.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 734C6BECD8FCB7F4C3993F7F /* Pods_Disco.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		22A6F9AC1D81FE1F006D2C94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22456C451D6A3C32001B7A9B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22456C4C1D6A3C32001B7A9B;
+			remoteInfo = "A-Side";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		220305D11D760D0E00A72C35 /* SpotifyStreamingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyStreamingController.swift; sourceTree = "<group>"; };
+		220305D11D760D0E00A72C35 /* MusicStreamingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicStreamingController.swift; sourceTree = "<group>"; };
 		220305F51D763A8200A72C35 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		222675151D6DFBB30052D475 /* PlaylistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
 		222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendPlaylistsViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +102,9 @@
 		228382061D6BEACD00D78B53 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		229EA60D1D73BB8400DCC453 /* StreamingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingViewController.swift; sourceTree = "<group>"; };
 		229EA60F1D73C73200DCC453 /* TrackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackTableViewCell.xib; sourceTree = "<group>"; };
+		22A6F9A71D81FE1F006D2C94 /* A-SideTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "A-SideTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		22A6F9A91D81FE1F006D2C94 /* A_SideTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A_SideTests.swift; sourceTree = "<group>"; };
+		22A6F9AB1D81FE1F006D2C94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22AFF0A51D6CE44400121CC4 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		22AFF0A71D6CE5B600121CC4 /* PlaylistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistController.swift; sourceTree = "<group>"; };
 		22AFF0A91D6CEC8000121CC4 /* NewPlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlaylistViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +132,13 @@
 				22456C681D6A40E6001B7A9B /* FBSDKCoreKit.framework in Frameworks */,
 				22456C691D6A40E6001B7A9B /* FBSDKLoginKit.framework in Frameworks */,
 				228382071D6BEACD00D78B53 /* Bolts.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		22A6F9A41D81FE1F006D2C94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				22456C4F1D6A3C32001B7A9B /* Disco */,
+				22A6F9A81D81FE1F006D2C94 /* A-SideTests */,
 				22456C4E1D6A3C32001B7A9B /* Products */,
 				057B07A1FAD4EB29DCB2C717 /* Pods */,
 				1ACFF4544AE7439540EBCA3A /* Frameworks */,
@@ -192,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				22456C4D1D6A3C32001B7A9B /* A-Side.app */,
+				22A6F9A71D81FE1F006D2C94 /* A-SideTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -265,9 +288,18 @@
 				22D2F1061D7BB094009D9653 /* AppearanceController.swift */,
 				224522861D6F7F1200F5F792 /* NetworkController.swift */,
 				223D01591D7A609C0037D76C /* ImageController.swift */,
-				220305D11D760D0E00A72C35 /* SpotifyStreamingController.swift */,
+				220305D11D760D0E00A72C35 /* MusicStreamingController.swift */,
 			);
 			name = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		22A6F9A81D81FE1F006D2C94 /* A-SideTests */ = {
+			isa = PBXGroup;
+			children = (
+				22A6F9A91D81FE1F006D2C94 /* A_SideTests.swift */,
+				22A6F9AB1D81FE1F006D2C94 /* Info.plist */,
+			);
+			path = "A-SideTests";
 			sourceTree = "<group>";
 		};
 		22AFF0AD1D6D2D2D00121CC4 /* Views */ = {
@@ -306,6 +338,24 @@
 			productReference = 22456C4D1D6A3C32001B7A9B /* A-Side.app */;
 			productType = "com.apple.product-type.application";
 		};
+		22A6F9A61D81FE1F006D2C94 /* A-SideTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22A6F9AE1D81FE1F006D2C94 /* Build configuration list for PBXNativeTarget "A-SideTests" */;
+			buildPhases = (
+				22A6F9A31D81FE1F006D2C94 /* Sources */,
+				22A6F9A41D81FE1F006D2C94 /* Frameworks */,
+				22A6F9A51D81FE1F006D2C94 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				22A6F9AD1D81FE1F006D2C94 /* PBXTargetDependency */,
+			);
+			name = "A-SideTests";
+			productName = "A-SideTests";
+			productReference = 22A6F9A71D81FE1F006D2C94 /* A-SideTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -321,9 +371,13 @@
 						DevelopmentTeam = EFTGDDK4SN;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
+					};
+					22A6F9A61D81FE1F006D2C94 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 22456C4C1D6A3C32001B7A9B;
 					};
 				};
 			};
@@ -341,6 +395,7 @@
 			projectRoot = "";
 			targets = (
 				22456C4C1D6A3C32001B7A9B /* A-Side */,
+				22A6F9A61D81FE1F006D2C94 /* A-SideTests */,
 			);
 		};
 /* End PBXProject section */
@@ -358,6 +413,13 @@
 				229EA6101D73C73200DCC453 /* TrackTableViewCell.xib in Resources */,
 				22456C561D6A3C32001B7A9B /* Main.storyboard in Resources */,
 				22D2F1051D7B81BF009D9653 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		22A6F9A51D81FE1F006D2C94 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +498,7 @@
 				2245227E1D6F66CE00F5F792 /* TrackController.swift in Sources */,
 				22456C6C1D6A4359001B7A9B /* AuthenticationViewController.swift in Sources */,
 				22D2F10B1D7CC7D3009D9653 /* SpotifyUser.swift in Sources */,
-				220305D21D760D0E00A72C35 /* SpotifyStreamingController.swift in Sources */,
+				220305D21D760D0E00A72C35 /* MusicStreamingController.swift in Sources */,
 				2245227C1D6F66C200F5F792 /* Track.swift in Sources */,
 				2238AD8A1D70C21500C7F013 /* TrackTableViewCell.swift in Sources */,
 				222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */,
@@ -447,7 +509,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		22A6F9A31D81FE1F006D2C94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22A6F9AA1D81FE1F006D2C94 /* A_SideTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		22A6F9AD1D81FE1F006D2C94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22456C4C1D6A3C32001B7A9B /* A-Side */;
+			targetProxy = 22A6F9AC1D81FE1F006D2C94 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		22456C541D6A3C32001B7A9B /* Main.storyboard */ = {
@@ -611,6 +689,32 @@
 			};
 			name = Release;
 		};
+		22A6F9AF1D81FE1F006D2C94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "A-SideTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tim-chamberlin.A-SideTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/A-Side.app/A-Side";
+			};
+			name = Debug;
+		};
+		22A6F9B01D81FE1F006D2C94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "A-SideTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tim-chamberlin.A-SideTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/A-Side.app/A-Side";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -628,6 +732,15 @@
 			buildConfigurations = (
 				22456C601D6A3C32001B7A9B /* Debug */,
 				22456C611D6A3C32001B7A9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22A6F9AE1D81FE1F006D2C94 /* Build configuration list for PBXNativeTarget "A-SideTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22A6F9AF1D81FE1F006D2C94 /* Debug */,
+				22A6F9B01D81FE1F006D2C94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

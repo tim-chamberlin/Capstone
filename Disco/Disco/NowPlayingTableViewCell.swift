@@ -46,6 +46,7 @@ class NowPlayingTableViewCell: UITableViewCell {
         }
         ImageController.getImageFromURL(imageURL) { (image, success) in
             self.albumArtworkImage.image = image
+            track.artwork = image
         }
     }
 }
