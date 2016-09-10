@@ -18,6 +18,11 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
         updatePlaylistTableView()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+    }
+    
     // MARK: - PlaylistTableViewDataSource
     
     func updatePlaylistTableView() {
@@ -44,18 +49,12 @@ class ContributingViewController: UIViewController, PlaylistTableViewDataSource,
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "playlistTVEmbedSegue" {
             contributingPlaylistsTableView = segue.destinationViewController as? PlaylistListViewController
-        } else if segue.identifier == "toFriendsListSegue" {
-            UserController.sharedController.getFriends { (friends, success) in
-                if let friends = friends {
-                    UserController.sharedController.currentUser?.friends = friends
-                }
-            }
         }
     }
     
     // MARK: - IBActions
 
     @IBAction func contributeToPlaylistButtonTapped(sender: AnyObject) {
-        self.performSegueWithIdentifier("toFriendsListSegue", sender: self)
+        self.parentViewController?.parentViewController?.performSegueWithIdentifier("toFriendsListSegue", sender: self)
     }
 }

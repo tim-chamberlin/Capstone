@@ -48,7 +48,6 @@ class PlaylistListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func updatePlaylistViewWithUser(user: User, withPlaylistType: PlaylistType, withNoPlaylistsText: String) {
-        
         PlaylistController.sharedController.fetchPlaylistsForUser(user.FBID, ofType: withPlaylistType) { (playlists, success) in
             if success {
                 guard let playlists = playlists else {

@@ -8,6 +8,8 @@
 
 import UIKit
 
+let trackTableViewCellHeight: CGFloat = 90
+
 class TrackTableViewCell: UITableViewCell {
 
     @IBOutlet weak var trackLabel: UILabel!

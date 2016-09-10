@@ -16,7 +16,8 @@ struct AppearanceController {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         
-//        UINavigationBar.appearance().backgroundColor = UIColor.lightCharcoalColor()
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: .Default)
         UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont.navigationBarFont(), NSForegroundColorAttributeName: UIColor.offWhiteColor()]
         UINavigationBar.appearance().tintColor = UIColor.goldColor()
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: UIFont.barButtonItemBold(), NSForegroundColorAttributeName: UIColor.goldColor()], forState: .Normal)

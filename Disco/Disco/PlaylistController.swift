@@ -121,7 +121,6 @@ class PlaylistController {
         })
     }
     
-    
     func fetchAllPlaylists(completion:(playlists: [Playlist]?, success: Bool) -> Void) {
         firebaseRef.child(Playlist.parentDirectory).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             guard let playlistDictionaries = snapshot.value as? [String:[String:AnyObject]] else {
@@ -325,15 +324,15 @@ class PlaylistController {
     
     // MARK: - Manage Playlist Contributors
     
-    func addContributor(user: User, toPlaylist playlist: Playlist, completion: (success: Bool) -> Void) {
+    func addContributor(user: User, toPlaylistWithID playlistID: String, completion: (success: Bool) -> Void) {
         // Add contributor to playlist object's contributors array
-        firebaseRef.child(Playlist.parentDirectory).child(playlist.uid).child(Playlist.kContributorsList).updateChildValues([user.FBID: true], withCompletionBlock: { (error, _) in
+        firebaseRef.child(Playlist.parentDirectory).child(playlistID).child(Playlist.kContributorsList).updateChildValues([user.FBID: true], withCompletionBlock: { (error, _) in
             if error != nil {
                 print(error?.localizedDescription)
                 completion(success: false)
             } else {
                 // Add to user object
-                firebaseRef.child(User.parentDirectory).child(user.FBID).child(PlaylistType.Contributing.rawValue).child(playlist.uid).setValue(true, withCompletionBlock: { (error, _) in
+                firebaseRef.child(User.parentDirectory).child(user.FBID).child(PlaylistType.Contributing.rawValue).child(playlistID).setValue(true, withCompletionBlock: { (error, _) in
                     if error == nil {
                         completion(success: true)
                     } else {

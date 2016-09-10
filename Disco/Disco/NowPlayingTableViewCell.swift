@@ -8,6 +8,8 @@
 
 import UIKit
 
+let nowPlayingTableViewCellHeight: CGFloat = 150
+
 class NowPlayingTableViewCell: UITableViewCell {
 
     @IBOutlet weak var albumArtworkImage: UIImageView!

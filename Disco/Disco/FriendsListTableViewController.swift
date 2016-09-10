@@ -9,13 +9,21 @@
 import UIKit
 
 class FriendsListTableViewController: UITableViewController {
-
+    
     var playlistView: PlaylistListViewController!
     
-    var friends = UserController.sharedController.currentUser?.friends
+    var selectedFriendIndexPath: NSIndexPath?
+    
+    var friends = [FacebookUser]() {
+        didSet {
+            //            orderTableViewByFirstName(friends)
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.registerNib(UINib(nibName: "FriendTableViewCell", bundle: nil), forCellReuseIdentifier: "friendCell")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -23,34 +31,55 @@ class FriendsListTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends?.count ?? 0
+        return friends.count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("friendCell", forIndexPath: indexPath)
-
-        guard let friend = friends?[indexPath.row] else { return UITableViewCell() }
-        cell.textLabel?.text = friend.name
-        // TODO: Custom friend cell with number of hosted playlists
-        
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("friendCell", forIndexPath: indexPath) as? FriendTableViewCell else { return UITableViewCell() }
+        cell.selectionStyle = .None
+        let friend = friends[indexPath.row]
+        cell.updateCellWithFriend(friend)
+        if indexPath == selectedFriendIndexPath {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
+        }
         return cell
     }
-
     
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "toFriendPlaylistsSegue" {
-            guard let destinationVC = segue.destinationViewController as? FriendPlaylistsViewController else { return }
-            if let indexPath = tableView.indexPathForSelectedRow, selectedUser = self.friends?[indexPath.row] {
-                destinationVC.selectedUser = selectedUser
-            }
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return friendTableViewCellHeight
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+        selectedFriendIndexPath = indexPath
+        cell.accessoryType = .Checkmark
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+        cell.accessoryType = .None
+    }
+    
+    
+    // MARK: - IBActions
+    
+    @IBAction func doneAction(sender: AnyObject) {
+        if let selectedFriendIndexPath = selectedFriendIndexPath {
+            let selectedFriend = friends[selectedFriendIndexPath.row]
+            guard let currentUser = UserController.sharedController.currentUser else { return }
+            PlaylistController.sharedController.addContributor(currentUser, toPlaylistWithID: selectedFriend.fbid, completion: { (success) in
+                self.performSegueWithIdentifier("unwindToHomeVC", sender: self)
+            })
         }
     }
-
+    
+    
     @IBAction func cancelAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
 }

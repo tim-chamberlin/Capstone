@@ -19,7 +19,7 @@ struct User {
     
     let FBID: String
     let name: String
-    var friends: [User] = []
+    var friends: [FacebookUser] = []
 //    var contributingPlaylists: [Playlist] = []
     var hostingPlaylists: [Playlist]?
     

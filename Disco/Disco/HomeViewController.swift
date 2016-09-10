@@ -16,9 +16,29 @@ class HomeViewController: UIViewController, UIPageViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = UserController.sharedController.currentUser?.name
+        setupNavBar()
         setupSegmentedController()
         setupPageViewController()
+    }
+    
+    func setupNavBar() {
+        guard let currentUser = UserController.sharedController.currentUser else { return }
+        
+        let imageContainerView = UIView(frame: CGRectMake(0, 0, 40.0, 40.0))
+        let imageView = UIImageView(frame: CGRectMake(0, 0, imageContainerView.frame.width, imageContainerView.frame.height))
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .ScaleAspectFill
+        imageView.layer.cornerRadius = imageView.frame.width/2
+        imageContainerView.addSubview(imageView)
+        navigationItem.titleView = imageContainerView
+        
+        UserController.sharedController.getProfilePictureForUserWithID(currentUser.FBID) { (profilePicture) in
+            guard let profilePicture = profilePicture else {
+                imageView.image = UIImage(named: "UserIcon")
+                return
+            }
+            imageView.image = profilePicture
+        }
     }
 
     func setupPageViewController() {
@@ -75,10 +95,25 @@ class HomeViewController: UIViewController, UIPageViewControllerDelegate {
         self.presentViewController(actionSheet, animated: true, completion: nil)
     }
     
+    // MARK: -  Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toFriendsListSegue" {
+            guard let destinationVC = segue.destinationViewController as? UINavigationController, friendListVC = destinationVC.viewControllers.first as? FriendsListTableViewController else { return }
+            
+            UserController.sharedController.getFriends { (friends, success) in
+                if let friends = friends {
+                    // Sort alphabetically
+                    friendListVC.friends = friends.sort { $0.name < $1.name }
+                }
+            }
+        }
+    }
+    
     // MARK: - IBActions
 
     @IBAction func unwindToHomeViewController(segue: UIStoryboardSegue) {
-        if let _ = segue.sourceViewController as? FriendPlaylistsViewController {
+        if let _ = segue.sourceViewController as? FriendsListTableViewController {
             if let contributingVC = pageViewController.firstVC as? ContributingViewController {
                 contributingVC.updatePlaylistTableView()
             }

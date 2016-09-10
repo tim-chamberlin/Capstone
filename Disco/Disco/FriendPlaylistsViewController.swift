@@ -67,11 +67,12 @@ class FriendPlaylistsViewController: UIViewController, PlaylistTableViewDataSour
     }
     
     @IBAction func doneAction(sender: AnyObject) {
-        guard let currentUser = UserController.sharedController.currentUser, playlist = selectedPlaylist else { return }
-        PlaylistController.sharedController.addContributor(currentUser, toPlaylist: playlist, completion: { (success) in
-            self.performSegueWithIdentifier("unwindToHomeVC", sender: self)
-        })
+//        guard let currentUser = UserController.sharedController.currentUser, playlist = selectedPlaylist else { return }
+//        PlaylistController.sharedController.addContributor(currentUser, toPlaylist: playlist, completion: { (success) in
+//            self.performSegueWithIdentifier("unwindToHomeVC", sender: self)
+//        })
     }
+    
     @IBAction func cancelTapped(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }

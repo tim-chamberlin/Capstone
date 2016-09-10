@@ -121,55 +121,46 @@
                     </navigationItem>
                     <connections>
                         <outlet property="segmentedControl" destination="FNO-Ak-cSp" id="Fxy-DK-EiL"/>
+                        <segue destination="wZE-Lu-ySy" kind="presentation" identifier="toFriendsListSegue" id="FaL-CS-5Ty"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aas-5R-XTF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2866" y="482"/>
         </scene>
-        <!--Friends using Disco-->
+        <!--Friends using A-Side-->
         <scene sceneID="Fcp-ly-x0n">
             <objects>
                 <tableViewController id="GMP-T9-Aga" customClass="FriendsListTableViewController" customModule="A_Side" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="u3g-Mi-be6">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="friendCell" textLabel="7Eg-Fk-CPQ" style="IBUITableViewCellStyleDefault" id="CwG-ug-SRn">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CwG-ug-SRn" id="2AS-8E-hf5">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7Eg-Fk-CPQ">
-                                            <rect key="frame" x="15" y="0.0" width="550" height="43"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="GMP-T9-Aga" id="EUm-lE-N3A"/>
                             <outlet property="delegate" destination="GMP-T9-Aga" id="gVk-Ih-pWa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Friends using Disco" id="5RR-9N-qN1">
+                    <navigationItem key="navigationItem" title="Friends using A-Side" id="5RR-9N-qN1">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Osu-5r-ojA">
                             <connections>
                                 <action selector="cancelAction:" destination="GMP-T9-Aga" id="BVN-ee-1BV"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="f9c-u3-u4E">
+                            <connections>
+                                <action selector="doneAction:" destination="GMP-T9-Aga" id="VgL-SM-AwY"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Xz4-2X-YBY" kind="unwind" identifier="unwindToHomeVC" unwindAction="unwindToHomeViewController:" id="dFx-Ye-SCb"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1jf-KS-b07" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Xz4-2X-YBY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2061" y="3081"/>
+            <point key="canvasLocation" x="2875" y="2063"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XRY-UU-hB1">
@@ -227,7 +218,6 @@
                                         </state>
                                         <connections>
                                             <action selector="contributeToPlaylistButtonTapped:" destination="y1v-EL-T6f" eventType="touchUpInside" id="3sc-s8-WG7"/>
-                                            <segue destination="wZE-Lu-ySy" kind="presentation" identifier="toFriendsListSegue" id="s7O-aC-2f1"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -672,60 +662,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="tRr-mm-ZK2" kind="relationship" relationship="rootViewController" id="N41-oN-FFV"/>
+                        <segue destination="GMP-T9-Aga" kind="relationship" relationship="rootViewController" id="FWj-GY-j69"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0O-pB-LVq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2143" y="2117"/>
-        </scene>
-        <!--All Playlists-->
-        <scene sceneID="rrD-qF-32j">
-            <objects>
-                <viewController id="tRr-mm-ZK2" customClass="FriendPlaylistsViewController" customModule="A_Side" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6mM-Ee-lwA"/>
-                        <viewControllerLayoutGuide type="bottom" id="hXL-8n-0bM"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="WPj-Kg-7FV">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vDT-cl-BzM">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                <connections>
-                                    <segue destination="L9M-Gq-vfw" kind="embed" identifier="embedPlaylistTableViewSegue" id="0GN-RK-MvO"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="vDT-cl-BzM" firstAttribute="top" secondItem="6mM-Ee-lwA" secondAttribute="bottom" id="Bds-j1-TsX"/>
-                            <constraint firstItem="hXL-8n-0bM" firstAttribute="top" secondItem="vDT-cl-BzM" secondAttribute="bottom" id="PHJ-G4-0F0"/>
-                            <constraint firstItem="vDT-cl-BzM" firstAttribute="leading" secondItem="WPj-Kg-7FV" secondAttribute="leading" id="haT-t2-gJe"/>
-                            <constraint firstAttribute="trailing" secondItem="vDT-cl-BzM" secondAttribute="trailing" id="jAE-fJ-8P0"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="All Playlists" id="XoY-Lb-27W">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="4KH-13-r6x">
-                            <connections>
-                                <action selector="cancelTapped:" destination="tRr-mm-ZK2" id="inZ-J5-Wmb"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="w0H-mh-0gU">
-                            <connections>
-                                <action selector="doneAction:" destination="tRr-mm-ZK2" id="piO-W2-sOI"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <segue destination="IUk-EM-GRM" kind="unwind" identifier="unwindToHomeVC" unwindAction="unwindToHomeViewController:" id="2HC-te-eUg"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6mR-zd-ZPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="IUk-EM-GRM" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="2866" y="2666"/>
+            <point key="canvasLocation" x="2143" y="2063"/>
         </scene>
         <!--Playlist List View Controller-->
         <scene sceneID="igQ-st-Kqd">
@@ -799,7 +741,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcd-2c-s4r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4344" y="1901"/>
+            <point key="canvasLocation" x="3778" y="1957"/>
         </scene>
         <!--Main Page View Controller-->
         <scene sceneID="FyE-cb-grI">
@@ -853,7 +795,6 @@
         <image name="UserIcon" width="38" height="38"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bBl-I3-GmA"/>
-        <segue reference="hqT-6w-M5J"/>
+        <segue reference="PXL-jV-rCT"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,7 +10,6 @@
 		220305D21D760D0E00A72C35 /* MusicStreamingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220305D11D760D0E00A72C35 /* MusicStreamingController.swift */; };
 		220305F61D763A8200A72C35 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220305F51D763A8200A72C35 /* Spotify.framework */; };
 		222675161D6DFBB30052D475 /* PlaylistListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675151D6DFBB30052D475 /* PlaylistListViewController.swift */; };
-		2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */; };
 		2238AD8A1D70C21500C7F013 /* TrackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */; };
 		223D01541D7A0E910037D76C /* SpotifyLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D01531D7A0E910037D76C /* SpotifyLoginViewController.swift */; };
 		223D01571D7A5C580037D76C /* NowPlayingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D01551D7A5C580037D76C /* NowPlayingTableViewCell.swift */; };
@@ -35,10 +34,14 @@
 		22456C7A1D6A8B5D001B7A9B /* FriendsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */; };
 		226F2E6C1D7B73190012F479 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226F2E6A1D7B73190012F479 /* FriendTableViewCell.swift */; };
 		226F2E6D1D7B73190012F479 /* FriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 226F2E6B1D7B73190012F479 /* FriendTableViewCell.xib */; };
+		227516041D84A475009DFE28 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 227516011D84A475009DFE28 /* ProgressHUD.bundle */; };
+		227516051D84A475009DFE28 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 227516031D84A475009DFE28 /* ProgressHUD.m */; };
 		228381F71D6BDC0F00D78B53 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F61D6BDC0F00D78B53 /* AVFoundation.framework */; };
 		228381F91D6BDC1C00D78B53 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */; };
 		228382031D6BE11F00D78B53 /* ContributingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228382021D6BE11F00D78B53 /* ContributingViewController.swift */; };
 		228382071D6BEACD00D78B53 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228382061D6BEACD00D78B53 /* Bolts.framework */; };
+		2292F2CF1D8380AE006A8A62 /* FacebookUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2292F2CE1D8380AE006A8A62 /* FacebookUser.swift */; };
+		2292F2D11D83B588006A8A62 /* FriendPlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2292F2D01D83B588006A8A62 /* FriendPlaylistsViewController.swift */; };
 		229EA60E1D73BB8400DCC453 /* StreamingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EA60D1D73BB8400DCC453 /* StreamingViewController.swift */; };
 		229EA6101D73C73200DCC453 /* TrackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EA60F1D73C73200DCC453 /* TrackTableViewCell.xib */; };
 		22A6F9AA1D81FE1F006D2C94 /* A_SideTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A6F9A91D81FE1F006D2C94 /* A_SideTests.swift */; };
@@ -68,7 +71,6 @@
 		220305D11D760D0E00A72C35 /* MusicStreamingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicStreamingController.swift; sourceTree = "<group>"; };
 		220305F51D763A8200A72C35 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		222675151D6DFBB30052D475 /* PlaylistListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistListViewController.swift; sourceTree = "<group>"; };
-		222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendPlaylistsViewController.swift; sourceTree = "<group>"; };
 		2238AD891D70C21500C7F013 /* TrackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTableViewCell.swift; sourceTree = "<group>"; };
 		223D01531D7A0E910037D76C /* SpotifyLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewController.swift; sourceTree = "<group>"; };
 		223D01551D7A5C580037D76C /* NowPlayingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NowPlayingTableViewCell.swift; sourceTree = "<group>"; };
@@ -95,11 +97,16 @@
 		22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewController.swift; sourceTree = "<group>"; };
 		226F2E6A1D7B73190012F479 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		226F2E6B1D7B73190012F479 /* FriendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendTableViewCell.xib; sourceTree = "<group>"; };
+		227516011D84A475009DFE28 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		227516021D84A475009DFE28 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		227516031D84A475009DFE28 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		228381F61D6BDC0F00D78B53 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		228381FC1D6BDCE300D78B53 /* Disco-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Disco-Bridging-Header.h"; sourceTree = "<group>"; };
 		228382021D6BE11F00D78B53 /* ContributingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContributingViewController.swift; sourceTree = "<group>"; };
 		228382061D6BEACD00D78B53 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		2292F2CE1D8380AE006A8A62 /* FacebookUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookUser.swift; sourceTree = "<group>"; };
+		2292F2D01D83B588006A8A62 /* FriendPlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendPlaylistsViewController.swift; sourceTree = "<group>"; };
 		229EA60D1D73BB8400DCC453 /* StreamingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamingViewController.swift; sourceTree = "<group>"; };
 		229EA60F1D73C73200DCC453 /* TrackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrackTableViewCell.xib; sourceTree = "<group>"; };
 		22A6F9A71D81FE1F006D2C94 /* A-SideTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "A-SideTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,7 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				22456C791D6A8B5D001B7A9B /* FriendsListTableViewController.swift */,
-				222675191D6E72B40052D475 /* FriendPlaylistsViewController.swift */,
+				2292F2D01D83B588006A8A62 /* FriendPlaylistsViewController.swift */,
 			);
 			name = "Contribute to playlist VCs";
 			sourceTree = "<group>";
@@ -254,6 +261,7 @@
 				22AFF0A51D6CE44400121CC4 /* Playlist.swift */,
 				2245227B1D6F66C200F5F792 /* Track.swift */,
 				22D2F10A1D7CC7D3009D9653 /* SpotifyUser.swift */,
+				2292F2CE1D8380AE006A8A62 /* FacebookUser.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -285,12 +293,23 @@
 		22456C781D6A7DCF001B7A9B /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
+				227516001D84A475009DFE28 /* ProgressHUD */,
 				22D2F1061D7BB094009D9653 /* AppearanceController.swift */,
 				224522861D6F7F1200F5F792 /* NetworkController.swift */,
 				223D01591D7A609C0037D76C /* ImageController.swift */,
 				220305D11D760D0E00A72C35 /* MusicStreamingController.swift */,
 			);
 			name = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		227516001D84A475009DFE28 /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				227516011D84A475009DFE28 /* ProgressHUD.bundle */,
+				227516021D84A475009DFE28 /* ProgressHUD.h */,
+				227516031D84A475009DFE28 /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
 			sourceTree = "<group>";
 		};
 		22A6F9A81D81FE1F006D2C94 /* A-SideTests */ = {
@@ -410,6 +429,7 @@
 				226F2E6D1D7B73190012F479 /* FriendTableViewCell.xib in Resources */,
 				223D01581D7A5C580037D76C /* NowPlayingTableViewCell.xib in Resources */,
 				22DE4C511D7E68FF00019F22 /* Popover.storyboard in Resources */,
+				227516041D84A475009DFE28 /* ProgressHUD.bundle in Resources */,
 				229EA6101D73C73200DCC453 /* TrackTableViewCell.xib in Resources */,
 				22456C561D6A3C32001B7A9B /* Main.storyboard in Resources */,
 				22D2F1051D7B81BF009D9653 /* GoogleService-Info.plist in Resources */,
@@ -479,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				223D01541D7A0E910037D76C /* SpotifyLoginViewController.swift in Sources */,
+				2292F2CF1D8380AE006A8A62 /* FacebookUser.swift in Sources */,
 				224522871D6F7F1200F5F792 /* NetworkController.swift in Sources */,
 				224522801D6F70DB00F5F792 /* MusicSearchTableViewController.swift in Sources */,
 				22D84B0C1D7F809000F3E48F /* MainPageViewController.swift in Sources */,
@@ -488,7 +509,8 @@
 				226F2E6C1D7B73190012F479 /* FriendTableViewCell.swift in Sources */,
 				22AFF0AA1D6CEC8000121CC4 /* NewPlaylistViewController.swift in Sources */,
 				22D2F1071D7BB094009D9653 /* AppearanceController.swift in Sources */,
-				2226751A1D6E72B40052D475 /* FriendPlaylistsViewController.swift in Sources */,
+				2292F2D11D83B588006A8A62 /* FriendPlaylistsViewController.swift in Sources */,
+				227516051D84A475009DFE28 /* ProgressHUD.m in Sources */,
 				22456C751D6A4D6E001B7A9B /* HomeViewController.swift in Sources */,
 				22456C701D6A462A001B7A9B /* User.swift in Sources */,
 				22456C6E1D6A4620001B7A9B /* UserController.swift in Sources */,

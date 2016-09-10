@@ -83,7 +83,7 @@ class UserController {
     }
 }
 
-// MARK: - Facebook
+// MARK: - Facebook Extension
 
 extension UserController {
     
@@ -105,8 +105,8 @@ extension UserController {
     
     // Retrieve profile picture
     
-    func getCurrentUserProfilePicture(forUser user: User, completion: (profilePicture: UIImage?) -> Void) {
-        guard let url = NSURL(string: "https://graph.facebook.com/\(user.FBID)/picture?type=small") else {
+    func getProfilePictureForUserWithID(FBID: String, completion: (profilePicture: UIImage?) -> Void) {
+        guard let url = NSURL(string: "https://graph.facebook.com/\(FBID)/picture?type=large") else {
             completion(profilePicture: nil)
             return
         }
@@ -118,14 +118,6 @@ extension UserController {
             completion(profilePicture: image)
         }
     }
-    
-//    func getCurrentUserProfilePicture(forUser user: User, completion: () -> Void) {
-//        let facebookRequest = FBSDKGraphRequest(graphPath: "me/picture", parameters: [:], HTTPMethod: NetworkController.HTTPMethod.Get.rawValue)
-//        facebookRequest.startWithCompletionHandler { (connection, result, error) in
-//            print(result)
-//            completion()
-//        }
-//    }
     
     // Retrieve current Facebook User ID
     
@@ -142,11 +134,11 @@ extension UserController {
     
     // Retrieve Friends List
     
-    func getFriends(completion: (friends: [User]?, success: Bool) -> Void) {
+    func getFriends(completion: (friends: [FacebookUser]?, success: Bool) -> Void) {
         let request = FBSDKGraphRequest(graphPath: "me/friends", parameters: [:], HTTPMethod: "GET")
         request.startWithCompletionHandler { (connection, result, error) in
             if let data = result["data"] as? [[String: AnyObject]] {
-                let friends = data.flatMap { User(dictionary: $0) }
+                let friends = data.flatMap { FacebookUser(dictionary: $0) }
                 completion(friends: friends, success: true)
             } else {
                 completion(friends: nil, success: false)

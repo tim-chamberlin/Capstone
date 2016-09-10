@@ -160,9 +160,9 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 150
+            return nowPlayingTableViewCellHeight
         } else {
-            return 90
+            return trackTableViewCellHeight
         }
     }
     

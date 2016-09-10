@@ -11,12 +11,8 @@ import Foundation
 
 class TrackController {
     
-    // TODO: Do I need a singleton for this?
-//    static let sharedController = TrackController()
     static let spotifyBaseURL = NSURL(string: "https://api.spotify.com/v1")
     
-    
-
     static func searchSpotifyForItemWithText(text: String, responseLimit: Int, filterByType type: String, completion: (items: (trackNames: [String], artists: [String], ids: [String])?, success: Bool) -> Void) {
         let searchBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("search")
         guard let spotifySearchBaseURL = searchBaseURL else {
@@ -60,7 +56,6 @@ class TrackController {
         }
     }
 
-    
     static func fetchTrackInfo(forTrackWithID spotifyID: String, completion:(track: Track?) -> Void) {
         let trackBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("tracks").URLByAppendingPathComponent(spotifyID)
         guard let trackURL = trackBaseURL else {
@@ -79,16 +74,6 @@ class TrackController {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     // MARK: - Vote Listener Methods
     
@@ -128,7 +113,6 @@ class TrackController {
             //
         }
     }
-    
     
     static func user(user: User, didVoteWithType voteType: VoteType, withVoteStatus voteStatus: VoteType, onTrack track: Track, inPlaylist playlist: Playlist, ofPlaylistType playlistType: PlaylistType, completion: (success: Bool) -> Void) {
         // get track's current votecount
@@ -176,8 +160,6 @@ class TrackController {
             //
         }
     }
-    
-    
     
     // MARK: - Helper Functions
     
