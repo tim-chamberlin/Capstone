@@ -229,7 +229,8 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             }
         } else if !queue.upNext.isEmpty {
             
-            MusicStreamingController.skipToNextTrack(inQueue: queue, completion: { 
+            MusicStreamingController.skipToNextTrack(inQueue: queue, completion: {
+                PlaylistController.sharedController.setIsLive(true, forQueue: queue, completion: nil)
                 self.updatePlaybackUI()
             })
         } else if queue.upNext.isEmpty {

@@ -32,9 +32,6 @@ class MusicStreamingController {
             })
             return .Success
         }
-
-        
-
         
         rcc.nextTrackCommand.enabled = true
         rcc.nextTrackCommand.addTargetWithHandler { (event) -> MPRemoteCommandHandlerStatus in
@@ -109,9 +106,9 @@ class MusicStreamingController {
         spotifyPlayer.setIsPlaying(!spotifyPlayer.playbackState.isPlaying, callback: nil)
         
         if spotifyPlayer.playbackState.isPlaying {
-            PlaylistController.sharedController.setIsLive(true, forQueue: queue, completion: nil)
-        } else if !spotifyPlayer.playbackState.isPlaying {
             PlaylistController.sharedController.setIsLive(false, forQueue: queue, completion: nil)
+        } else if !spotifyPlayer.playbackState.isPlaying {
+            PlaylistController.sharedController.setIsLive(true, forQueue: queue, completion: nil)
         }
     }
     
@@ -139,6 +136,7 @@ class MusicStreamingController {
                         print(error.localizedDescription)
                     } else {
                         dispatch_async(dispatch_get_main_queue(), {
+                            PlaylistController.sharedController.setIsLive(false, forQueue: queue, completion: nil)
                             completion()
                         })
                     }

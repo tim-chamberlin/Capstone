@@ -36,7 +36,7 @@ class PlaylistController {
     
     func createPlaylist(forUser user: User, withName name: String, completion: (success: Bool, playlist: Playlist?) -> Void) {
         // Generate new uid in Playlists directory
-//        let key = firebaseRef.child(Playlist.parentDirectory).childByAutoId().key
+        //        let key = firebaseRef.child(Playlist.parentDirectory).childByAutoId().key
         let key = user.FBID
         let playlist = Playlist(uid: key, name: name)
         firebaseRef.child(Playlist.parentDirectory).child(key).setValue(playlist.jsonValue) { (error, _) in
@@ -132,11 +132,22 @@ class PlaylistController {
         })
     }
     
+    
+    func checkIfUserHasQueue(FBID: String, completion: (hasQueue: Bool) -> Void) {
+        firebaseRef.child(Playlist.parentDirectory).child(FBID).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            guard let _ = snapshot.value as? [String: AnyObject] else {
+                completion(hasQueue: false)
+                return
+            }
+            completion(hasQueue: true)
+        })
+    }
+    
     // MARK: - Add/Remove a track
     
     func setNowPlaying(track: Track?, forQueue queue: Playlist, completion: () -> Void) {
         if let track = track {
-            removeNowPlayingFromQueue(queue, completion: { 
+            removeNowPlayingFromQueue(queue, completion: {
                 firebaseRef.child(Playlist.parentDirectory).child(queue.uid).child(Playlist.kNowPlaying).child(track.firebaseUID).setValue(track.jsonValue, withCompletionBlock: { (error, _) in
                     if error == nil {
                         completion()
@@ -146,7 +157,7 @@ class PlaylistController {
                 })
             })
         } else { // Clear nowPlaying
-            removeNowPlayingFromQueue(queue, completion: { 
+            removeNowPlayingFromQueue(queue, completion: {
                 completion()
             })
         }
@@ -254,13 +265,13 @@ class PlaylistController {
     // MARK: - Remove All Playlist Observers
     
     func removeAllPlaylistObservers() {
-//        firebaseRef.child(Playlist.parentDirectory).remove
+        //        firebaseRef.child(Playlist.parentDirectory).remove
     }
     
     // MARK: - Remove All Observers From Firebase (called when app will terminate)
     
     func removeAllObserversFromFirebaseRef() {
-//        firebaseRef.removeAllObservers()
+        //        firebaseRef.removeAllObservers()
     }
     
     // MARK: - Other Observers
@@ -303,12 +314,12 @@ class PlaylistController {
         if let _ = oldNowPlaying, newNowPlaying = newNowPlaying { // Track is now playing and queue has at least one song in it
             // Remove track from nowPlaying, replace it with newNowPlaying, remove newNowPlaying from upNext array
             removeTrack(newNowPlaying, fromUpNextInQueue: queue, completion: { (error) in
-                self.setNowPlaying(newNowPlaying, forQueue: queue, completion: { 
+                self.setNowPlaying(newNowPlaying, forQueue: queue, completion: {
                     completion(newNowPlaying: newNowPlaying)
                 })
             })
         } else if let _ = oldNowPlaying { // No tracks in upNext
-            setNowPlaying(nil, forQueue: queue, completion: { 
+            setNowPlaying(nil, forQueue: queue, completion: {
                 completion(newNowPlaying: nil)
             })
         } else if let newNowPlaying = newNowPlaying { // No tracks in nowPlaying

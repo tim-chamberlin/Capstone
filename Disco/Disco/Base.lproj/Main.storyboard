@@ -128,7 +128,7 @@
             </objects>
             <point key="canvasLocation" x="2866" y="482"/>
         </scene>
-        <!--Friends using A-Side-->
+        <!--Friends' Queues-->
         <scene sceneID="Fcp-ly-x0n">
             <objects>
                 <tableViewController id="GMP-T9-Aga" customClass="FriendsListTableViewController" customModule="A_Side" customModuleProvider="target" sceneMemberID="viewController">
@@ -141,7 +141,7 @@
                             <outlet property="delegate" destination="GMP-T9-Aga" id="gVk-Ih-pWa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Friends using A-Side" id="5RR-9N-qN1">
+                    <navigationItem key="navigationItem" title="Friends' Queues" id="5RR-9N-qN1">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Osu-5r-ojA">
                             <connections>
                                 <action selector="cancelAction:" destination="GMP-T9-Aga" id="BVN-ee-1BV"/>
@@ -691,11 +691,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="526"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" textLabel="U51-DH-3kP" detailTextLabel="kBQ-Ld-kTO" style="IBUITableViewCellStyleSubtitle" id="Lw7-ZZ-TnH">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hostingPlaylistCell" textLabel="U51-DH-3kP" detailTextLabel="kBQ-Ld-kTO" style="IBUITableViewCellStyleSubtitle" id="Lw7-ZZ-TnH">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lw7-ZZ-TnH" id="RiN-OA-o59">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U51-DH-3kP">

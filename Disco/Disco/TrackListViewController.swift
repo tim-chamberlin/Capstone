@@ -195,7 +195,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
         track.playlistID = playlistID
         PlaylistController.sharedController.addTrack(track, toQueue: self.playlist!) { (success) in
             // Fetch playlist tracks and reload tableView
-            print("Update playlist with track: \(track.name)")
+            if success {
+                print("Update playlist with track: \(track.name)")
+                ProgressHUD.showSuccess("Track added")
+            } else {
+                ProgressHUD.showError("Error adding track to queue")
+            }
+            
         }
     }
     

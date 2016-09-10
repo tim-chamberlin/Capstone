@@ -103,8 +103,20 @@ class HomeViewController: UIViewController, UIPageViewControllerDelegate {
             
             UserController.sharedController.getFriends { (friends, success) in
                 if let friends = friends {
-                    // Sort alphabetically
-                    friendListVC.friends = friends.sort { $0.name < $1.name }
+                    var counter = 0
+                    var friendsWithQueues = [FacebookUser]()
+                    for friend in friends {
+                        PlaylistController.sharedController.checkIfUserHasQueue(friend.fbid, completion: { (hasQueue) in
+                            if hasQueue {
+                                friendsWithQueues.append(friend)
+                            }
+                            counter += 1
+                            if counter == friends.count {
+                                // Sort alphabetically
+                                friendListVC.friends = friendsWithQueues.sort { $0.name < $1.name }
+                            }
+                        })
+                    }
                 }
             }
         }
