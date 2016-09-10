@@ -333,6 +333,11 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OPL-nz-gli">
                                         <rect key="frame" x="0.0" y="536" width="600" height="64"/>
                                         <subviews>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="pnx-ad-ewM">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="3"/>
+                                                <color key="progressTintColor" red="0.96078431372549022" green="0.95686274509803915" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="trackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </progressView>
                                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcZ-wa-C10">
                                                 <rect key="frame" x="12" y="10" width="44" height="44"/>
                                                 <constraints>
@@ -412,7 +417,10 @@
                                             <constraint firstItem="by2-DW-HCa" firstAttribute="top" secondItem="OPL-nz-gli" secondAttribute="top" id="5qk-Es-FKh"/>
                                             <constraint firstItem="TcZ-wa-C10" firstAttribute="leading" secondItem="OPL-nz-gli" secondAttribute="leading" constant="12" id="Ang-Pd-nTb"/>
                                             <constraint firstItem="by2-DW-HCa" firstAttribute="width" secondItem="OR7-k8-gqq" secondAttribute="width" id="Cgu-xu-pzv"/>
+                                            <constraint firstItem="pnx-ad-ewM" firstAttribute="leading" secondItem="OPL-nz-gli" secondAttribute="leading" id="DeR-XB-eD2"/>
                                             <constraint firstAttribute="height" constant="64" id="Jng-9b-cBV"/>
+                                            <constraint firstItem="pnx-ad-ewM" firstAttribute="top" secondItem="OPL-nz-gli" secondAttribute="top" id="Laq-GO-ccN"/>
+                                            <constraint firstAttribute="trailing" secondItem="pnx-ad-ewM" secondAttribute="trailing" id="WMO-7g-hyt"/>
                                             <constraint firstItem="OR7-k8-gqq" firstAttribute="leading" relation="lessThanOrEqual" secondItem="d2q-PB-G3m" secondAttribute="trailing" priority="1" constant="20" id="WaW-fo-E2u"/>
                                             <constraint firstItem="TcZ-wa-C10" firstAttribute="centerY" secondItem="OPL-nz-gli" secondAttribute="centerY" id="WjG-tD-IV9"/>
                                             <constraint firstAttribute="trailing" secondItem="OR7-k8-gqq" secondAttribute="trailing" constant="8" id="Ws5-QV-Hou"/>
@@ -468,6 +476,7 @@
                         <outlet property="spotifyProfilePictureImageView" destination="hny-Hw-s47" id="T2w-T7-ANm"/>
                         <outlet property="spotifyUserName" destination="za2-xS-7dn" id="tGR-Ah-qrJ"/>
                         <outlet property="tableView" destination="LSm-eL-tfw" id="2Sl-un-zte"/>
+                        <outlet property="trackProgressView" destination="pnx-ad-ewM" id="71v-Ca-Qqa"/>
                         <segue destination="6EG-UC-9mR" kind="popoverPresentation" identifier="showLogoutPopover" popoverAnchorView="by2-DW-HCa" id="wAw-HO-GdM">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
@@ -795,6 +804,6 @@
         <image name="UserIcon" width="38" height="38"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PXL-jV-rCT"/>
+        <segue reference="bBl-I3-GmA"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -18,6 +18,7 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBOutlet weak var spotifyProfilePictureImageView: UIImageView!
     @IBOutlet weak var spotifyUserName: UILabel!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var trackProgressView: UIProgressView!
     @IBOutlet weak var playbackControlsView: UIView!
     @IBOutlet weak var spotifyLoginContainer: UIView!
     
@@ -176,6 +177,9 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     }
     
     func audioStreaming(audioStreaming: SPTAudioStreamingController!, didChangePosition position: NSTimeInterval) {
+        
+        trackProgressView.progress = Float(position/(spotifyPlayer.metadata.currentTrack?.duration)!)
+        
         if (((audioStreaming.metadata.currentTrack?.duration)! - position) < 0.75) {
             // Queue next song
             print("\(playlist?.nowPlaying?.name) ended")
