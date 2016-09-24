@@ -57,7 +57,7 @@ class TrackController {
     }
 
     static func fetchTrackInfo(forTrackWithID spotifyID: String, completion:(track: Track?) -> Void) {
-        let trackBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("tracks").URLByAppendingPathComponent(spotifyID)
+        let trackBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("tracks")!.URLByAppendingPathComponent(spotifyID)
         guard let trackURL = trackBaseURL else {
             print("Optional URL return nil")
             completion(track: nil)
