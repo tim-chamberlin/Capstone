@@ -47,7 +47,7 @@ class MusicStreamingController {
         
         var trackInfo = [String: AnyObject]()
         
-        trackInfo = [MPMediaItemPropertyTitle:track.name, MPMediaItemPropertyArtist:track.artist]
+        trackInfo = [MPMediaItemPropertyTitle:track.name, MPMediaItemPropertyArtist:track.artist, MPNowPlayingInfoPropertyElapsedPlaybackTime: spotifyPlayer.playbackState.position]
         
         // Check for artwork
         if let artwork = track.artwork {
