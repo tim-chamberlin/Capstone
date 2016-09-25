@@ -30,27 +30,21 @@ class TrackController {
             if let data = data, jsonDictionary = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
                 dispatch_async(dispatch_get_main_queue(), {
                     
-                    guard let tracksDictionary = jsonDictionary["tracks"] as? [String: AnyObject], itemsDictionary = tracksDictionary["items"] as? [[String : AnyObject]] else {
+                    guard let tracksDictionary = jsonDictionary["\(type)s"] as? [String: AnyObject], itemsDictionary = tracksDictionary["items"] as? [[String : AnyObject]] else {
                         print("Error formatting data")
                         completion(items: nil, success: false)
                         return
                     }
                     
-                    let names = itemsDictionary.flatMap { $0["name"] as? String }
-                    let ids = itemsDictionary.flatMap { $0["id"] as? String }
-                    
-                    let artists = itemsDictionary.flatMap { $0["artists"] as? [[String: AnyObject]] }
-                    var artistsGroupedByTrack = [String]()
-                    for artistDictionaryArray in artists {
-                        var trackArtists = [String]()
-                        for artistDictionary in artistDictionaryArray {
-                            let artistName = artistDictionary["name"] as! String
-                            trackArtists.append(artistName)
-                        }
-                        let trackArtistsString = trackArtists.joinWithSeparator(", ")
-                        artistsGroupedByTrack.append(trackArtistsString)
+                    switch type {
+                    case "track":
+                        let parsedTrackJSON = TrackController.formatJsonForTrackSearch(itemsDictionary)
+                        completion(items: parsedTrackJSON, success: true)
+                    case "playlist":
+                        break
+                    default:
+                        completion(items: nil, success: false)
                     }
-                    completion(items: (names, artistsGroupedByTrack, ids), success: true)
                 })
             }
         }
@@ -168,5 +162,30 @@ class TrackController {
             return a.voteCount > b.voteCount
         }
         return sortedTracks
+    }
+    
+    static func formatJsonForTrackSearch(dictionary: [[String: AnyObject]]) -> (trackNames: [String], artists: [String], ids: [String])? {
+        
+        let trackNames = dictionary.flatMap { $0["name"] as? String }
+        let ids = dictionary.flatMap { $0["id"] as? String }
+        
+        let artists = dictionary.flatMap { $0["artists"] as? [[String: AnyObject]] }
+        var artistsGroupedByTrack = [String]()
+        for artistDictionaryArray in artists {
+            var trackArtists = [String]()
+            for artistDictionary in artistDictionaryArray {
+                let artistName = artistDictionary["name"] as! String
+                trackArtists.append(artistName)
+            }
+            let trackArtistsString = trackArtists.joinWithSeparator(", ")
+            artistsGroupedByTrack.append(trackArtistsString)
+        }
+        return (trackNames, artistsGroupedByTrack, ids)
+    }
+    
+    
+    
+    static func formatJsonForPlaylistSearch() {
+        
     }
 }

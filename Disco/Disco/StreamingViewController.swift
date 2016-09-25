@@ -267,7 +267,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             if success {
                 guard let playlist = playlist, currentUser = UserController.sharedController.currentUser else { return }
                 PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
-                    print("New queue created")
                     self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
                 })
             }

@@ -189,7 +189,7 @@ extension UserController {
         SPTAuth.defaultInstance().redirectURL = UserController.spotifyRedirectURL
 //        SPTAuth.defaultInstance().tokenRefreshURL = UserController.spotifyRefreshServiceURL
 //        SPTAuth.defaultInstance().tokenSwapURL = UserController.spotifySwapServiceURL
-        SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope]
+        SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope]
         SPTAuth.defaultInstance().sessionUserDefaultsKey = currentUser.FBID
         SPTAuth.defaultInstance().allowNativeLogin = true
     }

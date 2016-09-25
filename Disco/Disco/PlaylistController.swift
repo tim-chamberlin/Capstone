@@ -62,6 +62,14 @@ class PlaylistController {
     
     // MARK: - Fetch Playlist
     
+    func getSpotifyPlaylistList(completion: (playlists: [[Track]]) -> Void) {
+        SPTPlaylistList.playlistsForUserWithSession(SPTAuth.defaultInstance().session) { (error, playlistList) in
+//            guard let playlistList = playlistList as? SPTPlaylistList else { return }
+            print(playlistList)
+            
+        }
+    }
+    
     func observeHostedPlaylistForUser(user: User, completion:(playlist: Playlist?, success: Bool) -> Void) {
         firebaseRef.child(User.parentDirectory).child(user.FBID).child(PlaylistType.Hosting.rawValue).observeEventType(.Value, withBlock: { (snapshot) in
             guard let playlistDictionary = snapshot.value as? [String: AnyObject] else {
@@ -357,7 +365,4 @@ class PlaylistController {
     func removeContributor(user: User, fromPlaylist playlist: Playlist, completion:(success: Bool) -> Void) {
         
     }
-    
-    
 }
-
