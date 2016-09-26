@@ -125,7 +125,6 @@ class MusicSearchTableViewController: UITableViewController, UISearchBarDelegate
                 }
             }
         }
-        
     }
     
     @IBAction func cancelAction(sender: AnyObject) {

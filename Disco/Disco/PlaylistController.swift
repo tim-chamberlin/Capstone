@@ -62,12 +62,6 @@ class PlaylistController {
     
     // MARK: - Fetch Playlist
     
-    
-    
-    
-    
-    
-    
     func getSpotifyPlaylistList(completion: (partialPlaylists: [SPTPartialPlaylist]?) -> Void) {
         SPTPlaylistList.playlistsForUserWithSession(SPTAuth.defaultInstance().session) { (error, playlistsPage) in
             if error != nil {
@@ -81,53 +75,49 @@ class PlaylistController {
                 completion(partialPlaylists: nil)
                 return
             }
-            self.getFullPlaylistPage(playlistsPage, completion: { (partialPlaylists) in
-                guard let partialPlaylists = partialPlaylists else { return }
+            self.getFullSpotifyList(playlistsPage, completion: { (partialItems) in
+                guard let partialPlaylists = partialItems as? [SPTPartialPlaylist] else { return }
                 completion(partialPlaylists: partialPlaylists)
             })
         }
     }
     
-    // Puts all playlists on single page
-    func getFullPlaylistPage(listPage: SPTListPage, completion: (partialPlaylists: [SPTPartialPlaylist]?) -> Void) {
+    // Puts all items on single page
+    func getFullSpotifyList(listPage: SPTListPage, completion: (partialItems: [AnyObject]?) -> Void) {
         var fullPage = listPage
         if fullPage.hasNextPage {
-            listPage.requestNextPageWithSession(SPTAuth.defaultInstance().session, callback: { (error, playlistPage) in
+            listPage.requestNextPageWithSession(SPTAuth.defaultInstance().session, callback: { (error, page) in
                 if error != nil {
                     print("Error while fetching next page of user's Spotify playlists")
                     return
                 }
-                guard let playlistPage = playlistPage as? SPTListPage else {
+                guard let page = page as? SPTListPage else {
                     return
                 }
-                fullPage = fullPage.pageByAppendingPage(playlistPage)
+                fullPage = fullPage.pageByAppendingPage(page)
                 
-                self.getFullPlaylistPage(fullPage, completion: completion)
+                self.getFullSpotifyList(fullPage, completion: completion)
             })
         } else {
-            var partialPlaylists = [SPTPartialPlaylist]()
+            var partialItems = [AnyObject]()
             for item in fullPage.items {
-                guard let item = item as? SPTPartialPlaylist else {
-                    continue
-                }
-                partialPlaylists.append(item)
+                partialItems.append(item)
             }
-            completion(partialPlaylists: partialPlaylists)
+            completion(partialItems: partialItems)
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    func getSpotifyPlaylistTracks(playlistURI: NSURL, completion: (tracks: [SPTPartialTrack]) -> Void) {
+        SPTPlaylistSnapshot.playlistWithURI(playlistURI, session: SPTAuth.defaultInstance().session) { (error, playlist) in
+            if let playlist = playlist as? SPTPlaylistSnapshot {
+                let firstTracksPage = playlist.firstTrackPage
+                self.getFullSpotifyList(firstTracksPage, completion: { (partialItems) in
+                    guard let partialTracks = partialItems as? [SPTPartialTrack] else { return }
+                    completion(tracks: partialTracks)
+                })
+            }
+        }
+    }
     
     
     

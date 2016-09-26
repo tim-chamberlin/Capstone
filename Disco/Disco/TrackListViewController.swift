@@ -74,12 +74,13 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
                     TrackController.getVoteStatusForTrackWithID(track.firebaseUID, inPlaylistWithID: queue.uid, ofType: playlistType, user: currentUser, completion: { [weak self] (voteStatus, success) in
                         if success {
                             track.currentUserVoteStatus = voteStatus
-                            self?.updateTableViewWithQueueData()
+                            self?.updateTrackCell(withTrack: track)
                         }
                     })
                     TrackController.attachVoteListener(forTrack: track, inPlaylist: queue, completion: { [weak self] (newVoteCount, success) in
                         track.voteCount = newVoteCount
-                        self?.updateTableViewWithQueueData()
+//                        self?.updateTableViewWithQueueData()
+                        self?.updateTrackCell(withTrack: track)
                     })
                 } else { // Track removed
                     queue.upNext = queue.upNext.filter { $0 != track }
@@ -103,8 +104,31 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     func updateTableViewWithQueueData() {
         guard let queue = playlist else { return }
         queue.upNext = TrackController.sortTracklistByVoteCount(queue.upNext)
+        
         tableView.reloadData()
+        
         setupViewForEmptyQueue()
+    }
+    
+    func updateTrackCell(withTrack track: Track) {
+        tableView.beginUpdates()
+        guard let trackIndex = playlist?.upNext.indexOf(track) else { return }
+        let indexPath = NSIndexPath(forRow: trackIndex, inSection: 1)
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        tableView.endUpdates()
+    }
+    
+    func insertCell(atIndexPath indexPath: NSIndexPath) {
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Bottom)
+        tableView.endUpdates()
+    }
+    
+    func cellDidMove(fromIndexPath indexPath1: NSIndexPath, toIndexPath indexPath2: NSIndexPath) {
+        tableView.beginUpdates()
+        tableView.deleteRowsAtIndexPaths([indexPath1], withRowAnimation: UITableViewRowAnimation.Bottom)
+        tableView.insertRowsAtIndexPaths([indexPath2], withRowAnimation: UITableViewRowAnimation.Bottom)
+        tableView.endUpdates()
     }
     
     func setupViewForEmptyQueue() {
@@ -191,9 +215,9 @@ class TrackListViewController: UIViewController, UITableViewDelegate, UITableVie
     func willAddTrackToPlaylist(track: Track) {
         musicSearchController?.active = false
         musicSearchController?.searchBar.text = ""
-        guard let playlistID = playlist?.uid else { return }
+        guard let playlistID = playlist?.uid, playlist = playlist else { return }
         track.playlistID = playlistID
-        PlaylistController.sharedController.addTrack(track, toQueue: self.playlist!) { (success) in
+        PlaylistController.sharedController.addTrack(track, toQueue: playlist) { (success) in
             // Fetch playlist tracks and reload tableView
             if success {
                 print("Update playlist with track: \(track.name)")

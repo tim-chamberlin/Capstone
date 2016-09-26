@@ -35,8 +35,8 @@ class MusicStreamingController {
         
         rcc.nextTrackCommand.enabled = true
         rcc.nextTrackCommand.addTargetWithHandler { (event) -> MPRemoteCommandHandlerStatus in
-            MusicStreamingController.skipToNextTrack(inQueue: queue, completion: { 
-                //
+            MusicStreamingController.skipToNextTrack(inQueue: queue, completion: {
+                
             })
             return .Success
         }
@@ -52,21 +52,24 @@ class MusicStreamingController {
         
         trackInfo = [MPMediaItemPropertyTitle:track.name, MPMediaItemPropertyArtist:track.artist, MPNowPlayingInfoPropertyElapsedPlaybackTime: spotifyPlayer.playbackState.position]
         
+        // Check for duration
+        if let trackDuration = spotifyPlayer.metadata.currentTrack?.duration {
+            trackInfo[MPMediaItemPropertyPlaybackDuration] = trackDuration
+        }
+        
         // Check for artwork
         if let artwork = track.artwork {
             let mediaArtworkImage = MPMediaItemArtwork(image: artwork)
             trackInfo[MPMediaItemPropertyArtwork] = mediaArtworkImage
         }
         
-        // Check for duration
-        if let trackDuration = spotifyPlayer.metadata.currentTrack?.duration {
-            trackInfo[MPMediaItemPropertyPlaybackDuration] = trackDuration
-        }
+        // TODO: Fix asynchronous track artwork bug
         
         MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = trackInfo
     }
     
     static func clearMPNowPlayingInfoCenter() {
+        
         MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = nil
     }
     
@@ -130,6 +133,7 @@ class MusicStreamingController {
                     if error == nil {
                         print("Started playing \(newNowPlaying?.name)")
                         dispatch_async(dispatch_get_main_queue(), {
+                            MusicStreamingController.setMPNowPlayingInfoCenterForTrack(newNowPlaying)
                             completion()
                         })
                     }
@@ -145,6 +149,7 @@ class MusicStreamingController {
                     } else {
                         dispatch_async(dispatch_get_main_queue(), {
                             PlaylistController.sharedController.setIsLive(false, forQueue: queue, completion: nil)
+                            MusicStreamingController.clearMPNowPlayingInfoCenter()
                             completion()
                         })
                     }

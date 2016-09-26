@@ -50,6 +50,7 @@ class TrackController {
         }
     }
 
+    // Initialize one track
     static func fetchTrackInfo(forTrackWithID spotifyID: String, completion:(track: Track?) -> Void) {
         let trackBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("tracks")!.URLByAppendingPathComponent(spotifyID)
         guard let trackURL = trackBaseURL else {
@@ -65,6 +66,35 @@ class TrackController {
             } else {
                 print("Error serializing JSON")
                 completion(track: nil)
+            }
+        }
+    }
+    
+    // Initialize multiple tracks
+    static func fetchInfo(forTracksWithIDs spotifyIDs: [String], completion:(tracks: [Track]?) -> Void) {
+        var counter = 0
+        var tracks = [Track]()
+        for spotifyID in spotifyIDs {
+            
+            let trackBaseURL = spotifyBaseURL?.URLByAppendingPathComponent("tracks")!.URLByAppendingPathComponent(spotifyID)
+            guard let trackURL = trackBaseURL else {
+                print("Optional URL returned nil")
+                continue
+            }
+            
+            NetworkController.performRequestForURL(trackURL, httpMethod: NetworkController.HTTPMethod.Get) { (data, error) in
+                if let data = data, jsonDictionary = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+                    guard let track = Track(spotifyDictionary: jsonDictionary) else { return }
+                    counter += 1
+                    tracks.append(track)
+                    
+                    if counter == spotifyIDs.count {
+                        completion(tracks: tracks)
+                    }
+                } else {
+                    print("Error serializing JSON")
+                    return
+                }
             }
         }
     }

@@ -300,7 +300,7 @@
                                                                 <constraint firstAttribute="height" constant="34" id="VOh-dq-TL6"/>
                                                                 <constraint firstAttribute="width" secondItem="8wi-1s-Ma3" secondAttribute="height" multiplier="13:2" id="iw2-2E-28J"/>
                                                             </constraints>
-                                                            <state key="normal" image="AddTrackGold"/>
+                                                            <state key="normal" image="AddTrackButtonGold"/>
                                                             <connections>
                                                                 <segue destination="NWX-rI-oWL" kind="presentation" identifier="addTrackToPlaylistSegue" id="bBl-I3-GmA"/>
                                                             </connections>
@@ -792,7 +792,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7FP-T2-VRM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3892" y="1191"/>
+            <point key="canvasLocation" x="3893" y="1253"/>
         </scene>
         <!--Playlist Search Table View Controller-->
         <scene sceneID="bkk-Lm-N7m">
@@ -845,7 +845,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AddTrackGold" width="286" height="44"/>
+        <image name="AddTrackButtonGold" width="286" height="44"/>
         <image name="ContributeToQueueButtonGold" width="286" height="44"/>
         <image name="Login With Spotify Button" width="286" height="50"/>
         <image name="Next" width="40" height="40"/>
@@ -855,6 +855,6 @@
         <image name="UserIcon" width="38" height="38"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bBl-I3-GmA"/>
+        <segue reference="PXL-jV-rCT"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -195,6 +195,9 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             guard let playlist = playlist else { return }
             MusicStreamingController.skipToNextTrack(inQueue: playlist, completion: {
                 // update ui
+                if playlist.upNext.isEmpty {
+                    self.trackProgressView.progress = 0.0
+                }
             })
         }
     }
@@ -254,7 +257,9 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     @IBAction func nextButtonTapped(sender: AnyObject) {
         guard let queue = playlist else { return }
         MusicStreamingController.skipToNextTrack(inQueue: queue) { 
-            //
+            if queue.upNext.isEmpty {
+                self.trackProgressView.progress = 0.0
+            }
         }
     }
     

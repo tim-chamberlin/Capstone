@@ -9,7 +9,7 @@
 import UIKit
 
 class PlaylistSearchTableViewController: UITableViewController {
-
+    
     var playlistNames: [String] = [] {
         didSet {
             self.tableView.reloadData()
@@ -63,7 +63,6 @@ class PlaylistSearchTableViewController: UITableViewController {
         return cell
     }
     
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
         selectedPlaylistIndexPath = indexPath
@@ -84,11 +83,27 @@ class PlaylistSearchTableViewController: UITableViewController {
     
     @IBAction func doneAction(sender: AnyObject) {
         if let selectedPlaylistURI = selectedPlaylistURI {
-            
+            PlaylistController.sharedController.getSpotifyPlaylistTracks(selectedPlaylistURI, completion: { (tracks) in
+                var trackIDs = [String]()
+                for track in tracks {
+                    trackIDs.append(track.identifier)
+                }
+                TrackController.fetchInfo(forTracksWithIDs: trackIDs, completion: { (tracks) in
+                    guard let tracks = tracks, currentUserQueue = PlaylistController.sharedController.hostedPlaylist else { return }
+                    var counter = 0
+                    for track in tracks {
+                        counter += 1
+                        PlaylistController.sharedController.addTrack(track, toQueue: currentUserQueue, completion: { (success) in
+                            if counter == tracks.count {
+                                self.dismissViewControllerAnimated(true, completion: {
+                                    ProgressHUD.showSuccess("Added tracks to queue")
+                                })
+                            }
+                        })
+                    }
+                })
+            })
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
-
 }
+
