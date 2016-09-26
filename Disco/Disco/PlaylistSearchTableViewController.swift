@@ -8,39 +8,35 @@
 
 import UIKit
 
-class PlaylistSearchTableViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating {
+class PlaylistSearchTableViewController: UITableViewController {
 
-    var playlists: [String] = []
+    var playlistNames: [String] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
-    var musicSearchController: UISearchController?
-    var selectedTrackIndexPath: NSIndexPath?
+    var playlistTrackCounts: [UInt] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
+    var playlistURIs: [NSURL] = []
+    
+    var selectedPlaylistIndexPath: NSIndexPath?
+    var selectedPlaylistURI: NSURL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSearchController()
         
-        PlaylistController.sharedController.getSpotifyPlaylistList { (playlists) in
-            //
-        }
-    }
-
-    func setupSearchController() {
-        musicSearchController = UISearchController(searchResultsController: nil)
-        guard let searchController = musicSearchController else { return }
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search for a playlist on Spotify..."
-        searchController.definesPresentationContext = true
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.barTintColor = UIColor.lightCharcoalColor()
-        searchController.searchBar.delegate = self
-        tableView.tableHeaderView = searchController.searchBar
-    }
-
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if let text = searchController.searchBar.text {
-            
+        PlaylistController.sharedController.getSpotifyPlaylistList { (partialPlaylists) in
+            dispatch_async(dispatch_get_main_queue(), {
+                guard let partialPlaylists = partialPlaylists else { return }
+                self.playlistNames = partialPlaylists.flatMap { $0.name }
+                self.playlistTrackCounts = partialPlaylists.flatMap { $0.trackCount }
+                self.playlistURIs = partialPlaylists.flatMap { $0.uri }
+            })
         }
     }
     
@@ -48,14 +44,36 @@ class PlaylistSearchTableViewController: UITableViewController, UISearchBarDeleg
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return playlistNames.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("playlistCell", forIndexPath: indexPath)
+        cell.selectionStyle = .None
+        if indexPath == selectedPlaylistIndexPath {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
+        }
+        
+        let playlistName = playlistNames[indexPath.row]
+        let trackCount = playlistTrackCounts[indexPath.row]
+        cell.textLabel?.text = "\(playlistName) - \(String(trackCount)) tracks"
         
         return cell
+    }
+    
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+        selectedPlaylistIndexPath = indexPath
+        selectedPlaylistURI = playlistURIs[indexPath.row]
+        cell.accessoryType = .Checkmark
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+        cell.accessoryType = .None
     }
     
     // MARK: - IBActions
@@ -65,7 +83,10 @@ class PlaylistSearchTableViewController: UITableViewController, UISearchBarDeleg
     }
     
     @IBAction func doneAction(sender: AnyObject) {
-        
+        if let selectedPlaylistURI = selectedPlaylistURI {
+            
+        }
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
