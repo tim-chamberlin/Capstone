@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, UIPopoverPresentationControllerDelegate, SpotifyLogoutDelegate {
     
@@ -25,10 +26,14 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
     override func viewDidLoad() {
         UserController.sharedController.checkSpotifyUserAuth { (loggedIn, session) in
             if loggedIn {
-                self.setupViewWithSpotifySession(session)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.setupViewWithSpotifySession(session)
+                })
             } else {
-                print("Spotify user doesn't have a session")
-                self.setupSpotifyAuthView()
+                dispatch_async(dispatch_get_main_queue(), {
+                    print("Spotify user doesn't have a session")
+                    self.setupSpotifyAuthView()
+                })
             }
         }
         didSetHostedPlaylist()
@@ -37,6 +42,8 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
         registerCustomCells()
         spotifyPlayer.delegate = self
         spotifyPlayer.playbackDelegate = self
+        
+        spotifyProfilePictureImageView.backgroundColor = UIColor.blueColor()
         
     }
     
@@ -90,18 +97,20 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             setupViewForEmptyQueue()
             UserController.sharedController.getCurrentSpotifyUserData(session) { (spotifyUser, success) in
                 if success {
-                    guard let spotifyUser = spotifyUser else { return }
-                    let nameToDisplay = spotifyUser.displayName ?? spotifyUser.canonicalUserName
-                    self.spotifyUserName.text = nameToDisplay
-
-                    // Retrieve image if it exists
-                    if let imageURL = spotifyUser.imageURL {
-                        ImageController.getImageFromURLWithResponse(imageURL, completion: { (image, response, error) in
-                            guard let image = image else { return }
-                            self.spotifyProfilePictureImageView.image = image
-                            
-                        })
-                    }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        guard let spotifyUser = spotifyUser else { return }
+                        let nameToDisplay = spotifyUser.displayName ?? spotifyUser.canonicalUserName
+                        self.spotifyUserName.text = nameToDisplay
+                        
+                        // Retrieve image if it exists
+                        if let imageURL = spotifyUser.imageURL {
+                            ImageController.getImageFromURLWithResponse(imageURL, completion: { (image, response, error) in
+                                guard let image = image else { return }
+                                self.spotifyProfilePictureImageView.image = image
+                                
+                            })
+                        }
+                    })
                 }
             }
         }
@@ -258,7 +267,6 @@ class StreamingViewController: TrackListViewController, SPTAudioStreamingDelegat
             if success {
                 guard let playlist = playlist, currentUser = UserController.sharedController.currentUser else { return }
                 PlaylistController.sharedController.createPlaylistReferenceForUserID(playlist, userID: currentUser.FBID, playlistType: .Hosting, completion: { (success) in
-                    print("New queue created")
                     self.performSegueWithIdentifier("addTrackToPlaylistSegue", sender: self)
                 })
             }

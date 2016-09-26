@@ -62,6 +62,75 @@ class PlaylistController {
     
     // MARK: - Fetch Playlist
     
+    
+    
+    
+    
+    
+    
+    func getSpotifyPlaylistList(completion: (partialPlaylists: [SPTPartialPlaylist]?) -> Void) {
+        SPTPlaylistList.playlistsForUserWithSession(SPTAuth.defaultInstance().session) { (error, playlistsPage) in
+            if error != nil {
+                print("Error while fetching current user's Spotify playlists")
+                completion(partialPlaylists: nil)
+                return
+            }
+            guard let playlistsPage = playlistsPage as? SPTListPage else {
+                print("No playlists found for the current user")
+                // TODO: Handle this case
+                completion(partialPlaylists: nil)
+                return
+            }
+            self.getFullPlaylistPage(playlistsPage, completion: { (partialPlaylists) in
+                guard let partialPlaylists = partialPlaylists else { return }
+                completion(partialPlaylists: partialPlaylists)
+            })
+        }
+    }
+    
+    // Puts all playlists on single page
+    func getFullPlaylistPage(listPage: SPTListPage, completion: (partialPlaylists: [SPTPartialPlaylist]?) -> Void) {
+        var fullPage = listPage
+        if fullPage.hasNextPage {
+            listPage.requestNextPageWithSession(SPTAuth.defaultInstance().session, callback: { (error, playlistPage) in
+                if error != nil {
+                    print("Error while fetching next page of user's Spotify playlists")
+                    return
+                }
+                guard let playlistPage = playlistPage as? SPTListPage else {
+                    return
+                }
+                fullPage = fullPage.pageByAppendingPage(playlistPage)
+                
+                self.getFullPlaylistPage(fullPage, completion: completion)
+            })
+        } else {
+            var partialPlaylists = [SPTPartialPlaylist]()
+            for item in fullPage.items {
+                guard let item = item as? SPTPartialPlaylist else {
+                    continue
+                }
+                partialPlaylists.append(item)
+            }
+            completion(partialPlaylists: partialPlaylists)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func observeHostedPlaylistForUser(user: User, completion:(playlist: Playlist?, success: Bool) -> Void) {
         firebaseRef.child(User.parentDirectory).child(user.FBID).child(PlaylistType.Hosting.rawValue).observeEventType(.Value, withBlock: { (snapshot) in
             guard let playlistDictionary = snapshot.value as? [String: AnyObject] else {
@@ -357,7 +426,4 @@ class PlaylistController {
     func removeContributor(user: User, fromPlaylist playlist: Playlist, completion:(success: Bool) -> Void) {
         
     }
-    
-    
 }
-

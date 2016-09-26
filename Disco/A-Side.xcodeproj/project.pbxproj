@@ -36,6 +36,7 @@
 		226F2E6D1D7B73190012F479 /* FriendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 226F2E6B1D7B73190012F479 /* FriendTableViewCell.xib */; };
 		227516041D84A475009DFE28 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 227516011D84A475009DFE28 /* ProgressHUD.bundle */; };
 		227516051D84A475009DFE28 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 227516031D84A475009DFE28 /* ProgressHUD.m */; };
+		2280D2D01D9734D000D9F3B5 /* PlaylistSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280D2CF1D9734D000D9F3B5 /* PlaylistSearchTableViewController.swift */; };
 		228381F71D6BDC0F00D78B53 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F61D6BDC0F00D78B53 /* AVFoundation.framework */; };
 		228381F91D6BDC1C00D78B53 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */; };
 		228382031D6BE11F00D78B53 /* ContributingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228382021D6BE11F00D78B53 /* ContributingViewController.swift */; };
@@ -100,6 +101,7 @@
 		227516011D84A475009DFE28 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		227516021D84A475009DFE28 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		227516031D84A475009DFE28 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		2280D2CF1D9734D000D9F3B5 /* PlaylistSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistSearchTableViewController.swift; sourceTree = "<group>"; };
 		228381F61D6BDC0F00D78B53 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		228381F81D6BDC1C00D78B53 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		228381FC1D6BDCE300D78B53 /* Disco-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Disco-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -198,12 +200,13 @@
 			name = "Contribute to playlist VCs";
 			sourceTree = "<group>";
 		};
-		224522851D6F7A8700F5F792 /* Track Search */ = {
+		224522851D6F7A8700F5F792 /* Spotify Search */ = {
 			isa = PBXGroup;
 			children = (
 				2245227F1D6F70DB00F5F792 /* MusicSearchTableViewController.swift */,
+				2280D2CF1D9734D000D9F3B5 /* PlaylistSearchTableViewController.swift */,
 			);
-			name = "Track Search";
+			name = "Spotify Search";
 			sourceTree = "<group>";
 		};
 		22456C441D6A3C32001B7A9B = {
@@ -285,7 +288,7 @@
 				224522791D6F647800F5F792 /* TrackListViewController.swift */,
 				224522811D6F70F300F5F792 /* Home VCs */,
 				224522821D6F7A4600F5F792 /* Contribute to playlist VCs */,
-				224522851D6F7A8700F5F792 /* Track Search */,
+				224522851D6F7A8700F5F792 /* Spotify Search */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -382,12 +385,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Tim Chamberlin";
 				TargetAttributes = {
 					22456C4C1D6A3C32001B7A9B = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = EFTGDDK4SN;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -396,6 +400,7 @@
 					};
 					22A6F9A61D81FE1F006D2C94 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 22456C4C1D6A3C32001B7A9B;
 					};
 				};
@@ -527,6 +532,7 @@
 				22AFF0A81D6CE5B600121CC4 /* PlaylistController.swift in Sources */,
 				22456C511D6A3C32001B7A9B /* AppDelegate.swift in Sources */,
 				22456C7A1D6A8B5D001B7A9B /* FriendsListTableViewController.swift in Sources */,
+				2280D2D01D9734D000D9F3B5 /* PlaylistSearchTableViewController.swift in Sources */,
 				223D015A1D7A609C0037D76C /* ImageController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,8 +597,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -637,8 +645,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -657,6 +667,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -683,6 +694,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Disco/Disco-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -707,6 +719,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Disco/Disco-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -720,6 +733,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tim-chamberlin.A-SideTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/A-Side.app/A-Side";
 			};
 			name = Debug;
@@ -733,6 +747,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tim-chamberlin.A-SideTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/A-Side.app/A-Side";
 			};
 			name = Release;

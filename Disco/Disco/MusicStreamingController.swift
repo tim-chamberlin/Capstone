@@ -43,11 +43,14 @@ class MusicStreamingController {
     }
     
     static func setMPNowPlayingInfoCenterForTrack(track: Track?) {
-        guard let track = track else { return }
+        guard let track = track else {
+            clearMPNowPlayingInfoCenter()
+            return
+        }
         
         var trackInfo = [String: AnyObject]()
         
-        trackInfo = [MPMediaItemPropertyTitle:track.name, MPMediaItemPropertyArtist:track.artist]
+        trackInfo = [MPMediaItemPropertyTitle:track.name, MPMediaItemPropertyArtist:track.artist, MPNowPlayingInfoPropertyElapsedPlaybackTime: spotifyPlayer.playbackState.position]
         
         // Check for artwork
         if let artwork = track.artwork {
@@ -61,6 +64,10 @@ class MusicStreamingController {
         }
         
         MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = trackInfo
+    }
+    
+    static func clearMPNowPlayingInfoCenter() {
+        MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = nil
     }
     
     // MARK: Setup spotifyPlayer for Streaming
@@ -129,6 +136,7 @@ class MusicStreamingController {
                 })
             })
         } else { // there are no songs in the queue
+            clearMPNowPlayingInfoCenter()
             PlaylistController.sharedController.changeQueueInFirebase(queue, oldNowPlaying: queue.nowPlaying, newNowPlaying: nil, completion: { (newNowPlaying) in
                 // stop playing
                 spotifyPlayer.skipNext({ (error) in
